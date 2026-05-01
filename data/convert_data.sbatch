@@ -8,7 +8,7 @@
 #SBATCH --output=logs/convert_data_%j.log
 #SBATCH --error=logs/convert_data_%j.log
 
-WORKDIR=/users/schlag/gipfelsturm
+WORKDIR=/users/$USER/gipfelsturm
 INPUT=/capstor/store/cscs/swissai/infra01/datasets/nvidia/Nemotron-ClimbMix/climbmix_small
 OUTPUT=/capstor/store/cscs/swissai/infra01/datasets/nvidia/Nemotron-ClimbMix/climbmix_small_megatron/climbmix_small
 

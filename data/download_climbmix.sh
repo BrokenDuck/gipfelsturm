@@ -4,7 +4,7 @@
 set -euo pipefail
 
 DATA_DIR="/capstor/store/cscs/swissai/infra01/datasets/nvidia/Nemotron-ClimbMix/climbmix_small"
-LOGFILE="/users/schlag/gipfelsturm/data/download_climbmix.log"
+LOGFILE="/users/$USER/gipfelsturm/data/download_climbmix.log"
 
 mkdir -p "$DATA_DIR"
 
