@@ -257,8 +257,8 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
 #SBATCH --account=g34
 #SBATCH --time={slurm_time}
 #SBATCH --job-name={job_name}
-#SBATCH --output=logs/%x-%j.log
-#SBATCH --error=logs/%x-%j.log
+#SBATCH --output=logs/%x-%j.out
+#SBATCH --error=logs/%x-%j.err
 #SBATCH --nodes={nodes}
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
@@ -294,7 +294,6 @@ cd $MEGATRON_LM_DIR
 flock $MEGATRON_LM_DIR/.git-lock bash -c "cd $MEGATRON_LM_DIR && git checkout -- . && git apply $WORKDIR/patches/*.patch"
 export PYTHONPATH=$MEGATRON_LM_DIR:$PYTHONPATH
 export CUDA_DEVICE_MAX_CONNECTIONS=1
-export TORCH_NCCL_AVOID_RECORD_STREAMS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export TRITON_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/.triton_cache
 export TORCHINDUCTOR_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/.inductor_cache
@@ -398,7 +397,7 @@ TRAINING_CMD="torchrun ${{TORCHRUN_ARGS[@]}} $MEGATRON_LM_DIR/pretrain_gpt.py \\
     ${{LEARNING_RATE_ARGS[@]}} \\
     ${{INITIALIZATION_ARGS[@]}} \\
     ${{MIXED_PRECISION_ARGS[@]}} \\
-    ${{DISTRIBUTED_ARGS[@]}}{extra_cmd_ref}
+    ${{DISTRIBUTED_ARGS[@]}} \\{extra_cmd_ref}
     ${{LOGGING_ARGS[@]}} \\
     ${{TOKENIZER_ARGS[@]}} \\
     ${{DATA_ARGS[@]}}"
