@@ -2,8 +2,8 @@
 """Parse Megatron-LM training logs into structured metrics.
 
 Usage:
-    uv run experiments/parse_log.py <out_file> [err_file] [--output PATH] [--summary PATH] [--skip-first N]
-    uv run experiments/parse_log.py logs/gipfel-baseline_760m-12345.out logs/gipfel-baseline_760m-12345.err --summary results/baseline/summary.json
+    uv run experiments/parse_log.py <out_file> [err_file] [--output PATH] [--summary PATH] [--args PATH] [--skip-first N]
+    uv run experiments/parse_log.py logs/gipfel-baseline_760m-12345.out logs/gipfel-baseline_760m-12345.err --summary results/baseline/summary.json --args results/baseline/args.json
 """
 
 import argparse
@@ -50,6 +50,69 @@ def parse_line(line: str) -> dict | None:
     if "iteration" not in fields:
         return None
     return fields
+
+
+_ARG_LINE = re.compile(r"^\d+: \[default0\]:\s{2}(\w+) \.+ (.+)$")
+_ARG_START = re.compile(r"arguments -{10,}")
+_ARG_END   = re.compile(r"end of arguments -{10,}")
+
+# Mapping from Megatron's printed repr to Python values
+_ARG_LITERALS: dict[str, object] = {"True": True, "False": False, "None": None}
+
+
+def _parse_arg_value(raw: str) -> object:
+    """Convert a Megatron arg value string to a Python object."""
+    raw = raw.strip()
+    if raw in _ARG_LITERALS:
+        return _ARG_LITERALS[raw]
+    # List: e.g. ['/path/to/data']
+    if raw.startswith("[") and raw.endswith("]"):
+        try:
+            return json.loads(raw.replace("'", '"'))
+        except json.JSONDecodeError:
+            return raw
+    # Int
+    try:
+        return int(raw)
+    except ValueError:
+        pass
+    # Float (including scientific notation)
+    try:
+        return float(raw)
+    except ValueError:
+        pass
+    # Bare string: strip surrounding quotes if present
+    if (raw.startswith("'") and raw.endswith("'")) or (
+        raw.startswith('"') and raw.endswith('"')
+    ):
+        return raw[1:-1]
+    return raw
+
+
+def parse_args_block(*log_paths: str) -> dict:
+    """Parse the Megatron pretrain arguments block into a dict.
+
+    Only reads from the first file that contains the block (rank-0 output).
+    Lines like ``0: [default0]:  key ..... value`` are extracted.
+    Lines are read strictly between the start/end markers.
+    """
+    for log_path in log_paths:
+        args: dict[str, object] = {}
+        inside = False
+        with open(log_path) as f:
+            for line in f:
+                if not inside:
+                    if _ARG_START.search(line):
+                        inside = True
+                    continue
+                if _ARG_END.search(line):
+                    break
+                m = _ARG_LINE.match(line)
+                if m:
+                    args[m.group(1)] = _parse_arg_value(m.group(2))
+        if args:
+            return args
+    return {}
 
 
 def parse_log(*log_paths: str) -> list[dict]:
@@ -120,6 +183,8 @@ def main():
                         help="Write metrics.jsonl to PATH (default: stdout)")
     parser.add_argument("--summary", metavar="PATH",
                         help="Write summary.json to PATH")
+    parser.add_argument("--args", metavar="PATH",
+                        help="Write parsed Megatron pretrain args to PATH as JSON")
     parser.add_argument("--run-name", metavar="NAME",
                         help="Run name to embed in summary (default: inferred from log filename)")
     parser.add_argument("--skip-first", type=int, default=5, metavar="N",
@@ -127,6 +192,16 @@ def main():
     args = parser.parse_args()
 
     run_name = args.run_name or Path(args.log_files[0]).stem
+
+    if args.args:
+        pretrain_args = parse_args_block(*args.log_files)
+        if pretrain_args:
+            args_path = Path(args.args)
+            args_path.parent.mkdir(parents=True, exist_ok=True)
+            args_path.write_text(json.dumps(pretrain_args, indent=2) + "\n")
+            print(f"Wrote {len(pretrain_args)} args to {args.args}")
+        else:
+            print(f"Warning: no args block found in {', '.join(args.log_files)}", file=sys.stderr)
 
     metrics = parse_log(*args.log_files)
 

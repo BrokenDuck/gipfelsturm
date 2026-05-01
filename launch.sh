@@ -311,8 +311,7 @@ cat >> "$SCRIPT" << 'FOOTER'
 
 echo "CMD: $TRAINING_CMD"
 srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-task $SLURM_CPUS_PER_TASK --wait 60 bash -c "
-    pip install uv -q --break-system-packages 2>/dev/null || true
-    cd $WORKDIR && uv pip install -e 'Megatron-LM/[training,dev]' --system --break-system-packages --no-build-isolation --link-mode=copy
+    source /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
 "
 

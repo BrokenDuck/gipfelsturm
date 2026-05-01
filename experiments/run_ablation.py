@@ -7,7 +7,6 @@ Usage:
 
 import argparse
 import csv
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -257,8 +256,8 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
 #SBATCH --account=g34
 #SBATCH --time={slurm_time}
 #SBATCH --job-name={job_name}
-#SBATCH --output=logs/%x-%j.out
-#SBATCH --error=logs/%x-%j.err
+#SBATCH --output=logs/{mode}/%x-%j.out
+#SBATCH --error=logs/{mode}/%x-%j.err
 #SBATCH --nodes={nodes}
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
@@ -288,7 +287,7 @@ TENSORBOARD_DIR=$LOG_DIR/tensorboard
 
 #########################################
 
-mkdir -p logs $LOG_DIR $TENSORBOARD_DIR $DATASET_CACHE_DIR
+mkdir -p logs/{mode} $LOG_DIR $TENSORBOARD_DIR $DATASET_CACHE_DIR
 
 cd $MEGATRON_LM_DIR
 flock $MEGATRON_LM_DIR/.git-lock bash -c "cd $MEGATRON_LM_DIR && git checkout -- . && git apply $WORKDIR/patches/*.patch"
@@ -405,7 +404,7 @@ TRAINING_CMD="torchrun ${{TORCHRUN_ARGS[@]}} $MEGATRON_LM_DIR/pretrain_gpt.py \\
 
 echo "CMD: $TRAINING_CMD"
 srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-task $SLURM_CPUS_PER_TASK --wait 60 bash -c "
-    cd $WORKDIR && uv pip install -e 'Megatron-LM/[training,dev]' --system --break-system-packages --no-build-isolation --link-mode=copy
+    source /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
 "
 
@@ -431,7 +430,11 @@ def main():
         action="store_true",
         help="Generate scripts but do not submit via sbatch.",
     )
-    parser.add_argument("--output-dir", default=str(REPO_ROOT / "logs"))
+    parser.add_argument(
+        "--output-dir",
+        default=None,
+        help="Where to write .sbatch files (default: logs/<mode>/)",
+    )
     parser.add_argument("--mode", default="throughput", choices=["throughput", "train"])
     args = parser.parse_args()
 
@@ -443,7 +446,9 @@ def main():
             print(f"No runs matched: {args.runs}", file=sys.stderr)
             sys.exit(1)
 
-    output_dir = Path(args.output_dir)
+    output_dir = (
+        Path(args.output_dir) if args.output_dir else REPO_ROOT / "logs" / args.mode
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
 
     for run in plan:
