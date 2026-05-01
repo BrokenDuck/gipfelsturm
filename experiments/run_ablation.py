@@ -183,7 +183,7 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
         slurm_time = f"{h:02d}:{m:02d}:00"
         eval_interval = 1000
         eval_iters = 10
-        lr_warmup_iters = 200
+        lr_warmup_iters = min(200, training_steps // 2)
         logging_extra = (
             "\n    --tensorboard-dir $TENSORBOARD_DIR"
             "\n    --log-timers-to-tensorboard"
@@ -205,15 +205,28 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
             fi""")
 
     precision_args = build_precision_args(_tbd_or(run["precision"], "bf16"))
+    precision_val = _tbd_or(run["precision"], "bf16").lower()
     attention_args = build_attention_args(_tbd_or(run["attention_backend"], "default"))
     kernel_opts_val = _tbd_or(run["kernel_opts"], "none")
     kernel_args = build_kernel_args(kernel_opts_val)
     distributed_args = build_distributed_args(run["tp"], run["pp"])
 
-    # Profiling preset: inject NVTE env vars for NSYS traces
     nvte_env_block = ""
+    if precision_val == "fp8":
+        # TE's FP8 context does not downcast QKV before the dot-product attention op —
+        # only linear layers (QKV/output projections) run in FP8. The attention kernel
+        # receives float32 QKV tensors, which FlashAttention 2 and FusedAttention both
+        # refuse. UnfusedDotProductAttention is the only backend that accepts float32.
+        # The NVTE env vars must match --attention-backend or TE raises an AssertionError.
+        nvte_env_block += (
+            "\nexport NVTE_FLASH_ATTN=0"
+            "\nexport NVTE_FUSED_ATTN=0"
+            "\nexport NVTE_UNFUSED_ATTN=1"
+        )
+        attention_args = ["--attention-backend", "unfused"]
+    # Profiling preset: inject NVTE env vars for NSYS traces
     if kernel_opts_val == "profiling":
-        nvte_env_block = (
+        nvte_env_block += (
             "\nexport NVTE_NVTX_ENABLED=1"
             "\nexport NVTE_DEBUG=1"
             "\nexport NVTE_DEBUG_LEVEL=1"
@@ -387,7 +400,7 @@ TORCHRUN_ARGS=(
     --tee 3
 )
 
-TRAINING_CMD="torchrun ${{TORCHRUN_ARGS[@]}} $MEGATRON_LM_DIR/pretrain_gpt.py \\
+TRAINING_CMD="python -m torch.distributed.run ${{TORCHRUN_ARGS[@]}} $MEGATRON_LM_DIR/pretrain_gpt.py \\
     ${{TRANSFORMER_ENGINE_ARGS[@]}} \\
     ${{NETWORK_SIZE_ARGS[@]}} \\
     ${{TRAINING_ARGS[@]}} \\
