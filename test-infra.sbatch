@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=gipfel-infra
-#SBATCH --account=lsaie-ss26
+#SBATCH --account=g34
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4

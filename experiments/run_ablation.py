@@ -17,12 +17,24 @@ REPO_ROOT = Path(__file__).parent.parent
 
 # Model architecture configs — mirrors launch.sh case statement
 MODEL_CONFIGS = {
-    "125m": dict(num_layers=12,  hidden=768,   ffn=2048,  heads=12, kv_heads=4,  default_mbs=16),
-    "350m": dict(num_layers=24,  hidden=1024,  ffn=2816,  heads=16, kv_heads=4,  default_mbs=8),
-    "760m": dict(num_layers=24,  hidden=1536,  ffn=4096,  heads=16, kv_heads=4,  default_mbs=4),
-    "1.5b": dict(num_layers=48,  hidden=1600,  ffn=4352,  heads=20, kv_heads=4,  default_mbs=4),
-    "3b":   dict(num_layers=32,  hidden=3072,  ffn=8192,  heads=24, kv_heads=8,  default_mbs=4),
-    "8b":   dict(num_layers=32,  hidden=4096,  ffn=14336, heads=32, kv_heads=8,  default_mbs=2),
+    "125m": dict(
+        num_layers=12, hidden=768, ffn=2048, heads=12, kv_heads=4, default_mbs=16
+    ),
+    "350m": dict(
+        num_layers=24, hidden=1024, ffn=2816, heads=16, kv_heads=4, default_mbs=8
+    ),
+    "760m": dict(
+        num_layers=24, hidden=1536, ffn=4096, heads=16, kv_heads=4, default_mbs=4
+    ),
+    "1.5b": dict(
+        num_layers=48, hidden=1600, ffn=4352, heads=20, kv_heads=4, default_mbs=4
+    ),
+    "3b": dict(
+        num_layers=32, hidden=3072, ffn=8192, heads=24, kv_heads=8, default_mbs=4
+    ),
+    "8b": dict(
+        num_layers=32, hidden=4096, ffn=14336, heads=32, kv_heads=8, default_mbs=2
+    ),
 }
 
 # kernel_opts column values -> extra Megatron CLI flags
@@ -43,20 +55,26 @@ KERNEL_PRESETS = {
     # CUDA graphs require --use-te-rng-tracker; TE-scoped graphs capture attn+mlp
     "cuda_graphs_attn": [
         "--use-te-rng-tracker",
-        "--cuda-graph-impl", "transformer_engine",
-        "--cuda-graph-scope", "attn",
+        "--cuda-graph-impl",
+        "transformer_engine",
+        "--cuda-graph-scope",
+        "attn",
     ],
     "cuda_graphs_attn_mlp": [
         "--use-te-rng-tracker",
-        "--cuda-graph-impl", "transformer_engine",
-        "--cuda-graph-scope", "attn,mlp",
+        "--cuda-graph-impl",
+        "transformer_engine",
+        "--cuda-graph-scope",
+        "attn,mlp",
     ],
     # Full-iteration graph via local MCore capture; requires --no-check-for-nan-in-loss-and-grad
     # (already set in TRAINING_ARGS) and --use-te-rng-tracker
     "cuda_graphs_local": [
         "--use-te-rng-tracker",
-        "--cuda-graph-impl", "local",
-        "--cuda-graph-scope", "full_iteration",
+        "--cuda-graph-impl",
+        "local",
+        "--cuda-graph-scope",
+        "full_iteration",
     ],
     # Profiling preset: enable NVTE NVTX markers for NSYS traces; no extra Megatron flags
     # Actual env vars (NVTE_NVTX_ENABLED, NVTE_DEBUG) are injected in the SLURM script body
@@ -72,7 +90,9 @@ def load_ablation_plan(csv_path: str) -> list[dict]:
 
 def resolve_model_config(model_size: str) -> dict:
     if model_size not in MODEL_CONFIGS:
-        raise ValueError(f"Unknown model size '{model_size}'. Choose: {', '.join(MODEL_CONFIGS)}")
+        raise ValueError(
+            f"Unknown model size '{model_size}'. Choose: {', '.join(MODEL_CONFIGS)}"
+        )
     return MODEL_CONFIGS[model_size]
 
 
@@ -110,7 +130,9 @@ def build_kernel_args(kernel_opts: str) -> list[str]:
     if k in ("tbd", ""):
         k = "none"
     if k not in KERNEL_PRESETS:
-        raise ValueError(f"Unknown kernel_opts '{kernel_opts}'. Choose: {', '.join(KERNEL_PRESETS)}")
+        raise ValueError(
+            f"Unknown kernel_opts '{kernel_opts}'. Choose: {', '.join(KERNEL_PRESETS)}"
+        )
     return KERNEL_PRESETS[k]
 
 
@@ -118,8 +140,10 @@ def build_distributed_args(tp: str, pp: str) -> list[str]:
     tp_val = int(_tbd_or(tp, "1"))
     pp_val = int(_tbd_or(pp, "1"))
     args = [
-        "--tensor-model-parallel-size", str(tp_val),
-        "--pipeline-model-parallel-size", str(pp_val),
+        "--tensor-model-parallel-size",
+        str(tp_val),
+        "--pipeline-model-parallel-size",
+        str(pp_val),
         "--use-distributed-optimizer",
         "--overlap-grad-reduce",
         "--overlap-param-gather",
@@ -210,7 +234,9 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
         return "\n".join(lines)
 
     # Render MIXED_PRECISION_ARGS
-    mixed_precision_block = "MIXED_PRECISION_ARGS=(\n" + fmt_args(precision_args) + "\n)"
+    mixed_precision_block = (
+        "MIXED_PRECISION_ARGS=(\n" + fmt_args(precision_args) + "\n)"
+    )
 
     # Render extra attention/kernel args block (appended to DISTRIBUTED_ARGS or separate)
     extra_args = attention_args + kernel_args
@@ -228,7 +254,7 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
 
     script = f"""\
 #!/bin/bash
-#SBATCH --account=infra01
+#SBATCH --account=g34
 #SBATCH --time={slurm_time}
 #SBATCH --job-name={job_name}
 #SBATCH --output=logs/%x-%j.log
@@ -389,11 +415,21 @@ echo "END TIME: $(date)"
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--csv", default=str(REPO_ROOT / "experiments" / "ablation_plan.csv"))
-    parser.add_argument("--run", dest="runs", action="append", metavar="NAME",
-                        help="Run only this named ablation (can repeat). Default: all.")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Generate scripts but do not submit via sbatch.")
+    parser.add_argument(
+        "--csv", default=str(REPO_ROOT / "experiments" / "ablation_plan.csv")
+    )
+    parser.add_argument(
+        "--run",
+        dest="runs",
+        action="append",
+        metavar="NAME",
+        help="Run only this named ablation (can repeat). Default: all.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Generate scripts but do not submit via sbatch.",
+    )
     parser.add_argument("--output-dir", default=str(REPO_ROOT / "logs"))
     parser.add_argument("--mode", default="throughput", choices=["throughput", "train"])
     args = parser.parse_args()
@@ -421,11 +457,15 @@ def main():
         if args.dry_run:
             print(f"Generated (dry-run): {script_path}")
         else:
-            result = subprocess.run(["sbatch", str(script_path)], capture_output=True, text=True)
+            result = subprocess.run(
+                ["sbatch", str(script_path)], capture_output=True, text=True
+            )
             if result.returncode == 0:
                 print(f"Submitted {name}: {result.stdout.strip()}")
             else:
-                print(f"Failed to submit {name}: {result.stderr.strip()}", file=sys.stderr)
+                print(
+                    f"Failed to submit {name}: {result.stderr.strip()}", file=sys.stderr
+                )
                 sys.exit(1)
 
 
