@@ -1,0 +1,38 @@
+# Patch: Megatron installation uses container transformer-engine and nvidia-resiliency-ext.
+#
+# Problem:
+#   Megatron-LM is installed with uv as a package into the container system environment. As
+#   the pyproject.toml file declares git sources for package installation, that overrides the
+#   available packages in the system environment. UV will clone the repos and recompile every-
+#   thing, we don't want that.
+#
+# What this patch does:
+#   We simply comment out the git sources and uv defaults to using the system packages.
+#
+# Where in the code:
+#   File: pyproject.toml
+#   Function: training_log()
+#   Location: [tool.uv.sources] toml section.
+#
+# How to fix if this patch breaks on a future Megatron version:
+#   Find the new location of [tool.uv.sources] and update the patch.
+#
+# Applied to: Megatron-LM core_v0.17.0
+#
+diff --git a/pyproject.toml b/pyproject.toml
+index 9fd20d70e..1fa219bbb 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -202,10 +202,10 @@ override-dependencies = [
+ flash_mla = [
+     { git = "https://github.com/deepseek-ai/FlashMLA", rev = "9edee0c022cd0938148a18e334203b0aab43aa19" },
+ ]
+-transformer-engine = { git = "https://github.com/NVIDIA/TransformerEngine.git", rev = "71bbefbf153418f943640df0f7373625dc93fa46" }
++# transformer-engine = { git = "https://github.com/NVIDIA/TransformerEngine.git", rev = "71bbefbf153418f943640df0f7373625dc93fa46" }
+ nemo-run = { git = "https://github.com/NVIDIA-NeMo/Run.git", rev = "01a9a8ba360f7b2908728ad0516e0ad9d936966d" }
+ emerging_optimizers = { git = "https://github.com/NVIDIA-NeMo/Emerging-Optimizers.git", rev = "v0.1.0" }
+-nvidia-resiliency-ext = { git = "https://github.com/NVIDIA/nvidia-resiliency-ext.git", rev = "15a851565a4ce846c04431ecb0cf09903ab4837e" }
++# nvidia-resiliency-ext = { git = "https://github.com/NVIDIA/nvidia-resiliency-ext.git", rev = "15a851565a4ce846c04431ecb0cf09903ab4837e" }
+ 
+ [tool.isort]
+ profile = "black"                                                          # black-compatible

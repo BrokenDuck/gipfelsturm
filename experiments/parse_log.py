@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Parse Megatron-LM stdout training logs into structured metrics.
+"""Parse Megatron-LM training logs into structured metrics.
 
 Usage:
-    uv run experiments/parse_log.py <log_file> [--output PATH] [--summary PATH] [--skip-first N]
-    uv run experiments/parse_log.py logs/gipfel-baseline_760m-12345.log --summary results/baseline/summary.json
+    uv run experiments/parse_log.py <out_file> [err_file] [--output PATH] [--summary PATH] [--skip-first N]
+    uv run experiments/parse_log.py logs/gipfel-baseline_760m-12345.out logs/gipfel-baseline_760m-12345.err --summary results/baseline/summary.json
 """
 
 import argparse
@@ -52,14 +52,16 @@ def parse_line(line: str) -> dict | None:
     return fields
 
 
-def parse_log(log_path: str) -> list[dict]:
-    """Parse all training iteration lines from a log file."""
+def parse_log(*log_paths: str) -> list[dict]:
+    """Parse all training iteration lines from one or more log files."""
     metrics = []
-    with open(log_path) as f:
-        for line in f:
-            record = parse_line(line)
-            if record is not None:
-                metrics.append(record)
+    for log_path in log_paths:
+        with open(log_path) as f:
+            for line in f:
+                record = parse_line(line)
+                if record is not None:
+                    metrics.append(record)
+    metrics.sort(key=lambda r: r["iteration"])
     return metrics
 
 
@@ -112,7 +114,8 @@ def compute_summary(metrics: list[dict], run_name: str = "", skip_first: int = 5
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("log_file", help="Path to SLURM .log file from a Megatron training run")
+    parser.add_argument("log_files", nargs="+", metavar="FILE",
+                        help="Path to .out file (and optionally .err file) from a Megatron training run")
     parser.add_argument("--output", metavar="PATH",
                         help="Write metrics.jsonl to PATH (default: stdout)")
     parser.add_argument("--summary", metavar="PATH",
@@ -123,13 +126,12 @@ def main():
                         help="Skip first N iterations for summary stats (default: 5)")
     args = parser.parse_args()
 
-    log_path = args.log_file
-    run_name = args.run_name or Path(log_path).stem
+    run_name = args.run_name or Path(args.log_files[0]).stem
 
-    metrics = parse_log(log_path)
+    metrics = parse_log(*args.log_files)
 
     if not metrics:
-        print(f"No training iterations found in {log_path}", file=sys.stderr)
+        print(f"No training iterations found in {', '.join(args.log_files)}", file=sys.stderr)
         sys.exit(1)
 
     # Write JSONL

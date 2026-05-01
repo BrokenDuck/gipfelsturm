@@ -5,11 +5,10 @@ requires-python = ">=3.10"
 dependencies = []
 
 [dependency-groups]
-dev = [
-    "pytest>=8.0",
-    "tabulate>=0.9",
-    "matplotlib>=3.7",
-]
+dev = ["pytest>=8.0", "tabulate>=0.9", "matplotlib>=3.7"]
+
+[tool.uv]
+cache-dir = "~/.cache/uv"
 
 [tool.pytest.ini_options]
 testpaths = ["experiments"]
