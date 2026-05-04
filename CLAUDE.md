@@ -201,9 +201,23 @@ uv run experiments/run_ablation.py --dry-run --output-dir /tmp/test_scripts
 |---|---|
 | `precision` | `bf16`, `fp16`, `fp8` (maps to Megatron precision flags) |
 | `attention_backend` | `default`, `flash`, `fused`, `unfused`, `local` |
-| `kernel_opts` | `none`, `all_fused`, `no_fusion`, `cuda_graphs_te`, `cuda_graphs_local` (see `KERNEL_PRESETS` in `run_ablation.py`) |
+| `kernel_opts` | `none`, `all_fused`, `no_fusion`, `cuda_graphs_attn`, `cuda_graphs_attn_mlp`, `cuda_graphs_local`, `profiling` (see `KERNEL_PRESETS` in `run_ablation.py`) |
 | `tp` / `pp` | Tensor/pipeline parallelism; TP>1 automatically adds `--sequence-parallel` |
 | `micro_batch` / `global_batch` | Batch sizes (TBD falls back to per-model defaults) |
+| `target_steps` | Number of training steps (default: 20 for throughput, 1000 for train) |
+| `target_minutes` | Wall-clock budget in minutes used to compute SLURM time limit (train mode only) |
+
+**throughput vs train mode differences**:
+
+| Setting | `throughput` | `train` |
+|---|---|---|
+| Default steps (if TBD) | 100 | 1000 |
+| SLURM time limit | fixed `00:30:00` | `target_minutes` + ~1.5h overhead buffer |
+| Eval interval | 100000 (effectively disabled) | 25 |
+| LR warmup iters | 50 | 50 |
+| NaN loss/grad check | disabled | enabled |
+| TensorBoard logging | off | `--tensorboard-dir`, timers, memory |
+| W&B | always disabled | enabled if `WANDB_API_KEY` is set |
 
 ### Parsing training logs
 

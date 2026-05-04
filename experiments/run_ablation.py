@@ -162,14 +162,16 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
     target_minutes = _tbd_or(run["target_minutes"], "30")
 
     if mode == "throughput":
-        training_steps = int(target_steps) if target_steps != "TBD" else 20
+        training_steps = int(target_steps) if target_steps != "TBD" else 100
         slurm_time = "00:30:00"
         eval_interval = 100000
         eval_iters = 5
-        lr_warmup_iters = 0
+        lr_warmup_iters = 50
         logging_extra = ""
         wandb_block = "export WANDB_MODE=disabled"
+        no_nan_check = "\n    --no-check-for-nan-in-loss-and-grad"
     else:  # train
+        no_nan_check = ""
         training_steps = int(target_steps) if target_steps != "TBD" else 1000
         minutes = float(target_minutes)
         # Add buffer for SLURM overhead
@@ -337,8 +339,7 @@ TRAINING_ARGS=(
     --cross-entropy-loss-fusion
     --disable-bias-linear
     --optimizer adam
-    --dataloader-type single
-    --no-check-for-nan-in-loss-and-grad
+    --dataloader-type single{no_nan_check}
     --manual-gc
 )
 
