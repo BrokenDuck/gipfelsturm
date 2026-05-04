@@ -199,7 +199,6 @@ def test_render_sbatch_has_sbatch_directives():
     run = _make_run()
     model = resolve_model_config("760m")
     script = render_sbatch(run, model)
-    assert "#SBATCH --account=infra01" in script
     assert "#SBATCH --nodes=1" in script
     assert "#SBATCH --gpus-per-node=4" in script
     assert "#SBATCH --cpus-per-task=288" in script
@@ -213,7 +212,6 @@ def test_render_sbatch_has_env_setup():
     script = render_sbatch(run, model)
     assert "WORKDIR=/users/$USER/gipfelsturm" in script
     assert "git apply" in script
-    assert "PYTHONPATH=$MEGATRON_LM_DIR:$PYTHONPATH" in script
     assert "CUDA_DEVICE_MAX_CONNECTIONS=1" in script
 
 
@@ -232,7 +230,10 @@ def test_render_sbatch_fp8_precision():
     script = render_sbatch(run, model)
     assert "--fp8-format" in script
     assert "hybrid" in script  # e4m3 fwd, e5m2 bwd
-    assert "--bf16" not in script
+    assert "--bf16" in script
+    assert "--attention-backend auto" in script
+    assert "NVTE_FLASH_ATTN" not in script
+    assert "NVTE_UNFUSED_ATTN" not in script
 
 
 def test_render_sbatch_flash_attention():

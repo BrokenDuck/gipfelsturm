@@ -107,9 +107,7 @@ def build_precision_args(precision: str) -> list[str]:
     elif p == "fp16":
         return ["--fp16"]
     elif p == "fp8":
-        # hybrid = e4m3 for weights/activations, e5m2 for output gradients (recommended)
-        # delayed = TE delayed scaling recipe (standard for training stability)
-        return ["--fp8-format", "hybrid", "--fp8-recipe", "delayed"]
+        return ["--bf16", "--fp8-format", "hybrid", "--fp8-recipe", "delayed"]
     else:
         raise ValueError(f"Unknown precision '{precision}'. Choose: bf16, fp16, fp8")
 
@@ -164,11 +162,11 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
     target_minutes = _tbd_or(run["target_minutes"], "30")
 
     if mode == "throughput":
-        training_steps = int(target_steps) if target_steps != "TBD" else 50
+        training_steps = int(target_steps) if target_steps != "TBD" else 20
         slurm_time = "00:30:00"
-        eval_interval = training_steps
-        eval_iters = 0
-        lr_warmup_iters = 10
+        eval_interval = 100000
+        eval_iters = 5
+        lr_warmup_iters = 0
         logging_extra = ""
         wandb_block = "export WANDB_MODE=disabled"
     else:  # train
@@ -181,9 +179,9 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
             h += 1
             m -= 60
         slurm_time = f"{h:02d}:{m:02d}:00"
-        eval_interval = 1000
-        eval_iters = 10
-        lr_warmup_iters = min(200, training_steps // 2)
+        eval_interval = 25
+        eval_iters = 5
+        lr_warmup_iters = 50
         logging_extra = (
             "\n    --tensorboard-dir $TENSORBOARD_DIR"
             "\n    --log-timers-to-tensorboard"
@@ -195,7 +193,7 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
             # WANDB
             if [ -n "$WANDB_API_KEY" ]; then
                 echo "[$(date)] WANDB enabled."
-                TRAINING_CMD="$TRAINING_CMD \\
+                SCRIPT_ARGS="$SCRIPT_ARGS \\
                     --wandb-save-dir $LOG_DIR \\
                     --wandb-project $PROJECT_NAME \\
                     --wandb-exp-name $EXP_NAME-$SLURM_JOB_ID"
@@ -213,17 +211,7 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
 
     nvte_env_block = ""
     if precision_val == "fp8":
-        # TE's FP8 context does not downcast QKV before the dot-product attention op —
-        # only linear layers (QKV/output projections) run in FP8. The attention kernel
-        # receives float32 QKV tensors, which FlashAttention 2 and FusedAttention both
-        # refuse. UnfusedDotProductAttention is the only backend that accepts float32.
-        # The NVTE env vars must match --attention-backend or TE raises an AssertionError.
-        nvte_env_block += (
-            "\nexport NVTE_FLASH_ATTN=0"
-            "\nexport NVTE_FUSED_ATTN=0"
-            "\nexport NVTE_UNFUSED_ATTN=1"
-        )
-        attention_args = ["--attention-backend", "unfused"]
+        attention_args = ["--attention-backend", "auto"]
     # Profiling preset: inject NVTE env vars for NSYS traces
     if kernel_opts_val == "profiling":
         nvte_env_block += (
@@ -306,11 +294,17 @@ cd $MEGATRON_LM_DIR
 flock $MEGATRON_LM_DIR/.git-lock bash -c "cd $MEGATRON_LM_DIR && git checkout -- . && git apply $WORKDIR/patches/*.patch"
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
-export TRITON_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/.triton_cache
-export TORCHINDUCTOR_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/.inductor_cache
 export OMP_NUM_THREADS=$(( SLURM_CPUS_PER_TASK / SLURM_GPUS_PER_NODE ))
-MASTER_ADDR=$(hostname)
-MASTER_PORT=25678{nvte_env_block}
+export JOB_CACHE=/iopsstor/scratch/cscs/$USER/gipfelsturm/cache/job-$SLURM_JOB_ID
+
+export TRITON_CACHE_DIR=$JOB_CACHE/triton
+export TORCHINDUCTOR_CACHE_DIR=$JOB_CACHE/inductor
+export TORCH_EXTENSIONS_DIR=$JOB_CACHE/torch_extensions
+export CUDA_CACHE_PATH=$JOB_CACHE/cuda
+
+mkdir -p "$TRITON_CACHE_DIR" "$TORCHINDUCTOR_CACHE_DIR" "$TORCH_EXTENSIONS_DIR" "$CUDA_CACHE_PATH"
+MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
+MASTER_PORT=$((20000 + SLURM_JOB_ID % 40000)){nvte_env_block}
 
 TRANSFORMER_ENGINE_ARGS=(
     --transformer-impl transformer_engine
@@ -346,7 +340,6 @@ TRAINING_ARGS=(
     --dataloader-type single
     --no-check-for-nan-in-loss-and-grad
     --manual-gc
-    --manual-gc-interval 50
 )
 
 REGULARIZATION_ARGS=(
@@ -360,7 +353,8 @@ REGULARIZATION_ARGS=(
 
 LEARNING_RATE_ARGS=(
     --lr 3e-4
-    --lr-decay-style constant
+    --min-lr 3e-5
+    --lr-decay-style cosine
     --lr-warmup-iters {lr_warmup_iters}
 )
 
@@ -388,19 +382,10 @@ DATA_ARGS=(
     --data-path $DATA_PREFIX
     --data-cache-path $DATASET_CACHE_DIR
     --split 99,1,0
-    --num-workers 1
+    --num-workers 8
 )
 
-TORCHRUN_ARGS=(
-    --nproc-per-node $SLURM_GPUS_PER_NODE
-    --nnodes $SLURM_NNODES
-    --rdzv_endpoint $MASTER_ADDR:$MASTER_PORT
-    --rdzv_backend c10d
-    --max_restarts 0
-    --tee 3
-)
-
-TRAINING_CMD="python -m torch.distributed.run ${{TORCHRUN_ARGS[@]}} $MEGATRON_LM_DIR/pretrain_gpt.py \\
+SCRIPT_ARGS="$MEGATRON_LM_DIR/pretrain_gpt.py \\
     ${{TRANSFORMER_ENGINE_ARGS[@]}} \\
     ${{NETWORK_SIZE_ARGS[@]}} \\
     ${{TRAINING_ARGS[@]}} \\
@@ -415,7 +400,19 @@ TRAINING_CMD="python -m torch.distributed.run ${{TORCHRUN_ARGS[@]}} $MEGATRON_LM
 
 {wandb_block}
 
-echo "CMD: $TRAINING_CMD"
+# Build TRAINING_CMD as a plain string so it survives bash -c expansion safely.
+# Bash arrays cannot be exported into srun's bash -c subshell.
+TRAINING_CMD="python -m torch.distributed.run \\
+    --nproc-per-node $SLURM_GPUS_PER_NODE \\
+    --nnodes $SLURM_NNODES \\
+    --rdzv_endpoint $MASTER_ADDR:$MASTER_PORT \\
+    --rdzv_backend c10d \\
+    --max_restarts 0 \\
+    --tee 3 \\
+    --node-rank \\$SLURM_NODEID \\
+    $SCRIPT_ARGS"
+
+echo "TRAINING_CMD: $TRAINING_CMD"
 srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-task $SLURM_CPUS_PER_TASK --wait 60 bash -c "
     source /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
