@@ -18,18 +18,19 @@ from collections import defaultdict
 
 
 # Matches the log prefix:  "3: [default2]:[rank14]: some text"
-# or simpler prefixes like "0: some text" without rank tags
+# or single-node format:   "2: [default3]: some text" (no [rankN] tag)
 # Format: "NODE: [defaultGPU]:[rankGLOBAL_RANK]: text"
 # NODE is the SLURM node index, GPU is the local GPU index on that node.
-_PREFIX_RE = re.compile(r"^\d+: \[default\d+\]:(?:\[rank(\d+)\]: )?(.*)")
+_PREFIX_RE = re.compile(r"^\d+: \[default(\d+)\]:(?:\[rank(\d+)\]: )?(.*)")
 
 
 def _strip_prefix(line: str) -> tuple[int | None, str]:
     """Return (rank, text) with the torchrun prefix removed."""
     m = _PREFIX_RE.match(line)
     if m:
-        rank_str, text = m.group(1), m.group(2)
-        rank = int(rank_str) if rank_str is not None else None
+        local_rank_str, global_rank_str, text = m.group(1), m.group(2), m.group(3)
+        # Prefer the explicit [rankN] global rank; fall back to the local GPU index.
+        rank = int(global_rank_str) if global_rank_str is not None else int(local_rank_str)
         return rank, text
     return None, line
 

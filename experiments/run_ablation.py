@@ -114,12 +114,21 @@ def build_precision_args(precision: str) -> list[str]:
 
 def build_attention_args(attention_backend: str) -> list[str]:
     b = attention_backend.lower()
-    if b in ("default", "auto", "tbd", ""):
+    if b in ("default", "tbd", ""):
         return []
-    elif b in ("flash", "fused", "unfused", "local"):
+    elif b in ("auto", "fused", "unfused", "local"):
         return ["--attention-backend", b]
+    elif b in ("flash", "flash_fa3"):
+        # FA3 via default venv
+        return ["--attention-backend", "flash"]
+    elif b == "flash_fa2":
+        # FA2 via .venv-gipfelturm-fa2; same Megatron flag as FA3
+        return ["--attention-backend", "flash"]
     else:
-        raise ValueError(f"Unknown attention_backend '{attention_backend}'")
+        raise ValueError(
+            f"Unknown attention_backend '{attention_backend}'. "
+            "Choose: default, auto, fused, flash, flash_fa3, flash_fa2, unfused, local"
+        )
 
 
 def build_kernel_args(kernel_opts: str) -> list[str]:
@@ -166,7 +175,7 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
         slurm_time = "00:30:00"
         eval_interval = 100000
         eval_iters = 5
-        lr_warmup_iters = 50
+        lr_warmup_iters = training_steps // 2
         logging_extra = ""
         wandb_block = "export WANDB_MODE=disabled"
         no_nan_check = "\n    --no-check-for-nan-in-loss-and-grad"
@@ -206,10 +215,17 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
 
     precision_args = build_precision_args(_tbd_or(run["precision"], "bf16"))
     precision_val = _tbd_or(run["precision"], "bf16").lower()
-    attention_args = build_attention_args(_tbd_or(run["attention_backend"], "default"))
+    attention_backend_val = _tbd_or(run["attention_backend"], "default").lower()
+    attention_args = build_attention_args(attention_backend_val)
     kernel_opts_val = _tbd_or(run["kernel_opts"], "none")
     kernel_args = build_kernel_args(kernel_opts_val)
     distributed_args = build_distributed_args(run["tp"], run["pp"])
+
+    venv_name = (
+        ".venv-gipfelturm-fa2"
+        if attention_backend_val == "flash_fa2"
+        else ".venv-gipfelturm"
+    )
 
     nvte_env_block = ""
     if precision_val == "fp8":
@@ -415,7 +431,7 @@ TRAINING_CMD="python -m torch.distributed.run \\
 
 echo "TRAINING_CMD: $TRAINING_CMD"
 srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-task $SLURM_CPUS_PER_TASK --wait 60 bash -c "
-    source /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/bin/activate
+    source /iopsstor/scratch/cscs/$USER/{venv_name}/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
 "
 

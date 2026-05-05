@@ -8,7 +8,6 @@
 #
 # Where in the code:
 #   File: pyproject.toml
-#   Function: training_log()
 #   Location: [tool.uv.sources] toml section.
 #
 # How to fix if this patch breaks on a future Megatron version:

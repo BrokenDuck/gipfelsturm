@@ -200,7 +200,7 @@ uv run experiments/run_ablation.py --dry-run --output-dir /tmp/test_scripts
 | CSV column | Controls |
 |---|---|
 | `precision` | `bf16`, `fp16`, `fp8` (maps to Megatron precision flags) |
-| `attention_backend` | `default`, `flash`, `fused`, `unfused`, `local` |
+| `attention_backend` | `default` (no flag), `auto` (TE auto-select), `fused` (cuDNN), `flash`/`flash_fa3` (FA3, default venv), `flash_fa2` (FA2, `.venv-gipfelturm-fa2`), `unfused` (standard), `local` (PyTorch) |
 | `kernel_opts` | `none`, `all_fused`, `no_fusion`, `cuda_graphs_attn`, `cuda_graphs_attn_mlp`, `cuda_graphs_local`, `profiling` (see `KERNEL_PRESETS` in `run_ablation.py`) |
 | `tp` / `pp` | Tensor/pipeline parallelism; TP>1 automatically adds `--sequence-parallel` |
 | `micro_batch` / `global_batch` | Batch sizes (TBD falls back to per-model defaults) |
