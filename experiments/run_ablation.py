@@ -116,8 +116,10 @@ def build_attention_args(attention_backend: str) -> list[str]:
     b = attention_backend.lower()
     if b in ("default", "tbd", ""):
         return []
-    elif b in ("auto", "fused", "unfused", "local"):
+    elif b in ("auto", "fused", "unfused"):
         return ["--attention-backend", b]
+    elif b == "local":
+        return ["--attention-backend", "local", "--spec", "local"]
     elif b in ("flash", "flash_fa3"):
         # FA3 via default venv
         return ["--attention-backend", "flash"]
@@ -313,14 +315,6 @@ flock $MEGATRON_LM_DIR/.git-lock bash -c "cd $MEGATRON_LM_DIR && git checkout --
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export OMP_NUM_THREADS=$(( SLURM_CPUS_PER_TASK / SLURM_GPUS_PER_NODE ))
-export JOB_CACHE=/iopsstor/scratch/cscs/$USER/gipfelsturm/cache/job-$SLURM_JOB_ID
-
-export TRITON_CACHE_DIR=$JOB_CACHE/triton
-export TORCHINDUCTOR_CACHE_DIR=$JOB_CACHE/inductor
-export TORCH_EXTENSIONS_DIR=$JOB_CACHE/torch_extensions
-export CUDA_CACHE_PATH=$JOB_CACHE/cuda
-
-mkdir -p "$TRITON_CACHE_DIR" "$TORCHINDUCTOR_CACHE_DIR" "$TORCH_EXTENSIONS_DIR" "$CUDA_CACHE_PATH"
 MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
 MASTER_PORT=$((20000 + SLURM_JOB_ID % 40000)){nvte_env_block}
 
@@ -431,6 +425,12 @@ TRAINING_CMD="python -m torch.distributed.run \\
 
 echo "TRAINING_CMD: $TRAINING_CMD"
 srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-task $SLURM_CPUS_PER_TASK --wait 60 bash -c "
+    export JOB_CACHE=/tmp/gipfel-\\$SLURM_JOB_ID-\\$SLURM_NODEID
+    export TRITON_CACHE_DIR=\\$JOB_CACHE/triton
+    export TORCHINDUCTOR_CACHE_DIR=\\$JOB_CACHE/inductor
+    export TORCH_EXTENSIONS_DIR=\\$JOB_CACHE/torch_extensions
+    export CUDA_CACHE_PATH=\\$JOB_CACHE/cuda
+    mkdir -p \"\\$TRITON_CACHE_DIR\" \"\\$TORCHINDUCTOR_CACHE_DIR\" \"\\$TORCH_EXTENSIONS_DIR\" \"\\$CUDA_CACHE_PATH\"
     source /iopsstor/scratch/cscs/$USER/{venv_name}/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
 "

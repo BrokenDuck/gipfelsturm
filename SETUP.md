@@ -23,6 +23,19 @@
     cd Megatron-LM && uv pip install --compile-bytecode --no-build-isolation --link-mode=copy --editable ".[dev,training]"
     ```
 
+5. Install Flash Attention 3 (this can take some time):
+    ```bash
+    # Ensure you are on a node with the container loaded and the the virtual environment is activated
+    uv pip install setuptools packaging ninja
+    cd /iopsstor/scratch/cscs/$USER/
+    git clone https://github.com/Dao-AILab/flash-attention.git
+    cd flash-attention/hopper
+    MAX_JOBS=25 python setup.py install
+    # We need to patch the installation because Megatron-LM and transformer engine expect the package at a different location
+    cp /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/lib/python-3.12/site-packages/flash_attn_interface.py /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/lib/python-3.12/site-packages/flash_attn_3/flash_attn_interface.py
+    touch /iopsstor/scratch/cscs/$USER/.venv-gipfelturm/lib/python-3.12/site-packages/flash_attn_3/__init__.py
+    ```
+
 5. Check that everything is installed correctly:
     ```bash
     pip list -v
