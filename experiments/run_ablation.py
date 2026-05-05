@@ -80,11 +80,54 @@ KERNEL_PRESETS = {
     "profiling": [],
 }
 
+# cuda_graph column values -> extra Megatron CLI flags
+# "full" requires --no-check-for-nan-in-loss-and-grad; render_sbatch handles this automatically.
+CUDA_GRAPH_PRESETS = {
+    "none": [],
+    # Full-iteration graph captured by MCore's local backend
+    "full": [
+        "--cuda-graph-impl",
+        "local",
+        "--te-rng-tracker",
+        "--cuda-graph-scope",
+        "full_iteration",
+        "--cuda-graph-warmup-steps",
+        "3",
+    ],
+    # TE-scoped graphs capturing attention + MLP blocks
+    "te": [
+        "--cuda-graph-impl",
+        "transformer_engine",
+        "--te-rng-tracker",
+        "--cuda-graph-scope",
+        "attn,mlp",
+    ],
+}
+
+# fusion_opts column: comma-separated "+name" / "-name" tokens.
+# Each entry: (enable_flag, disable_flag). disable_flag may be None if Megatron lacks a negation.
+FUSION_FLAGS: dict[str, tuple[str, str | None]] = {
+    "gelu": ("--bias-gelu-fusion", "--no-bias-gelu-fusion"),
+    "swiglu": ("--bias-swiglu-fusion", "--no-bias-swiglu-fusion"),
+    "dropout": ("--bias-dropout-fusion", "--no-bias-dropout-fusion"),
+    "softmax": ("--masked-softmax-fusion", "--no-masked-softmax-fusion"),
+    "rope": ("--apply-rope-fusion", "--no-rope-fusion"),
+    "cross_entropy": ("--cross-entropy-loss-fusion", "--no-cross-entropy-loss-fusion"),
+    "grad_accum": (
+        "--gradient-accumulation-fusion",
+        "--no-gradient-accumulation-fusion",
+    ),
+}
+
 
 def load_ablation_plan(csv_path: str) -> list[dict]:
     with open(csv_path) as f:
-        reader = csv.DictReader(f)
-        return [{k.strip(): v.strip() for k, v in row.items()} for row in reader]
+        # skipinitialspace so quoted cells work even when preceded by "key , value"
+        reader = csv.DictReader(f, skipinitialspace=True)
+        return [
+            {k.strip(): v.strip() for k, v in row.items() if k is not None}
+            for row in reader
+        ]
 
 
 def resolve_model_config(model_size: str) -> dict:
@@ -119,7 +162,13 @@ def build_attention_args(attention_backend: str) -> list[str]:
     elif b in ("auto", "fused", "unfused"):
         return ["--attention-backend", b]
     elif b == "local":
-        return ["--attention-backend", "local", "--spec", "local"]
+        return [
+            "--attention-backend",
+            "local",
+            "--spec",
+            "local",
+            "--no-persist-layer-norm",
+        ]
     elif b in ("flash", "flash_fa3"):
         # FA3 via default venv
         return ["--attention-backend", "flash"]
@@ -133,6 +182,43 @@ def build_attention_args(attention_backend: str) -> list[str]:
         )
 
 
+def build_fusion_args(fusion_opts: str) -> list[str]:
+    """Parse '+name,-name,...' tokens into Megatron fusion flags.
+
+    Unknown names raise ValueError. Empty / 'none' / 'default' returns [].
+    """
+    val = fusion_opts.strip().lower()
+    if val in ("", "none", "default", "tbd"):
+        return []
+    args: list[str] = []
+    for token in val.split(","):
+        token = token.strip()
+        if not token:
+            continue
+        if token.startswith("+"):
+            name = token[1:]
+            on = True
+        elif token.startswith("-"):
+            name = token[1:]
+            on = False
+        else:
+            raise ValueError(
+                f"fusion_opts token '{token}' must start with '+' (enable) or '-' (disable)"
+            )
+        if name not in FUSION_FLAGS:
+            raise ValueError(
+                f"Unknown fusion name '{name}'. Choose: {', '.join(FUSION_FLAGS)}"
+            )
+        enable_flag, disable_flag = FUSION_FLAGS[name]
+        if on:
+            args.append(enable_flag)
+        else:
+            if disable_flag is None:
+                raise ValueError(f"Fusion '{name}' has no disable flag in Megatron")
+            args.append(disable_flag)
+    return args
+
+
 def build_kernel_args(kernel_opts: str) -> list[str]:
     k = kernel_opts.lower()
     if k in ("tbd", ""):
@@ -142,6 +228,17 @@ def build_kernel_args(kernel_opts: str) -> list[str]:
             f"Unknown kernel_opts '{kernel_opts}'. Choose: {', '.join(KERNEL_PRESETS)}"
         )
     return KERNEL_PRESETS[k]
+
+
+def build_cuda_graph_args(cuda_graph: str) -> list[str]:
+    c = cuda_graph.lower()
+    if c in ("tbd", ""):
+        c = "none"
+    if c not in CUDA_GRAPH_PRESETS:
+        raise ValueError(
+            f"Unknown cuda_graph '{cuda_graph}'. Choose: {', '.join(CUDA_GRAPH_PRESETS)}"
+        )
+    return CUDA_GRAPH_PRESETS[c]
 
 
 def build_distributed_args(tp: str, pp: str) -> list[str]:
@@ -221,6 +318,19 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
     attention_args = build_attention_args(attention_backend_val)
     kernel_opts_val = _tbd_or(run["kernel_opts"], "none")
     kernel_args = build_kernel_args(kernel_opts_val)
+    cuda_graph_val = _tbd_or(run.get("cuda_graph", "none"), "none").lower()
+    cuda_graph_args = build_cuda_graph_args(cuda_graph_val)
+    # full-iteration CUDA graphs require NaN check to be disabled
+    if cuda_graph_val == "full":
+        no_nan_check = "\n    --no-check-for-nan-in-loss-and-grad"
+    fusion_args = build_fusion_args(run.get("fusion_opts", ""))
+    # cross_entropy: hardcoded default on; disabled only if explicitly negated via fusion_opts
+    if "--no-cross-entropy-loss-fusion" in fusion_args:
+        ce_fusion_line = ""
+        fusion_args = [a for a in fusion_args if a != "--no-cross-entropy-loss-fusion"]
+    else:
+        ce_fusion_line = "\n    --cross-entropy-loss-fusion"
+        fusion_args = [a for a in fusion_args if a != "--cross-entropy-loss-fusion"]
     distributed_args = build_distributed_args(run["tp"], run["pp"])
 
     venv_name = (
@@ -258,8 +368,8 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
         "MIXED_PRECISION_ARGS=(\n" + fmt_args(precision_args) + "\n)"
     )
 
-    # Render extra attention/kernel args block (appended to DISTRIBUTED_ARGS or separate)
-    extra_args = attention_args + kernel_args
+    # Render extra attention/kernel/fusion args block
+    extra_args = attention_args + kernel_args + cuda_graph_args + fusion_args
     extra_block = ""
     if extra_args:
         extra_block = "\nEXTRA_ARGS=(\n" + fmt_args(extra_args) + "\n)\n"
@@ -310,8 +420,6 @@ TENSORBOARD_DIR=$LOG_DIR/tensorboard
 
 mkdir -p logs/{mode} $LOG_DIR $TENSORBOARD_DIR $DATASET_CACHE_DIR
 
-cd $MEGATRON_LM_DIR
-flock $MEGATRON_LM_DIR/.git-lock bash -c "cd $MEGATRON_LM_DIR && git checkout -- . && git apply $WORKDIR/patches/*.patch"
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export OMP_NUM_THREADS=$(( SLURM_CPUS_PER_TASK / SLURM_GPUS_PER_NODE ))
@@ -345,8 +453,7 @@ TRAINING_ARGS=(
     --train-iters $TRAINING_STEPS
     --log-interval 1
     --eval-interval {eval_interval}
-    --eval-iters {eval_iters}
-    --cross-entropy-loss-fusion
+    --eval-iters {eval_iters}{ce_fusion_line}
     --disable-bias-linear
     --optimizer adam
     --dataloader-type single{no_nan_check}

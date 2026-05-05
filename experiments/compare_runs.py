@@ -30,17 +30,31 @@ def load_summaries(results_dir: str, run_names: list[str] | None = None) -> list
     summaries = []
 
     if run_names:
-        dirs = [base / name for name in run_names]
+        candidates = [base / name for name in run_names]
     else:
-        dirs = sorted(p for p in base.iterdir() if p.is_dir())
+        candidates = sorted(p for p in base.iterdir() if p.is_dir())
 
-    for d in dirs:
+    # Subdirectory layout: <run>/summary.json
+    for d in candidates:
         summary_path = d / "summary.json"
         if not summary_path.exists():
             print(f"Warning: no summary.json in {d}", file=sys.stderr)
             continue
         with open(summary_path) as f:
             summaries.append(json.load(f))
+
+    # Flat layout: <run>_summary.json (fallback when no subdirs found)
+    if not summaries:
+        if run_names:
+            flat_files = [base / f"{name}_summary.json" for name in run_names]
+        else:
+            flat_files = sorted(base.glob("*_summary.json"))
+        for p in flat_files:
+            if not p.exists():
+                print(f"Warning: {p} not found", file=sys.stderr)
+                continue
+            with open(p) as f:
+                summaries.append(json.load(f))
 
     return summaries
 
@@ -180,10 +194,20 @@ def main():
         print("No results found.", file=sys.stderr)
         sys.exit(1)
 
+    # If --baseline is a file path, load it and prepend so it appears in the table
+    baseline_name = args.baseline
+    if args.baseline and Path(args.baseline).is_file():
+        with open(args.baseline) as f:
+            baseline_summary = json.load(f)
+        # Avoid duplicates if it's already in the loaded set
+        if not any(s.get("run_name") == baseline_summary.get("run_name") for s in summaries):
+            summaries.insert(0, baseline_summary)
+        baseline_name = baseline_summary.get("run_name")
+
     # Sort
     summaries.sort(key=lambda s: s.get(args.sort) or 0, reverse=True)
 
-    summaries = compute_speedups(summaries, baseline_name=args.baseline)
+    summaries = compute_speedups(summaries, baseline_name=baseline_name)
 
     if args.format == "csv":
         print(format_csv(summaries))
@@ -192,6 +216,9 @@ def main():
 
     if args.plot:
         plot_comparison(summaries, metric=args.sort, output_path=args.plot)
+        csv_path = str(Path(args.plot).with_suffix(".csv"))
+        Path(csv_path).write_text(format_csv(summaries))
+        print(f"Saved CSV to {csv_path}")
 
 
 if __name__ == "__main__":

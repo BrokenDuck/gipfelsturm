@@ -1,0 +1,31 @@
+# Fix: handle --spec local in gpt_builders.py
+#
+# Problem:
+#   --attention-backend local requires --spec local (validated in arguments.py:323),
+#   but gpt_builders.py passes args.spec directly to import_module(), which expects a
+#   (module_path, ClassName) tuple. The string list ["local"] has only 1 element, causing
+#   ValueError: not enough values to unpack (expected 2, got 1).
+#
+# Fix:
+#   treat args.spec == ['local'] as the "no custom spec" path, and force use_te=False
+#   so _get_transformer_layer_spec falls through to get_gpt_layer_local_spec.
+#
+# File: gpt_builders.py, function gpt_builder, ~line 44.
+
+diff --git a/gpt_builders.py b/gpt_builders.py
+index 24b5f89d3..8bd70702f 100644
+--- a/gpt_builders.py
++++ b/gpt_builders.py
+@@ -41,10 +41,10 @@ def gpt_builder(args, pre_process, post_process, vp_stage=None, config=None, pg_
+             post_process=post_process,
+         )
+     else:  # using core models
+-        if args.spec is not None:
++        if args.spec is not None and args.spec != ['local']:
+             transformer_layer_spec = import_module(args.spec)
+         else:
+-            use_te = args.transformer_impl == "transformer_engine"
++            use_te = args.transformer_impl == "transformer_engine" and args.spec != ['local']
+
+             if args.experimental_attention_variant is not None:
+                 transformer_layer_spec = (
