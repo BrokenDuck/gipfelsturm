@@ -89,8 +89,8 @@ CUDA_GRAPH_PRESETS = {
         "--cuda-graph-impl",
         "local",
         "--te-rng-tracker",
-        "--cuda-graph-scope",
-        "full_iteration",
+        # "--cuda-graph-scope",
+        # "full_iteration",
         "--cuda-graph-warmup-steps",
         "3",
     ],
@@ -100,7 +100,8 @@ CUDA_GRAPH_PRESETS = {
         "transformer_engine",
         "--te-rng-tracker",
         "--cuda-graph-scope",
-        "attn,mlp",
+        "attn",
+        "mlp",
     ],
 }
 
