@@ -7,11 +7,10 @@ from experiments.run_ablation import (
     resolve_model_config,
     build_precision_args,
     build_attention_args,
-    build_kernel_args,
     build_distributed_args,
+    build_prec_aware_opt_args,
     render_sbatch,
     MODEL_CONFIGS,
-    KERNEL_PRESETS,
 )
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -67,10 +66,33 @@ def test_build_precision_args_fp16():
     assert build_precision_args("fp16") == ["--fp16"]
 
 
+def test_build_precision_args_fp32():
+    args = build_precision_args("fp32")
+    assert "--recompute-granularity" in args
+    assert "--bf16" not in args
+    assert "--fp16" not in args
+
+
 def test_build_precision_args_fp8():
     args = build_precision_args("fp8")
     assert "--fp8-format" in args
-    assert "hybrid" in args  # e4m3 fwd, e5m2 bwd — recommended for training
+    assert "hybrid" in args
+    assert "--fp8-recipe" in args
+    assert "delayed" in args
+
+
+def test_build_precision_args_fp8_hybrid():
+    args = build_precision_args("fp8_hybrid")
+    assert "--fp8-format" in args
+    assert "hybrid" in args
+    assert "--fp8-recipe" in args
+    assert "delayed" in args
+
+
+def test_build_precision_args_fp8_e4m3():
+    args = build_precision_args("fp8_e4m3")
+    assert "--fp8-format" in args
+    assert "e4m3" in args
     assert "--fp8-recipe" in args
     assert "delayed" in args
 
@@ -80,16 +102,67 @@ def test_build_precision_args_unknown_raises():
         build_precision_args("int8")
 
 
+# ── Precision-aware optimizer args ───────────────────────────────────────────
+
+def test_build_prec_aware_opt_args_none():
+    assert build_prec_aware_opt_args("none") == []
+
+
+def test_build_prec_aware_opt_args_empty():
+    assert build_prec_aware_opt_args("") == []
+
+
+def test_build_prec_aware_opt_args_bf16_fp32():
+    args = build_prec_aware_opt_args("bf16_fp32")
+    assert "--use-precision-aware-optimizer" in args
+    assert "--main-grads-dtype" in args
+    assert "bf16" in args
+    assert "--main-params-dtype" in args
+    assert "fp32" in args
+
+
+def test_build_prec_aware_opt_args_fp32_fp16():
+    args = build_prec_aware_opt_args("fp32_fp16")
+    assert "--use-precision-aware-optimizer" in args
+    assert "fp32" in args
+    assert "fp16" in args
+
+
+def test_build_prec_aware_opt_args_all_combinations():
+    for combo in ("fp32_fp32", "bf16_fp32", "fp32_fp16", "bf16_fp16"):
+        args = build_prec_aware_opt_args(combo)
+        assert "--use-precision-aware-optimizer" in args
+
+
+def test_build_prec_aware_opt_args_unknown_raises():
+    with pytest.raises(ValueError, match="Unknown prec_aware_opt"):
+        build_prec_aware_opt_args("fp16_bf16")
+
+
 # ── Attention args ────────────────────────────────────────────────────────────
 
 def test_build_attention_args_default():
     assert build_attention_args("default") == []
 
 
-def test_build_attention_args_flash():
-    args = build_attention_args("flash")
+def test_build_attention_args_cudnn():
+    assert build_attention_args("cuDNN") == []
+
+
+def test_build_attention_args_fa3():
+    args = build_attention_args("fa3")
+    assert args == ["--attention-backend", "flash"]
+
+
+def test_build_attention_args_fa2():
+    args = build_attention_args("fa2")
+    assert args == ["--attention-backend", "flash"]
+
+
+def test_build_attention_args_local():
+    args = build_attention_args("local")
     assert "--attention-backend" in args
-    assert "flash" in args
+    assert "local" in args
 
 
 def test_build_attention_args_tbd():
@@ -99,42 +172,6 @@ def test_build_attention_args_tbd():
 def test_build_attention_args_unknown_raises():
     with pytest.raises(ValueError, match="Unknown attention_backend"):
         build_attention_args("xformers")
-
-
-# ── Kernel args ───────────────────────────────────────────────────────────────
-
-def test_build_kernel_args_none():
-    assert build_kernel_args("none") == []
-
-
-def test_build_kernel_args_tbd():
-    assert build_kernel_args("TBD") == []
-
-
-def test_build_kernel_args_all_fused():
-    args = build_kernel_args("all_fused")
-    assert "--bias-activation-fusion" in args
-
-
-def test_build_kernel_args_cuda_graphs_attn():
-    args = build_kernel_args("cuda_graphs_attn")
-    assert "--use-te-rng-tracker" in args
-    assert "--cuda-graph-impl" in args
-    assert "transformer_engine" in args
-    assert "--cuda-graph-scope" in args
-    assert "attn" in args
-
-
-def test_build_kernel_args_cuda_graphs_local():
-    args = build_kernel_args("cuda_graphs_local")
-    assert "--use-te-rng-tracker" in args
-    assert "--cuda-graph-impl" in args
-    assert "local" in args
-
-
-def test_build_kernel_args_unknown_raises():
-    with pytest.raises(ValueError, match="Unknown kernel_opts"):
-        build_kernel_args("magic_kernel")
 
 
 # ── Distributed args ──────────────────────────────────────────────────────────
@@ -183,8 +220,9 @@ def _make_run(**overrides):
         "micro_batch": "4",
         "global_batch": "256",
         "precision": "bf16",
+        "prec_aware_opt": "none",
         "attention_backend": "default",
-        "kernel_opts": "none",
+        "mode": "throughput",
         "target_minutes": "30",
         "target_steps": "50",
         "expected_tok_s_gpu": "TBD",
@@ -211,7 +249,6 @@ def test_render_sbatch_has_env_setup():
     model = resolve_model_config("760m")
     script = render_sbatch(run, model)
     assert "WORKDIR=/users/$USER/gipfelsturm" in script
-    assert "git apply" in script
     assert "CUDA_DEVICE_MAX_CONNECTIONS=1" in script
 
 
@@ -231,17 +268,14 @@ def test_render_sbatch_fp8_precision():
     assert "--fp8-format" in script
     assert "hybrid" in script  # e4m3 fwd, e5m2 bwd
     assert "--bf16" in script
-    assert "--attention-backend auto" in script
-    assert "NVTE_FLASH_ATTN" not in script
-    assert "NVTE_UNFUSED_ATTN" not in script
+    assert "--attention-backend" not in script
 
 
-def test_render_sbatch_flash_attention():
-    run = _make_run(attention_backend="flash")
+def test_render_sbatch_fa3_attention():
+    run = _make_run(attention_backend="fa3")
     model = resolve_model_config("760m")
     script = render_sbatch(run, model)
-    assert "--attention-backend" in script
-    assert "flash" in script
+    assert "--attention-backend flash" in script
 
 
 def test_render_sbatch_default_attention_no_flag():
@@ -249,6 +283,13 @@ def test_render_sbatch_default_attention_no_flag():
     model = resolve_model_config("760m")
     script = render_sbatch(run, model)
     assert "--attention-backend" not in script
+
+
+def test_render_sbatch_unfused_attention_via_fusion_opts():
+    run = _make_run(fusion_opts="-attention")
+    model = resolve_model_config("760m")
+    script = render_sbatch(run, model)
+    assert "--attention-backend unfused" in script
 
 
 def test_render_sbatch_tp4_pp1():
@@ -278,16 +319,16 @@ def test_render_sbatch_has_srun():
 
 
 def test_render_sbatch_throughput_disables_wandb():
-    run = _make_run()
+    run = _make_run(mode="throughput")
     model = resolve_model_config("760m")
-    script = render_sbatch(run, model, mode="throughput")
+    script = render_sbatch(run, model)
     assert "WANDB_MODE=disabled" in script
 
 
 def test_render_sbatch_train_mode_enables_wandb_block():
-    run = _make_run(target_steps="1000", target_minutes="30")
+    run = _make_run(mode="train", target_steps="1000", target_minutes="30")
     model = resolve_model_config("760m")
-    script = render_sbatch(run, model, mode="train")
+    script = render_sbatch(run, model)
     assert "WANDB_API_KEY" in script
     assert "--tensorboard-dir" in script
 
@@ -307,35 +348,35 @@ def test_render_sbatch_job_name():
     assert "#SBATCH --job-name=gipfel-my_ablation" in script
 
 
-def test_render_sbatch_profiling_injects_nvte_env():
-    run = _make_run(kernel_opts="profiling")
-    model = resolve_model_config("760m")
-    script = render_sbatch(run, model)
-    assert "NVTE_NVTX_ENABLED=1" in script
-    assert "NVTE_DEBUG=1" in script
-
-
-def test_render_sbatch_non_profiling_no_nvte_env():
-    run = _make_run(kernel_opts="none")
-    model = resolve_model_config("760m")
-    script = render_sbatch(run, model)
-    assert "NVTE_NVTX_ENABLED" not in script
-
-
 def test_render_sbatch_train_mode_timing_flags():
-    run = _make_run(target_steps="1000", target_minutes="30")
+    run = _make_run(mode="train", target_steps="1000", target_minutes="30")
     model = resolve_model_config("760m")
-    script = render_sbatch(run, model, mode="train")
+    script = render_sbatch(run, model)
     assert "--timing-log-level 1" in script
     assert "--timing-log-option minmax" in script
 
 
-def test_render_sbatch_cuda_graphs_attn_has_rng_tracker():
-    run = _make_run(kernel_opts="cuda_graphs_attn")
+def test_render_sbatch_no_disable_bias_linear():
+    run = _make_run()
     model = resolve_model_config("760m")
     script = render_sbatch(run, model)
-    assert "--use-te-rng-tracker" in script
-    assert "--cuda-graph-impl transformer_engine" in script
+    assert "--disable-bias-linear" not in script
+
+
+def test_render_sbatch_prec_aware_opt_off_by_default():
+    run = _make_run()
+    model = resolve_model_config("760m")
+    script = render_sbatch(run, model)
+    assert "--use-precision-aware-optimizer" not in script
+
+
+def test_render_sbatch_prec_aware_opt_bf16_fp32():
+    run = _make_run(prec_aware_opt="bf16_fp32")
+    model = resolve_model_config("760m")
+    script = render_sbatch(run, model)
+    assert "--use-precision-aware-optimizer" in script
+    assert "--main-grads-dtype bf16" in script
+    assert "--main-params-dtype fp32" in script
 
 
 # ── dry-run end-to-end ────────────────────────────────────────────────────────
@@ -347,7 +388,7 @@ def test_dry_run_generates_file(tmp_path):
         [sys.executable, str(REPO_ROOT / "experiments" / "run_ablation.py"),
          "--dry-run",
          "--output-dir", str(tmp_path),
-         "--run", "baseline_125m_1n_bf16"],
+         "--run", "baseline_760m_4n_bf16"],
         capture_output=True, text=True, cwd=str(REPO_ROOT)
     )
     assert result.returncode == 0, result.stderr

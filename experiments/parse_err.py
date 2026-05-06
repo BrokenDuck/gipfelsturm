@@ -17,20 +17,25 @@ import sys
 from collections import defaultdict
 
 
-# Matches the log prefix:  "3: [default2]:[rank14]: some text"
-# or single-node format:   "2: [default3]: some text" (no [rankN] tag)
-# Format: "NODE: [defaultGPU]:[rankGLOBAL_RANK]: text"
-# NODE is the SLURM node index, GPU is the local GPU index on that node.
-_PREFIX_RE = re.compile(r"^\d+: \[default(\d+)\]:(?:\[rank(\d+)\]: )?(.*)")
+# Matches the log prefix in two formats:
+#   Full:    "3: [default2]:[rank14]: some text"  (torchrun multi-node)
+#   Minimal: "3: some text"                        (single-node / bare SLURM)
+# Groups: (node_idx, local_gpu, global_rank, text)
+_PREFIX_RE = re.compile(r"^(\d+): (?:\[default(\d+)\]:(?:\[rank(\d+)\]: )?)?(.*)")
 
 
 def _strip_prefix(line: str) -> tuple[int | None, str]:
     """Return (rank, text) with the torchrun prefix removed."""
     m = _PREFIX_RE.match(line)
     if m:
-        local_rank_str, global_rank_str, text = m.group(1), m.group(2), m.group(3)
-        # Prefer the explicit [rankN] global rank; fall back to the local GPU index.
-        rank = int(global_rank_str) if global_rank_str is not None else int(local_rank_str)
+        node_str, local_rank_str, global_rank_str, text = m.groups()
+        # Prefer explicit global rank, then local GPU index, then node index.
+        if global_rank_str is not None:
+            rank = int(global_rank_str)
+        elif local_rank_str is not None:
+            rank = int(local_rank_str)
+        else:
+            rank = int(node_str)
         return rank, text
     return None, line
 

@@ -36,61 +36,25 @@ MODEL_CONFIGS = {
     ),
 }
 
-# kernel_opts column values -> extra Megatron CLI flags
-KERNEL_PRESETS = {
-    "none": [],
-    "all_fused": [
-        "--bias-activation-fusion",
-        "--masked-softmax-fusion",
-        "--bias-dropout-fusion",
-    ],
-    "no_fusion": [
-        "--no-rope-fusion",
-        "--no-gradient-accumulation-fusion",
-        "--no-persist-layer-norm",
-    ],
-    # transformer_engine is already the default backend — no extra flags needed
-    "transformer_engine": [],
-    # CUDA graphs require --use-te-rng-tracker; TE-scoped graphs capture attn+mlp
-    "cuda_graphs_attn": [
-        "--use-te-rng-tracker",
-        "--cuda-graph-impl",
-        "transformer_engine",
-        "--cuda-graph-scope",
-        "attn",
-    ],
-    "cuda_graphs_attn_mlp": [
-        "--use-te-rng-tracker",
-        "--cuda-graph-impl",
-        "transformer_engine",
-        "--cuda-graph-scope",
-        "attn,mlp",
-    ],
-    # Full-iteration graph via local MCore capture; requires --no-check-for-nan-in-loss-and-grad
-    # (already set in TRAINING_ARGS) and --use-te-rng-tracker
-    "cuda_graphs_local": [
-        "--use-te-rng-tracker",
-        "--cuda-graph-impl",
-        "local",
-        "--cuda-graph-scope",
-        "full_iteration",
-    ],
-    # Profiling preset: enable NVTE NVTX markers for NSYS traces; no extra Megatron flags
-    # Actual env vars (NVTE_NVTX_ENABLED, NVTE_DEBUG) are injected in the SLURM script body
-    "profiling": [],
-}
-
 # cuda_graph column values -> extra Megatron CLI flags
 # "full" requires --no-check-for-nan-in-loss-and-grad; render_sbatch handles this automatically.
 CUDA_GRAPH_PRESETS = {
     "none": [],
-    # Full-iteration graph captured by MCore's local backend
+    # Iteration graph captured by MCore's local backend
     "full": [
         "--cuda-graph-impl",
         "local",
         "--te-rng-tracker",
-        # "--cuda-graph-scope",
-        # "full_iteration",
+        "--cuda-graph-warmup-steps",
+        "3",
+    ],
+    # Full-iteration graph captured by MCore's local backend
+    "full_iter": [
+        "--cuda-graph-impl",
+        "local",
+        "--te-rng-tracker",
+        "--cuda-graph-scope",
+        "full_iteration",
         "--cuda-graph-warmup-steps",
         "3",
     ],
@@ -106,17 +70,21 @@ CUDA_GRAPH_PRESETS = {
 }
 
 # fusion_opts column: comma-separated "+name" / "-name" tokens.
-# Each entry: (enable_flag, disable_flag). disable_flag may be None if Megatron lacks a negation.
-FUSION_FLAGS: dict[str, tuple[str, str | None]] = {
-    "gelu": ("--bias-gelu-fusion", "--no-bias-gelu-fusion"),
-    "swiglu": ("--bias-swiglu-fusion", "--no-bias-swiglu-fusion"),
-    "dropout": ("--bias-dropout-fusion", "--no-bias-dropout-fusion"),
-    "softmax": ("--masked-softmax-fusion", "--no-masked-softmax-fusion"),
-    "rope": ("--apply-rope-fusion", "--no-rope-fusion"),
-    "cross_entropy": ("--cross-entropy-loss-fusion", "--no-cross-entropy-loss-fusion"),
+# Each entry: (enable_flags, disable_flags). disable_flags may be None if Megatron lacks a negation.
+FUSION_FLAGS: dict[str, tuple[list[str], list[str] | None]] = {
+    "attention": (["--attention-backend", "fused"], ["--attention-backend", "unfused"]),
+    "gelu": (["--bias-gelu-fusion"], ["--no-bias-gelu-fusion"]),
+    "swiglu": (["--bias-swiglu-fusion"], ["--no-bias-swiglu-fusion"]),
+    "dropout": (["--bias-dropout-fusion"], ["--no-bias-dropout-fusion"]),
+    "softmax": (["--masked-softmax-fusion"], ["--no-masked-softmax-fusion"]),
+    "rope": (["--apply-rope-fusion"], ["--no-rope-fusion"]),
+    "cross_entropy": (
+        ["--cross-entropy-loss-fusion"],
+        ["--no-cross-entropy-loss-fusion"],
+    ),
     "grad_accum": (
-        "--gradient-accumulation-fusion",
-        "--no-gradient-accumulation-fusion",
+        ["--gradient-accumulation-fusion"],
+        ["--no-gradient-accumulation-fusion"],
     ),
 }
 
@@ -146,40 +114,51 @@ def _tbd_or(value: str, default):
 
 def build_precision_args(precision: str) -> list[str]:
     p = precision.lower()
-    if p == "bf16":
+    if p == "fp32":
+        # Try to reduce memory footprint more aggressively
+        return [
+            "--recompute-granularity",
+            "full",
+            "--recompute-method",
+            "block",
+            "--recompute-num-layers",
+            "4",
+        ]
+    elif p == "bf16":
         return ["--bf16"]
     elif p == "fp16":
         return ["--fp16"]
-    elif p == "fp8":
+    elif p in ("fp8", "fp8_hybrid"):
         return ["--bf16", "--fp8-format", "hybrid", "--fp8-recipe", "delayed"]
+    elif p == "fp8_e4m3":
+        return ["--bf16", "--fp8-format", "e4m3", "--fp8-recipe", "delayed"]
     else:
-        raise ValueError(f"Unknown precision '{precision}'. Choose: bf16, fp16, fp8")
+        raise ValueError(
+            f"Unknown precision '{precision}'. Choose: fp32, fp16, bf16, fp8_hybrid, fp8_e4m3"
+        )
 
 
 def build_attention_args(attention_backend: str) -> list[str]:
     b = attention_backend.lower()
-    if b in ("default", "tbd", ""):
+    # cuDNN fused attention is the default — no flag needed
+    if b in ("default", "cudnn", "tbd", ""):
         return []
-    elif b in ("auto", "fused", "unfused"):
-        return ["--attention-backend", b]
+    elif b == "fa3" or b == "fa2":
+        # Fa2 is activated by changing venvs
+        return ["--attention-backend", "flash"]
     elif b == "local":
         return [
             "--attention-backend",
             "local",
             "--spec",
             "local",
+            # Persist layer norm crashed on local backend
             "--no-persist-layer-norm",
         ]
-    elif b in ("flash", "flash_fa3"):
-        # FA3 via default venv
-        return ["--attention-backend", "flash"]
-    elif b == "flash_fa2":
-        # FA2 via .venv-gipfelturm-fa2; same Megatron flag as FA3
-        return ["--attention-backend", "flash"]
     else:
         raise ValueError(
             f"Unknown attention_backend '{attention_backend}'. "
-            "Choose: default, auto, fused, flash, flash_fa3, flash_fa2, unfused, local"
+            "Choose: default, cuDNN, fa3, fa2, local"
         )
 
 
@@ -210,25 +189,14 @@ def build_fusion_args(fusion_opts: str) -> list[str]:
             raise ValueError(
                 f"Unknown fusion name '{name}'. Choose: {', '.join(FUSION_FLAGS)}"
             )
-        enable_flag, disable_flag = FUSION_FLAGS[name]
+        enable_flags, disable_flags = FUSION_FLAGS[name]
         if on:
-            args.append(enable_flag)
+            args.extend(enable_flags)
         else:
-            if disable_flag is None:
+            if disable_flags is None:
                 raise ValueError(f"Fusion '{name}' has no disable flag in Megatron")
-            args.append(disable_flag)
+            args.extend(disable_flags)
     return args
-
-
-def build_kernel_args(kernel_opts: str) -> list[str]:
-    k = kernel_opts.lower()
-    if k in ("tbd", ""):
-        k = "none"
-    if k not in KERNEL_PRESETS:
-        raise ValueError(
-            f"Unknown kernel_opts '{kernel_opts}'. Choose: {', '.join(KERNEL_PRESETS)}"
-        )
-    return KERNEL_PRESETS[k]
 
 
 def build_cuda_graph_args(cuda_graph: str) -> list[str]:
@@ -240,6 +208,34 @@ def build_cuda_graph_args(cuda_graph: str) -> list[str]:
             f"Unknown cuda_graph '{cuda_graph}'. Choose: {', '.join(CUDA_GRAPH_PRESETS)}"
         )
     return CUDA_GRAPH_PRESETS[c]
+
+
+_PREC_AWARE_OPT_COMBINATIONS = {
+    "fp32_fp32": ("fp32", "fp32"),
+    "bf16_fp32": ("bf16", "fp32"),
+    "fp32_fp16": ("fp32", "fp16"),
+    "bf16_fp16": ("bf16", "fp16"),
+}
+
+
+def build_prec_aware_opt_args(prec_aware_opt: str) -> list[str]:
+    """Return --use-precision-aware-optimizer flags, or [] if none/off."""
+    val = prec_aware_opt.strip().lower()
+    if val in ("", "none", "off", "tbd"):
+        return []
+    if val not in _PREC_AWARE_OPT_COMBINATIONS:
+        raise ValueError(
+            f"Unknown prec_aware_opt '{prec_aware_opt}'. "
+            f"Choose: none, {', '.join(_PREC_AWARE_OPT_COMBINATIONS)}"
+        )
+    grads_dtype, params_dtype = _PREC_AWARE_OPT_COMBINATIONS[val]
+    return [
+        "--use-precision-aware-optimizer",
+        "--main-grads-dtype",
+        grads_dtype,
+        "--main-params-dtype",
+        params_dtype,
+    ]
 
 
 def build_distributed_args(tp: str, pp: str) -> list[str]:
@@ -260,8 +256,9 @@ def build_distributed_args(tp: str, pp: str) -> list[str]:
     return args
 
 
-def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
+def render_sbatch(run: dict, model: dict) -> str:
     run_name = run["run_name"]
+    mode = _tbd_or(run.get("mode", "throughput"), "throughput").lower()
     nodes = int(_tbd_or(run["nodes"], "4"))
 
     mbs = int(_tbd_or(run["micro_batch"], str(model["default_mbs"])))
@@ -313,12 +310,11 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
                 echo "[$(date)] WANDB disabled."
             fi""")
 
+    prec_aware_opt_args = build_prec_aware_opt_args(run.get("prec_aware_opt", "none"))
     precision_args = build_precision_args(_tbd_or(run["precision"], "bf16"))
     precision_val = _tbd_or(run["precision"], "bf16").lower()
     attention_backend_val = _tbd_or(run["attention_backend"], "default").lower()
     attention_args = build_attention_args(attention_backend_val)
-    kernel_opts_val = _tbd_or(run["kernel_opts"], "none")
-    kernel_args = build_kernel_args(kernel_opts_val)
     cuda_graph_val = _tbd_or(run.get("cuda_graph", "none"), "none").lower()
     cuda_graph_args = build_cuda_graph_args(cuda_graph_val)
     # full-iteration CUDA graphs require NaN check to be disabled
@@ -328,28 +324,24 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
     # cross_entropy: hardcoded default on; disabled only if explicitly negated via fusion_opts
     if "--no-cross-entropy-loss-fusion" in fusion_args:
         ce_fusion_line = ""
-        fusion_args = [a for a in fusion_args if a != "--no-cross-entropy-loss-fusion"]
+        fusion_args = [
+            a for a in fusion_args if a not in ("--no-cross-entropy-loss-fusion",)
+        ]
     else:
         ce_fusion_line = "\n    --cross-entropy-loss-fusion"
-        fusion_args = [a for a in fusion_args if a != "--cross-entropy-loss-fusion"]
+        fusion_args = [
+            a for a in fusion_args if a not in ("--cross-entropy-loss-fusion",)
+        ]
     distributed_args = build_distributed_args(run["tp"], run["pp"])
 
     venv_name = (
-        ".venv-gipfelturm-fa2"
-        if attention_backend_val == "flash_fa2"
-        else ".venv-gipfelturm"
+        ".venv-gipfelturm-fa2" if attention_backend_val == "fa2" else ".venv-gipfelturm"
     )
 
     nvte_env_block = ""
-    if precision_val == "fp8":
-        attention_args = ["--attention-backend", "auto"]
-    # Profiling preset: inject NVTE env vars for NSYS traces
-    if kernel_opts_val == "profiling":
-        nvte_env_block += (
-            "\nexport NVTE_NVTX_ENABLED=1"
-            "\nexport NVTE_DEBUG=1"
-            "\nexport NVTE_DEBUG_LEVEL=1"
-        )
+    if precision_val in ("fp8", "fp8_hybrid", "fp8_e4m3"):
+        # FP8 requires TE auto-select; cuDNN is the default so no flag needed
+        attention_args = []
 
     def fmt_args(args: list[str]) -> str:
         if not args:
@@ -364,13 +356,17 @@ def render_sbatch(run: dict, model: dict, mode: str = "throughput") -> str:
             i += 1
         return "\n".join(lines)
 
+    prec_aware_opt_inline = (
+        "\n" + fmt_args(prec_aware_opt_args) if prec_aware_opt_args else ""
+    )
+
     # Render MIXED_PRECISION_ARGS
     mixed_precision_block = (
         "MIXED_PRECISION_ARGS=(\n" + fmt_args(precision_args) + "\n)"
     )
 
     # Render extra attention/kernel/fusion args block
-    extra_args = attention_args + kernel_args + cuda_graph_args + fusion_args
+    extra_args = attention_args + cuda_graph_args + fusion_args
     extra_block = ""
     if extra_args:
         extra_block = "\nEXTRA_ARGS=(\n" + fmt_args(extra_args) + "\n)\n"
@@ -421,16 +417,18 @@ TENSORBOARD_DIR=$LOG_DIR/tensorboard
 
 mkdir -p logs/{mode} $LOG_DIR $TENSORBOARD_DIR $DATASET_CACHE_DIR
 
+# Required for tp
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export OMP_NUM_THREADS=$(( SLURM_CPUS_PER_TASK / SLURM_GPUS_PER_NODE ))
+# Try to reduce our memory footprint a bit: https://docs.nvidia.com/nemo/megatron-bridge/latest/performance-guide.html#techniques-for-reducing-memory-to-avoid-memory-overflow-and-enhance-training-efficiency
+export TORCH_NCCL_AVOID_RECORD_STREAMS=1
+export NCCL_NVLS_ENABLE=0
 MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
 MASTER_PORT=$((20000 + SLURM_JOB_ID % 40000)){nvte_env_block}
 
 TRANSFORMER_ENGINE_ARGS=(
-    --transformer-impl transformer_engine
-    --use-precision-aware-optimizer
-    --main-grads-dtype bf16
+    --transformer-impl transformer_engine{prec_aware_opt_inline}
 )
 
 NETWORK_SIZE_ARGS=(
@@ -455,7 +453,6 @@ TRAINING_ARGS=(
     --log-interval 1
     --eval-interval {eval_interval}
     --eval-iters {eval_iters}{ce_fusion_line}
-    --disable-bias-linear
     --optimizer adam
     --dataloader-type single{no_nan_check}
     --manual-gc
@@ -568,9 +565,8 @@ def main():
     parser.add_argument(
         "--output-dir",
         default=None,
-        help="Where to write .sbatch files (default: logs/<mode>/)",
+        help="Where to write .sbatch files (default: logs/<mode>/ per run)",
     )
-    parser.add_argument("--mode", default="throughput", choices=["throughput", "train"])
     args = parser.parse_args()
 
     plan = load_ablation_plan(args.csv)
@@ -581,15 +577,17 @@ def main():
             print(f"No runs matched: {args.runs}", file=sys.stderr)
             sys.exit(1)
 
-    output_dir = (
-        Path(args.output_dir) if args.output_dir else REPO_ROOT / "logs" / args.mode
-    )
-    output_dir.mkdir(parents=True, exist_ok=True)
-
     for run in plan:
         name = run["run_name"]
+        mode = _tbd_or(run.get("mode", "throughput"), "throughput").lower()
         model = resolve_model_config(run["model_size"])
-        script = render_sbatch(run, model, mode=args.mode)
+        script = render_sbatch(run, model)
+
+        if args.output_dir:
+            output_dir = Path(args.output_dir)
+        else:
+            output_dir = REPO_ROOT / "logs" / mode
+        output_dir.mkdir(parents=True, exist_ok=True)
 
         script_path = output_dir / f"gipfel-{name}.sbatch"
         script_path.write_text(script)
