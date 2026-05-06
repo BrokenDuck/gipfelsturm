@@ -390,7 +390,7 @@ def render_sbatch(run: dict, model: dict) -> str:
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
 #SBATCH --cpus-per-task=288
-#SBATCH --mem=460000
+#SBATCH --mem=850000
 #SBATCH --no-requeue
 
 echo "START TIME: $(date)"
@@ -398,7 +398,9 @@ echo "START TIME: $(date)"
 ################ Configs ################
 WORKDIR=/users/$USER/gipfelsturm
 MEGATRON_LM_DIR=$WORKDIR/Megatron-LM
-DATA_PREFIX=/capstor/store/cscs/swissai/infra01/datasets/nvidia/Nemotron-ClimbMix/climbmix_small_megatron/climbmix_small
+DATA_SOURCE=/capstor/scratch/cscs/$USER/datasets/climbmix_small
+DATA_DIR=/tmp/climbmix_small
+DATA_PREFIX=$DATA_DIR/climbmix_small
 DATASET_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/cache
 
 # Training config
@@ -412,18 +414,17 @@ PROJECT_NAME=gipfelsturm
 EXP_NAME={run_name}-${{SLURM_NNODES}}n
 LOG_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/$PROJECT_NAME/$EXP_NAME
 TENSORBOARD_DIR=$LOG_DIR/tensorboard
-
 #########################################
 
-mkdir -p logs/{mode} $LOG_DIR $TENSORBOARD_DIR $DATASET_CACHE_DIR
+mkdir -p $WORKDIR/logs/{mode} $LOG_DIR $TENSORBOARD_DIR
 
 # Required for tp
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export OMP_NUM_THREADS=$(( SLURM_CPUS_PER_TASK / SLURM_GPUS_PER_NODE ))
 # Try to reduce our memory footprint a bit: https://docs.nvidia.com/nemo/megatron-bridge/latest/performance-guide.html#techniques-for-reducing-memory-to-avoid-memory-overflow-and-enhance-training-efficiency
-export TORCH_NCCL_AVOID_RECORD_STREAMS=1
-export NCCL_NVLS_ENABLE=0
+# export TORCH_NCCL_AVOID_RECORD_STREAMS=1
+# export NCCL_NVLS_ENABLE=0
 MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n1)
 MASTER_PORT=$((20000 + SLURM_JOB_ID % 40000)){nvte_env_block}
 
@@ -536,6 +537,12 @@ srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-ta
     export TORCH_EXTENSIONS_DIR=\\$JOB_CACHE/torch_extensions
     export CUDA_CACHE_PATH=\\$JOB_CACHE/cuda
     mkdir -p \"\\$TRITON_CACHE_DIR\" \"\\$TORCHINDUCTOR_CACHE_DIR\" \"\\$TORCH_EXTENSIONS_DIR\" \"\\$CUDA_CACHE_PATH\"
+    
+    echo \\$SLURM_NODEID: [\\$(date)] staging data to $DATA_DIR
+    mkdir -p $DATA_DIR
+    cp $DATA_SOURCE.bin $DATA_SOURCE.idx $DATA_DIR
+    echo \\$SLURM_NODEID: [\\$(date)] data staging complete
+
     source /iopsstor/scratch/cscs/$USER/{venv_name}/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
 "
@@ -577,6 +584,8 @@ def main():
             print(f"No runs matched: {args.runs}", file=sys.stderr)
             sys.exit(1)
 
+    # Write all scripts first
+    script_paths = []
     for run in plan:
         name = run["run_name"]
         mode = _tbd_or(run.get("mode", "throughput"), "throughput").lower()
@@ -592,20 +601,33 @@ def main():
         script_path = output_dir / f"gipfel-{name}.sbatch"
         script_path.write_text(script)
         script_path.chmod(0o755)
+        script_paths.append((name, script_path))
 
-        if args.dry_run:
+    if args.dry_run:
+        for name, script_path in script_paths:
             print(f"Generated (dry-run): {script_path}")
-        else:
+        return
+
+    # Submit in batches of 8; each batch depends on all jobs in the previous batch
+    BATCH_SIZE = 8
+    prev_job_ids: list[str] = []
+    for i in range(0, len(script_paths), BATCH_SIZE):
+        batch = script_paths[i : i + BATCH_SIZE]
+        sbatch_cmd = ["sbatch"]
+        if prev_job_ids:
+            sbatch_cmd += [f"--dependency=afterany:{':'.join(prev_job_ids)}"]
+        batch_job_ids = []
+        for name, script_path in batch:
             result = subprocess.run(
-                ["sbatch", str(script_path)], capture_output=True, text=True
+                sbatch_cmd + [str(script_path)], capture_output=True, text=True
             )
-            if result.returncode == 0:
-                print(f"Submitted {name}: {result.stdout.strip()}")
-            else:
-                print(
-                    f"Failed to submit {name}: {result.stderr.strip()}", file=sys.stderr
-                )
+            if result.returncode != 0:
+                print(f"Failed to submit {name}: {result.stderr.strip()}", file=sys.stderr)
                 sys.exit(1)
+            job_id = result.stdout.strip().split()[-1]
+            print(f"Submitted {name}: {job_id}" + (f" (depends on {','.join(prev_job_ids)})" if prev_job_ids else ""))
+            batch_job_ids.append(job_id)
+        prev_job_ids = batch_job_ids
 
 
 if __name__ == "__main__":

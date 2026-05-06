@@ -240,7 +240,7 @@ def test_render_sbatch_has_sbatch_directives():
     assert "#SBATCH --nodes=1" in script
     assert "#SBATCH --gpus-per-node=4" in script
     assert "#SBATCH --cpus-per-task=288" in script
-    assert "#SBATCH --mem=460000" in script
+    assert "#SBATCH --mem=850000" in script
     assert "#SBATCH --no-requeue" in script
 
 
