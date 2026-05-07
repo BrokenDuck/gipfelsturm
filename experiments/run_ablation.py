@@ -398,9 +398,7 @@ echo "START TIME: $(date)"
 ################ Configs ################
 WORKDIR=/users/$USER/gipfelsturm
 MEGATRON_LM_DIR=$WORKDIR/Megatron-LM
-DATA_SOURCE=/capstor/scratch/cscs/$USER/datasets/climbmix_small
-DATA_DIR=/tmp/climbmix_small
-DATA_PREFIX=$DATA_DIR/climbmix_small
+DATA_PREFIX=/iopsstor/scratch/cscs/$USER/dataset/climbmix_small/climbmix_small
 DATASET_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/cache
 
 # Training config
@@ -499,7 +497,7 @@ DATA_ARGS=(
     --data-path $DATA_PREFIX
     --data-cache-path $DATASET_CACHE_DIR
     --split 99,1,0
-    --num-workers 8
+    --num-workers 2
 )
 
 SCRIPT_ARGS="$MEGATRON_LM_DIR/pretrain_gpt.py \\
@@ -537,11 +535,6 @@ srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-ta
     export TORCH_EXTENSIONS_DIR=\\$JOB_CACHE/torch_extensions
     export CUDA_CACHE_PATH=\\$JOB_CACHE/cuda
     mkdir -p \"\\$TRITON_CACHE_DIR\" \"\\$TORCHINDUCTOR_CACHE_DIR\" \"\\$TORCH_EXTENSIONS_DIR\" \"\\$CUDA_CACHE_PATH\"
-    
-    echo \\$SLURM_NODEID: [\\$(date)] staging data to $DATA_DIR
-    mkdir -p $DATA_DIR
-    cp $DATA_SOURCE.bin $DATA_SOURCE.idx $DATA_DIR
-    echo \\$SLURM_NODEID: [\\$(date)] data staging complete
 
     source /iopsstor/scratch/cscs/$USER/{venv_name}/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
@@ -608,26 +601,29 @@ def main():
             print(f"Generated (dry-run): {script_path}")
         return
 
-    # Submit in batches of 8; each batch depends on all jobs in the previous batch
+    # Submit in batches of 8; job i*BATCH_SIZE+j depends only on job (i-1)*BATCH_SIZE+j
     BATCH_SIZE = 8
-    prev_job_ids: list[str] = []
+    prev_batch_job_ids: list[str] = []
     for i in range(0, len(script_paths), BATCH_SIZE):
         batch = script_paths[i : i + BATCH_SIZE]
-        sbatch_cmd = ["sbatch"]
-        if prev_job_ids:
-            sbatch_cmd += [f"--dependency=afterany:{':'.join(prev_job_ids)}"]
         batch_job_ids = []
-        for name, script_path in batch:
+        for j, (name, script_path) in enumerate(batch):
+            sbatch_cmd = ["sbatch"]
+            if prev_batch_job_ids and j < len(prev_batch_job_ids):
+                sbatch_cmd += [f"--dependency=afterany:{prev_batch_job_ids[j]}"]
             result = subprocess.run(
                 sbatch_cmd + [str(script_path)], capture_output=True, text=True
             )
             if result.returncode != 0:
-                print(f"Failed to submit {name}: {result.stderr.strip()}", file=sys.stderr)
+                print(
+                    f"Failed to submit {name}: {result.stderr.strip()}", file=sys.stderr
+                )
                 sys.exit(1)
             job_id = result.stdout.strip().split()[-1]
-            print(f"Submitted {name}: {job_id}" + (f" (depends on {','.join(prev_job_ids)})" if prev_job_ids else ""))
+            dep_str = f" (depends on {prev_batch_job_ids[j]})" if prev_batch_job_ids and j < len(prev_batch_job_ids) else ""
+            print(f"Submitted {name}: {job_id}{dep_str}")
             batch_job_ids.append(job_id)
-        prev_job_ids = batch_job_ids
+        prev_batch_job_ids = batch_job_ids
 
 
 if __name__ == "__main__":
