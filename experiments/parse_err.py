@@ -23,6 +23,14 @@ from collections import defaultdict
 # Groups: (node_idx, local_gpu, global_rank, text)
 _PREFIX_RE = re.compile(r"^(\d+): (?:\[default(\d+)\]:(?:\[rank(\d+)\]: )?)?(.*)")
 
+# When two processes write simultaneously the torchrun prefix "[defaultN]:" can be
+# split across two physical lines by the OS pipe buffer.  This produces fragments:
+#   "0: [d"                           → text = "[d"          (partial prefix start)
+#   "0: efault0]:AssertionError: …"   → text = "efault0]:…"  (prefix tail + content)
+# Detect and recover from both cases.
+_SPLIT_TAIL_RE = re.compile(r"^[a-z]+\d+\]:(.*)")   # tail of "[defaultN]:" + content
+_PARTIAL_PREFIX_RE = re.compile(r"^\[[a-z\d]*$")    # bare start of "[default…"
+
 
 def _strip_prefix(line: str) -> tuple[int | None, str]:
     """Return (rank, text) with the torchrun prefix removed."""
@@ -36,8 +44,51 @@ def _strip_prefix(line: str) -> tuple[int | None, str]:
             rank = int(local_rank_str)
         else:
             rank = int(node_str)
+
+        # Recover content from a split-prefix tail like "efault0]:AssertionError: …".
+        tail_m = _SPLIT_TAIL_RE.match(text)
+        if tail_m:
+            text = tail_m.group(1)
+        # Skip bare partial-prefix fragments like "[d" that carry no content.
+        elif _PARTIAL_PREFIX_RE.match(text):
+            return None, line
+
         return rank, text
     return None, line
+
+
+def _exception_key(tb: list[str]) -> str:
+    """Return the exception type from the last non-empty line of a traceback.
+
+    Uses only the exception class name (before the first colon) so that
+    per-rank details like GPU IDs don't prevent deduplication.
+    """
+    for line in reversed(tb):
+        stripped = line.strip()
+        if stripped:
+            return stripped.split(":")[0]
+    return ""
+
+
+_LAUNCHER_EXCEPTIONS = {
+    "torch.distributed.elastic.multiprocessing.errors.ChildFailedError",
+    "torch.distributed.elastic.rendezvous.api.RendezvousConnectionError",
+}
+
+
+def _best_traceback(tbs: list[list[str]]) -> list[str]:
+    """Return the most informative traceback from a per-rank list.
+
+    Prefer the first traceback whose exception is not a torchrun launcher
+    wrapper (ChildFailedError, RendezvousConnectionError). These wrappers
+    share the node-process rank ID with the worker that actually failed,
+    so they appear as later entries for the same rank. Fall back to the
+    last traceback if all are wrappers.
+    """
+    for tb in tbs:
+        if _exception_key(tb) not in _LAUNCHER_EXCEPTIONS:
+            return tb
+    return tbs[-1]
 
 
 def _collect_traceback_lines(lines: list[str]) -> dict[int, list[str]]:
@@ -71,20 +122,7 @@ def _collect_traceback_lines(lines: list[str]) -> dict[int, list[str]]:
     for rank, tb in active.items():
         per_rank[rank].append(tb)
 
-    return {rank: tbs[-1] for rank, tbs in per_rank.items() if tbs}
-
-
-def _exception_key(tb: list[str]) -> str:
-    """Return the exception type from the last non-empty line of a traceback.
-
-    Uses only the exception class name (before the first colon) so that
-    per-rank details like GPU IDs don't prevent deduplication.
-    """
-    for line in reversed(tb):
-        stripped = line.strip()
-        if stripped:
-            return stripped.split(":")[0]
-    return ""
+    return {rank: _best_traceback(tbs) for rank, tbs in per_rank.items() if tbs}
 
 
 def parse_err(path: str) -> dict[int, list[str]]:

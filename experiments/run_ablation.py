@@ -34,6 +34,14 @@ MODEL_CONFIGS = {
     "8b": dict(
         num_layers=32, hidden=4096, ffn=14336, heads=32, kv_heads=8, default_mbs=2
     ),
+    "13b": dict(
+        num_layers=40,
+        hidden=5120,
+        ffn=17920,
+        heads=40,
+        kv_heads=8,
+        default_mbs=1,
+    ),
 }
 
 # cuda_graph column values -> extra Megatron CLI flags
@@ -218,8 +226,13 @@ _PREC_AWARE_OPT_COMBINATIONS = {
 }
 
 
-def build_prec_aware_opt_args(prec_aware_opt: str) -> list[str]:
-    """Return --use-precision-aware-optimizer flags, or [] if none/off."""
+def build_prec_aware_opt_args(prec_aware_opt: str, dp_strat: str = "distopt") -> list[str]:
+    """Return precision-aware-optimizer flags, or [] if none/off.
+
+    When dp_strat starts with 'mega', the dtype flags are renamed to the
+    Megatron-FSDP variants (--megatron-fsdp-main-{grads,params}-dtype).
+    When active, always appends --enable-experimental.
+    """
     val = prec_aware_opt.strip().lower()
     if val in ("", "none", "off", "tbd"):
         return []
@@ -229,13 +242,82 @@ def build_prec_aware_opt_args(prec_aware_opt: str) -> list[str]:
             f"Choose: none, {', '.join(_PREC_AWARE_OPT_COMBINATIONS)}"
         )
     grads_dtype, params_dtype = _PREC_AWARE_OPT_COMBINATIONS[val]
+    dp_strat_val = dp_strat.strip().lower()
+    if dp_strat_val.startswith("mega"):
+        return [
+            "--use-precision-aware-optimizer",
+            "--megatron-fsdp-main-grads-dtype",
+            grads_dtype,
+            "--megatron-fsdp-main-params-dtype",
+            params_dtype,
+            "--enable-experimental",
+        ]
     return [
         "--use-precision-aware-optimizer",
         "--main-grads-dtype",
         grads_dtype,
         "--main-params-dtype",
         params_dtype,
+        "--enable-experimental",
     ]
+
+
+_FSDP_SHARDING_STRATEGIES = {
+    "z1": "optim",
+    "z2": "optim_grads",
+    "z3": "optim_grads_params",
+}
+
+_MEGA_FSDP_EXTRA_FLAGS = [
+    "--calculate-per-token-loss",
+    "--init-model-with-meta-device",
+    "--grad-reduce-in-bf16",
+    "--fsdp-double-buffer",
+    "--use-nccl-ub",
+]
+
+
+def build_dp_strat_args(dp_strat: str, pp: str = "1") -> list[str]:
+    """Return data-parallelism flags for the given dp_strat column value.
+
+    Values:
+      'ddp'      — plain DDP, no distributed optimizer
+      'distopt'  — distributed optimizer (--use-distributed-optimizer)
+      '<prefix>_<suffix>' — FSDP: prefix 'torch' or 'mega', suffix 'z1'/'z2'/'z3'
+
+    Constraints:
+      - torch requires PP=1
+      - distopt/ddp emit --data-parallel-sharding-strategy no_shard (explicit default)
+      - mega FSDP appends extra required flags
+    """
+    val = dp_strat.strip().lower()
+    if val in ("", "none", "tbd", "no_shard", "distopt"):
+        return ["--data-parallel-sharding-strategy", "no_shard"]
+    if val == "ddp":
+        return ["--data-parallel-sharding-strategy", "no_shard"]
+
+    parts = val.split("_", 1)
+    if len(parts) != 2:
+        raise ValueError(
+            f"Invalid dp_strat value '{dp_strat}'. Expected 'ddp', 'distopt', or "
+            f"'<prefix>_<suffix>' (e.g. torch_z1, mega_z2)."
+        )
+    prefix, suffix = parts
+    if prefix not in ("torch", "mega"):
+        raise ValueError(f"Unknown dp_strat prefix '{prefix}'. Choose: torch, mega")
+    if suffix not in _FSDP_SHARDING_STRATEGIES:
+        raise ValueError(
+            f"Unknown dp_strat suffix '{suffix}'. Choose: {', '.join(_FSDP_SHARDING_STRATEGIES)}"
+        )
+    if prefix == "torch" and int(_tbd_or(pp, "1")) != 1:
+        raise ValueError(f"torch FSDP2 requires pipeline_parallel_size=1, got pp={pp}")
+
+    strategy = _FSDP_SHARDING_STRATEGIES[suffix]
+    impl_flag = "--use-torch-fsdp2" if prefix == "torch" else "--use-megatron-fsdp"
+    args = [impl_flag, "--data-parallel-sharding-strategy", strategy]
+    if prefix == "mega":
+        args.extend(_MEGA_FSDP_EXTRA_FLAGS)
+    return args
 
 
 def build_distributed_args(tp: str, pp: str) -> list[str]:
@@ -310,7 +392,20 @@ def render_sbatch(run: dict, model: dict) -> str:
                 echo "[$(date)] WANDB disabled."
             fi""")
 
-    prec_aware_opt_args = build_prec_aware_opt_args(run.get("prec_aware_opt", "none"))
+    dp_strat_val = _tbd_or(run.get("dp_strat", "distopt"), "distopt")
+    dp_strat_norm = dp_strat_val.strip().lower()
+    fsdp_active = dp_strat_norm not in ("", "none", "tbd", "no_shard", "distopt", "ddp")
+    if dp_strat_norm.startswith("torch") and str(
+        run.get("prec_aware_opt", "none")
+    ).strip().lower() not in ("", "none", "off", "tbd"):
+        raise ValueError(
+            f"run '{run['run_name']}': torch FSDP2 is incompatible with prec_aware_opt "
+            f"(got prec_aware_opt={run.get('prec_aware_opt')})"
+        )
+    prec_aware_opt_args = build_prec_aware_opt_args(
+        run.get("prec_aware_opt", "none"), dp_strat=dp_strat_val
+    )
+    dp_strat_args = build_dp_strat_args(dp_strat_val, pp=run.get("pp", "1"))
     precision_args = build_precision_args(_tbd_or(run["precision"], "bf16"))
     precision_val = _tbd_or(run["precision"], "bf16").lower()
     attention_backend_val = _tbd_or(run["attention_backend"], "default").lower()
@@ -332,7 +427,27 @@ def render_sbatch(run: dict, model: dict) -> str:
         fusion_args = [
             a for a in fusion_args if a not in ("--cross-entropy-loss-fusion",)
         ]
-    distributed_args = build_distributed_args(run["tp"], run["pp"])
+    distributed_args = build_distributed_args(run["tp"], run["pp"]) + dp_strat_args
+    if dp_strat_norm == "ddp":
+        _distopt_flags = {
+            "--use-distributed-optimizer",
+            "--overlap-grad-reduce",
+            "--overlap-param-gather",
+        }
+        distributed_args = [
+            a for a in distributed_args if a not in _distopt_flags
+        ]
+    if dp_strat_norm.startswith("torch"):
+        _torch_fsdp_incompatible = {
+            "--use-distributed-optimizer",
+            "--overlap-grad-reduce",
+            "--overlap-param-gather",
+        }
+        distributed_args = [
+            a for a in distributed_args if a not in _torch_fsdp_incompatible
+        ]
+    if dp_strat_norm.startswith("mega"):
+        distributed_args += ["--ckpt-format", "fsdp_dtensor"]
 
     venv_name = (
         ".venv-gipfelturm-fa2" if attention_backend_val == "fa2" else ".venv-gipfelturm"
@@ -416,8 +531,8 @@ TENSORBOARD_DIR=$LOG_DIR/tensorboard
 
 mkdir -p $WORKDIR/logs/{mode} $LOG_DIR $TENSORBOARD_DIR
 
-# Required for tp
-export CUDA_DEVICE_MAX_CONNECTIONS=1
+# Required for TP; must be unset with FSDP (conflicts with FSDP's async comms)
+{"# " if fsdp_active else ""}export CUDA_DEVICE_MAX_CONNECTIONS=1
 export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export OMP_NUM_THREADS=$(( SLURM_CPUS_PER_TASK / SLURM_GPUS_PER_NODE ))
 # Try to reduce our memory footprint a bit: https://docs.nvidia.com/nemo/megatron-bridge/latest/performance-guide.html#techniques-for-reducing-memory-to-avoid-memory-overflow-and-enhance-training-efficiency
@@ -620,7 +735,11 @@ def main():
                 )
                 sys.exit(1)
             job_id = result.stdout.strip().split()[-1]
-            dep_str = f" (depends on {prev_batch_job_ids[j]})" if prev_batch_job_ids and j < len(prev_batch_job_ids) else ""
+            dep_str = (
+                f" (depends on {prev_batch_job_ids[j]})"
+                if prev_batch_job_ids and j < len(prev_batch_job_ids)
+                else ""
+            )
             print(f"Submitted {name}: {job_id}{dep_str}")
             batch_job_ids.append(job_id)
         prev_batch_job_ids = batch_job_ids

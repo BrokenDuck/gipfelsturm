@@ -9,6 +9,7 @@ from experiments.run_ablation import (
     build_attention_args,
     build_distributed_args,
     build_prec_aware_opt_args,
+    build_dp_strat_args,
     render_sbatch,
     MODEL_CONFIGS,
 )
@@ -221,6 +222,7 @@ def _make_run(**overrides):
         "global_batch": "256",
         "precision": "bf16",
         "prec_aware_opt": "none",
+        "dp_strat": "distopt",
         "attention_backend": "default",
         "mode": "throughput",
         "target_minutes": "30",
@@ -377,6 +379,225 @@ def test_render_sbatch_prec_aware_opt_bf16_fp32():
     assert "--use-precision-aware-optimizer" in script
     assert "--main-grads-dtype bf16" in script
     assert "--main-params-dtype fp32" in script
+
+
+# ── dp_strat args ─────────────────────────────────────────────────────────────
+
+def test_build_dp_strat_args_distopt():
+    args = build_dp_strat_args("distopt")
+    assert args == ["--data-parallel-sharding-strategy", "no_shard"]
+
+
+def test_build_dp_strat_args_ddp():
+    args = build_dp_strat_args("ddp")
+    assert args == ["--data-parallel-sharding-strategy", "no_shard"]
+
+
+def test_build_dp_strat_args_none():
+    args = build_dp_strat_args("none")
+    assert args == ["--data-parallel-sharding-strategy", "no_shard"]
+
+
+def test_build_dp_strat_args_tbd():
+    args = build_dp_strat_args("TBD")
+    assert args == ["--data-parallel-sharding-strategy", "no_shard"]
+
+
+def test_build_dp_strat_args_torch_z1():
+    args = build_dp_strat_args("torch_z1", pp="1")
+    assert "--use-torch-fsdp2" in args
+    assert "--data-parallel-sharding-strategy" in args
+    assert args[args.index("--data-parallel-sharding-strategy") + 1] == "optim"
+
+
+def test_build_dp_strat_args_torch_z2():
+    args = build_dp_strat_args("torch_z2", pp="1")
+    assert "--use-torch-fsdp2" in args
+    assert args[args.index("--data-parallel-sharding-strategy") + 1] == "optim_grads"
+
+
+def test_build_dp_strat_args_torch_z3():
+    args = build_dp_strat_args("torch_z3", pp="1")
+    assert "--use-torch-fsdp2" in args
+    assert args[args.index("--data-parallel-sharding-strategy") + 1] == "optim_grads_params"
+
+
+def test_build_dp_strat_args_mega_z1():
+    args = build_dp_strat_args("mega_z1")
+    assert "--use-megatron-fsdp" in args
+    assert args[args.index("--data-parallel-sharding-strategy") + 1] == "optim"
+
+
+def test_build_dp_strat_args_mega_z3():
+    args = build_dp_strat_args("mega_z3")
+    assert "--use-megatron-fsdp" in args
+    assert args[args.index("--data-parallel-sharding-strategy") + 1] == "optim_grads_params"
+
+
+def test_build_dp_strat_args_mega_includes_extra_flags():
+    args = build_dp_strat_args("mega_z2")
+    assert "--calculate-per-token-loss" in args
+    assert "--init-model-with-meta-device" in args
+    assert "--grad-reduce-in-bf16" in args
+    assert "--fsdp-double-buffer" in args
+    assert "--use-nccl-ub" in args
+
+
+def test_build_dp_strat_args_torch_no_extra_flags():
+    args = build_dp_strat_args("torch_z1", pp="1")
+    assert "--calculate-per-token-loss" not in args
+    assert "--fsdp-double-buffer" not in args
+
+
+def test_build_dp_strat_args_torch_requires_pp1():
+    with pytest.raises(ValueError, match="pp=2"):
+        build_dp_strat_args("torch_z1", pp="2")
+
+
+def test_build_dp_strat_args_unknown_prefix_raises():
+    with pytest.raises(ValueError, match="Unknown dp_strat prefix"):
+        build_dp_strat_args("deepspeed_z1")
+
+
+def test_build_dp_strat_args_unknown_suffix_raises():
+    with pytest.raises(ValueError, match="Unknown dp_strat suffix"):
+        build_dp_strat_args("mega_z4")
+
+
+def test_build_dp_strat_args_malformed_raises():
+    with pytest.raises(ValueError, match="Invalid dp_strat value"):
+        build_dp_strat_args("torchonly")
+
+
+# ── prec_aware_opt + dp_strat interaction ─────────────────────────────────────
+
+def test_build_prec_aware_opt_args_includes_enable_experimental():
+    args = build_prec_aware_opt_args("bf16_fp32")
+    assert "--enable-experimental" in args
+
+
+def test_build_prec_aware_opt_args_mega_fsdp_renames_flags():
+    args = build_prec_aware_opt_args("bf16_fp32", dp_strat="mega_z2")
+    assert "--use-precision-aware-optimizer" in args
+    assert "--megatron-fsdp-main-grads-dtype" in args
+    assert "--megatron-fsdp-main-params-dtype" in args
+    assert "--main-grads-dtype" not in args
+    assert "--main-params-dtype" not in args
+    assert "--enable-experimental" in args
+
+
+def test_build_prec_aware_opt_args_distopt_uses_standard_flags():
+    args = build_prec_aware_opt_args("bf16_fp32", dp_strat="distopt")
+    assert "--main-grads-dtype" in args
+    assert "--main-params-dtype" in args
+    assert "--megatron-fsdp-main-grads-dtype" not in args
+
+
+# ── render_sbatch dp_strat ────────────────────────────────────────────────────
+
+def test_render_sbatch_distopt_default():
+    run = _make_run()
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--data-parallel-sharding-strategy no_shard" in script
+    assert "--use-torch-fsdp2" not in script
+    assert "--use-megatron-fsdp" not in script
+    assert "--use-distributed-optimizer" in script
+
+
+def test_render_sbatch_ddp_removes_distributed_optimizer():
+    run = _make_run(dp_strat="ddp")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--use-distributed-optimizer" not in script
+    assert "--overlap-grad-reduce" not in script
+    assert "--overlap-param-gather" not in script
+
+
+def test_render_sbatch_fsdp_torch_z2():
+    run = _make_run(dp_strat="torch_z2", pp="1")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--use-torch-fsdp2" in script
+    assert "--data-parallel-sharding-strategy optim_grad" in script
+
+
+def test_render_sbatch_fsdp_mega_z3_with_prec_aware_opt():
+    run = _make_run(dp_strat="mega_z3", prec_aware_opt="bf16_fp32")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--use-megatron-fsdp" in script
+    assert "--data-parallel-sharding-strategy optim_grads_params" in script
+    assert "--megatron-fsdp-main-grads-dtype bf16" in script
+    assert "--megatron-fsdp-main-params-dtype fp32" in script
+    assert "--main-grads-dtype" not in script
+    assert "--enable-experimental" in script
+
+
+def test_render_sbatch_fsdp_torch_rejects_prec_aware_opt():
+    run = _make_run(dp_strat="torch_z1", pp="1", prec_aware_opt="bf16_fp32")
+    with pytest.raises(ValueError, match="torch FSDP2 is incompatible with prec_aware_opt"):
+        render_sbatch(run, resolve_model_config("760m"))
+
+
+def test_render_sbatch_fsdp_torch_rejects_pp_gt1():
+    run = _make_run(dp_strat="torch_z1", pp="2")
+    with pytest.raises(ValueError, match="pp=2"):
+        render_sbatch(run, resolve_model_config("760m"))
+
+
+def test_render_sbatch_fsdp_active_comments_out_cuda_device_max_connections():
+    run = _make_run(dp_strat="torch_z1", pp="1")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "# export CUDA_DEVICE_MAX_CONNECTIONS=1" in script
+    assert "\nexport CUDA_DEVICE_MAX_CONNECTIONS=1" not in script
+
+
+def test_render_sbatch_no_fsdp_keeps_cuda_device_max_connections():
+    run = _make_run(dp_strat="distopt")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "export CUDA_DEVICE_MAX_CONNECTIONS=1" in script
+    assert "# export CUDA_DEVICE_MAX_CONNECTIONS=1" not in script
+
+
+def test_render_sbatch_torch_fsdp_removes_distributed_optimizer_and_overlaps():
+    run = _make_run(dp_strat="torch_z1", pp="1")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--use-distributed-optimizer" not in script
+    assert "--overlap-grad-reduce" not in script
+    assert "--overlap-param-gather" not in script
+
+
+def test_render_sbatch_mega_fsdp_keeps_distributed_optimizer():
+    run = _make_run(dp_strat="mega_z2")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--use-distributed-optimizer" in script
+    assert "--overlap-grad-reduce" in script
+    assert "--overlap-param-gather" in script
+
+
+def test_render_sbatch_mega_fsdp_extra_flags():
+    run = _make_run(dp_strat="mega_z1")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--calculate-per-token-loss" in script
+    assert "--init-model-with-meta-device" in script
+    assert "--grad-reduce-in-bf16" in script
+    assert "--fsdp-double-buffer" in script
+    assert "--use-nccl-ub" in script
+
+
+def test_render_sbatch_mega_fsdp_sets_ckpt_format():
+    run = _make_run(dp_strat="mega_z1")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--ckpt-format fsdp_dtensor" in script
+
+
+def test_render_sbatch_no_fsdp_no_ckpt_format():
+    run = _make_run(dp_strat="distopt")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--ckpt-format" not in script
+
+
+def test_render_sbatch_torch_fsdp_no_ckpt_format():
+    run = _make_run(dp_strat="torch_z1", pp="1")
+    script = render_sbatch(run, resolve_model_config("760m"))
+    assert "--ckpt-format" not in script
 
 
 # ── dry-run end-to-end ────────────────────────────────────────────────────────
