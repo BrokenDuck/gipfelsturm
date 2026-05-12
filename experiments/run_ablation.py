@@ -120,6 +120,29 @@ def _tbd_or(value: str, default):
     return default if value.upper() in ("TBD", "") else value
 
 
+_FP8_BASE_FLAGS = ["--fp8-format", "hybrid"]
+
+_FP8_RECIPE_FLAGS = {
+    "delayed": [
+        "--fp8-recipe", "delayed",
+        "--fp8-amax-history-len", "1024",
+        "--fp8-amax-compute-algo", "max",
+        "--fp8-margin", "0",
+        "--fp8-param-gather",
+    ],
+    "current": [
+        "--fp8-recipe", "tensorwise",
+        "--first-last-layers-bf16",
+        "--num-layers-at-start-in-bf16", "1",
+        "--num-layers-at-end-in-bf16", "1",
+        "--fp8-param-gather",
+    ],
+    "subchannel": [
+        "--fp8-recipe", "blockwise",
+    ],
+}
+
+
 def build_precision_args(precision: str) -> list[str]:
     p = precision.lower()
     if p == "fp32":
@@ -136,13 +159,23 @@ def build_precision_args(precision: str) -> list[str]:
         return ["--bf16"]
     elif p == "fp16":
         return ["--fp16"]
-    elif p in ("fp8", "fp8_hybrid"):
-        return ["--bf16", "--fp8-format", "hybrid", "--fp8-recipe", "delayed"]
-    elif p == "fp8_e4m3":
-        return ["--bf16", "--fp8-format", "e4m3", "--fp8-recipe", "delayed"]
+    elif p.endswith(("_fp8_delayed", "_fp8_current", "_fp8_subchannel")):
+        base, _, recipe = p.rpartition("_fp8_")
+        if base not in ("bf16", "fp16"):
+            raise ValueError(
+                f"Unknown precision '{precision}'. "
+                f"Choose: fp32, fp16, bf16, "
+                f"bf16_fp8_delayed, bf16_fp8_current, bf16_fp8_subchannel, "
+                f"fp16_fp8_delayed, fp16_fp8_current, fp16_fp8_subchannel"
+            )
+        prec_flag = f"--{base}"
+        return [prec_flag] + _FP8_BASE_FLAGS + _FP8_RECIPE_FLAGS[recipe]
     else:
         raise ValueError(
-            f"Unknown precision '{precision}'. Choose: fp32, fp16, bf16, fp8_hybrid, fp8_e4m3"
+            f"Unknown precision '{precision}'. "
+            f"Choose: fp32, fp16, bf16, "
+            f"bf16_fp8_delayed, bf16_fp8_current, bf16_fp8_subchannel, "
+            f"fp16_fp8_delayed, fp16_fp8_current, fp16_fp8_subchannel"
         )
 
 
@@ -320,7 +353,7 @@ def build_dp_strat_args(dp_strat: str, pp: str = "1") -> list[str]:
     return args
 
 
-def build_distributed_args(tp: str, pp: str) -> list[str]:
+def build_distributed_args(tp: str, pp: str, vpp: str = "none") -> list[str]:
     tp_val = int(_tbd_or(tp, "1"))
     pp_val = int(_tbd_or(pp, "1"))
     args = [
@@ -335,6 +368,9 @@ def build_distributed_args(tp: str, pp: str) -> list[str]:
     # Enable sequence parallelism when TP > 1
     if tp_val > 1:
         args.append("--sequence-parallel")
+    vpp_norm = _tbd_or(vpp, "none").strip().lower()
+    if vpp_norm not in ("", "none"):
+        args += ["--num-layers-per-virtual-pipeline-stage", vpp_norm]
     return args
 
 
@@ -427,7 +463,7 @@ def render_sbatch(run: dict, model: dict) -> str:
         fusion_args = [
             a for a in fusion_args if a not in ("--cross-entropy-loss-fusion",)
         ]
-    distributed_args = build_distributed_args(run["tp"], run["pp"]) + dp_strat_args
+    distributed_args = build_distributed_args(run["tp"], run["pp"], run.get("vpp", "none")) + dp_strat_args
     if dp_strat_norm == "ddp":
         _distopt_flags = {
             "--use-distributed-optimizer",
@@ -454,7 +490,7 @@ def render_sbatch(run: dict, model: dict) -> str:
     )
 
     nvte_env_block = ""
-    if precision_val in ("fp8", "fp8_hybrid", "fp8_e4m3"):
+    if "_fp8_" in precision_val:
         # FP8 requires TE auto-select; cuDNN is the default so no flag needed
         attention_args = []
 

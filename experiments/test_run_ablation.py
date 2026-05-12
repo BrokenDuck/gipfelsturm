@@ -74,33 +74,76 @@ def test_build_precision_args_fp32():
     assert "--fp16" not in args
 
 
-def test_build_precision_args_fp8():
-    args = build_precision_args("fp8")
+def test_build_precision_args_bf16_fp8_delayed():
+    args = build_precision_args("bf16_fp8_delayed")
+    assert "--bf16" in args
     assert "--fp8-format" in args
     assert "hybrid" in args
     assert "--fp8-recipe" in args
     assert "delayed" in args
+    assert "--fp8-amax-history-len" in args
+    assert "1024" in args
+    assert "--fp8-amax-compute-algo" in args
+    assert "max" in args
+    assert "--fp8-margin" in args
+    assert "0" in args
+    assert "--fp8-param-gather" in args
+    assert "--fp16" not in args
 
 
-def test_build_precision_args_fp8_hybrid():
-    args = build_precision_args("fp8_hybrid")
+def test_build_precision_args_fp16_fp8_delayed():
+    args = build_precision_args("fp16_fp8_delayed")
+    assert "--fp16" in args
+    assert "--fp8-recipe" in args
+    assert "delayed" in args
+    assert "--bf16" not in args
+
+
+def test_build_precision_args_bf16_fp8_current():
+    args = build_precision_args("bf16_fp8_current")
+    assert "--bf16" in args
     assert "--fp8-format" in args
     assert "hybrid" in args
     assert "--fp8-recipe" in args
-    assert "delayed" in args
+    assert "tensorwise" in args
+    assert "--first-last-layers-bf16" in args
+    assert "--num-layers-at-start-in-bf16" in args
+    assert "1" in args
+    assert "--num-layers-at-end-in-bf16" in args
+    assert "--fp8-param-gather" in args
 
 
-def test_build_precision_args_fp8_e4m3():
-    args = build_precision_args("fp8_e4m3")
+def test_build_precision_args_bf16_fp8_subchannel():
+    args = build_precision_args("bf16_fp8_subchannel")
+    assert "--bf16" in args
     assert "--fp8-format" in args
-    assert "e4m3" in args
+    assert "hybrid" in args
     assert "--fp8-recipe" in args
-    assert "delayed" in args
+    assert "blockwise" in args
+
+
+def test_build_precision_args_fp16_fp8_current():
+    args = build_precision_args("fp16_fp8_current")
+    assert "--fp16" in args
+    assert "tensorwise" in args
+    assert "--bf16" not in args
+
+
+def test_build_precision_args_fp16_fp8_subchannel():
+    args = build_precision_args("fp16_fp8_subchannel")
+    assert "--fp16" in args
+    assert "blockwise" in args
+    assert "--bf16" not in args
 
 
 def test_build_precision_args_unknown_raises():
     with pytest.raises(ValueError, match="Unknown precision"):
         build_precision_args("int8")
+
+
+def test_build_precision_args_bad_fp8_base_raises():
+    with pytest.raises(ValueError, match="Unknown precision"):
+        build_precision_args("fp32_fp8_delayed")
 
 
 # ── Precision-aware optimizer args ───────────────────────────────────────────
@@ -264,12 +307,31 @@ def test_render_sbatch_bf16_precision():
 
 
 def test_render_sbatch_fp8_precision():
-    run = _make_run(precision="fp8")
+    run = _make_run(precision="bf16_fp8_delayed")
     model = resolve_model_config("760m")
     script = render_sbatch(run, model)
     assert "--fp8-format" in script
-    assert "hybrid" in script  # e4m3 fwd, e5m2 bwd
+    assert "hybrid" in script
     assert "--bf16" in script
+    assert "--attention-backend" not in script
+
+
+def test_render_sbatch_fp8_current_precision():
+    run = _make_run(precision="bf16_fp8_current")
+    model = resolve_model_config("760m")
+    script = render_sbatch(run, model)
+    assert "--fp8-format" in script
+    assert "tensorwise" in script
+    assert "--first-last-layers-bf16" in script
+    assert "--attention-backend" not in script
+
+
+def test_render_sbatch_fp8_subchannel_precision():
+    run = _make_run(precision="bf16_fp8_subchannel")
+    model = resolve_model_config("760m")
+    script = render_sbatch(run, model)
+    assert "--fp8-format" in script
+    assert "blockwise" in script
     assert "--attention-backend" not in script
 
 

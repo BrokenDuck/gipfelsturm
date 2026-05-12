@@ -2,3 +2,6 @@
 - https://docs.nvidia.com/nemo/megatron-bridge/latest/performance-guide.html
 - https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-26-02.html
 - https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/index.html
+- https://github.com/linkedin/Liger-Kernel
+- https://github.com/apple/ml-cross-entropy
+- https://github.com/Dao-AILab/quack
