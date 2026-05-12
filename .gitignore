@@ -5,3 +5,10 @@ results/
 __pycache__/
 *.pyc
 .pytest_cache/
+.inductor_cache/*
+.triton_cache/*
+cache/*
+packages/*
+experiments/run_ablation.py
+experiments/ablation_plan.csv
+gipfelsturm/*

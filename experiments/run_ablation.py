@@ -407,7 +407,7 @@ def render_sbatch(run: dict, model: dict) -> str:
         slurm_time = f"{h:02d}:{m:02d}:00"
         eval_interval = 25
         eval_iters = 5
-        lr_warmup_iters = 50
+        lr_warmup_iters = min(50, training_steps // 4)
         logging_extra = (
             "\n    --tensorboard-dir $TENSORBOARD_DIR"
             "\n    --log-timers-to-tensorboard"
@@ -485,8 +485,12 @@ def render_sbatch(run: dict, model: dict) -> str:
     if dp_strat_norm.startswith("mega"):
         distributed_args += ["--ckpt-format", "fsdp_dtensor"]
 
-    venv_name = (
-        ".venv-gipfelturm-fa2" if attention_backend_val == "fa2" else ".venv-gipfelturm"
+    venv_name = ".venv"
+
+    save_line = (
+        "\n    --save $LOG_DIR/checkpoints\n    --save-interval 10\n    --load $LOG_DIR/checkpoints\n    --exit-signal-handler"
+        if mode == "train"
+        else ""
     )
 
     nvte_env_block = ""
@@ -532,24 +536,26 @@ def render_sbatch(run: dict, model: dict) -> str:
 
     script = f"""\
 #!/bin/bash
-#SBATCH --account=g34
+#SBATCH --account=lsaie-ss26
 #SBATCH --time={slurm_time}
 #SBATCH --job-name={job_name}
 #SBATCH --output=logs/{mode}/%x-%j.out
 #SBATCH --error=logs/{mode}/%x-%j.err
+#SBATCH --partition=debug
 #SBATCH --nodes={nodes}
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
 #SBATCH --cpus-per-task=288
-#SBATCH --mem=850000
+#SBATCH --mem=460000
 #SBATCH --no-requeue
+{"#SBATCH --signal=TERM@120" if mode == "train" else ""}
 
 echo "START TIME: $(date)"
 
 ################ Configs ################
-WORKDIR=/users/$USER/gipfelsturm
+WORKDIR=/iopsstor/scratch/cscs/$USER/gipfelsturm
 MEGATRON_LM_DIR=$WORKDIR/Megatron-LM
-DATA_PREFIX=/iopsstor/scratch/cscs/$USER/dataset/climbmix_small/climbmix_small
+DATA_PREFIX=/capstor/store/cscs/swissai/infra01/datasets/nvidia/Nemotron-ClimbMix/climbmix_small_megatron/climbmix_small
 DATASET_CACHE_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/cache
 
 # Training config
@@ -565,7 +571,10 @@ LOG_DIR=/iopsstor/scratch/cscs/$USER/gipfelsturm/$PROJECT_NAME/$EXP_NAME
 TENSORBOARD_DIR=$LOG_DIR/tensorboard
 #########################################
 
-mkdir -p $WORKDIR/logs/{mode} $LOG_DIR $TENSORBOARD_DIR
+mkdir -p $WORKDIR/logs/{mode} $LOG_DIR $TENSORBOARD_DIR $LOG_DIR/checkpoints
+
+# Apply local patches to Megatron-LM
+cd $MEGATRON_LM_DIR && git checkout -- . && git apply $WORKDIR/patches/*.patch && cd $WORKDIR
 
 # Required for TP; must be unset with FSDP (conflicts with FSDP's async comms)
 {"# " if fsdp_active else ""}export CUDA_DEVICE_MAX_CONNECTIONS=1
@@ -605,7 +614,7 @@ TRAINING_ARGS=(
     --eval-iters {eval_iters}{ce_fusion_line}
     --optimizer adam
     --dataloader-type single{no_nan_check}
-    --manual-gc
+    --manual-gc{save_line}
 )
 
 REGULARIZATION_ARGS=(
@@ -687,11 +696,20 @@ srun -lu --mpi=pmix --network=disable_rdzv_get --environment=alps3 --cpus-per-ta
     export CUDA_CACHE_PATH=\\$JOB_CACHE/cuda
     mkdir -p \"\\$TRITON_CACHE_DIR\" \"\\$TORCHINDUCTOR_CACHE_DIR\" \"\\$TORCH_EXTENSIONS_DIR\" \"\\$CUDA_CACHE_PATH\"
 
-    source /iopsstor/scratch/cscs/$USER/{venv_name}/bin/activate
+    source $WORKDIR/{venv_name}/bin/activate
     numactl --membind=0-3 $TRAINING_CMD
 "
 
 echo "END TIME: $(date)"
+{"" if mode != "train" else """
+# Resubmit if training isn't complete yet
+LAST_ITER=$(cat $LOG_DIR/checkpoints/latest_checkpointed_iteration.txt 2>/dev/null || echo 0)
+if [ "$LAST_ITER" -lt "$TRAINING_STEPS" ]; then
+    echo "Checkpoint at iteration $LAST_ITER / $TRAINING_STEPS — resubmitting."
+    sbatch "$0"
+else
+    echo "Training complete at iteration $LAST_ITER."
+fi"""}
 """
     return script
 
