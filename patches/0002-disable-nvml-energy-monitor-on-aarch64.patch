@@ -1,0 +1,58 @@
+# Patch: Disable NVML energy monitor on aarch64 (GH200) to prevent SIGSEGV
+#
+# Problem:
+#   nvmlDeviceGetTotalEnergyConsumption() segfaults on GH200/ARM64 during
+#   checkpoint saving. The crash is a hard SIGSEGV inside libnvidia-ml.so,
+#   not a catchable NVMLError, so the existing except clause doesn't help.
+#   See: https://github.com/NVIDIA/Megatron-LM/issues/1861
+#
+# Fix:
+#   Check platform.machine() == "aarch64" at import time and skip NVML
+#   initialization entirely on that architecture.
+#
+# File: megatron/core/energy_monitor.py
+# Locate: top-level try/except ImportError block that sets has_nvml
+
+diff --git a/megatron/core/energy_monitor.py b/megatron/core/energy_monitor.py
+index 4334cfe38..7c32a0064 100644
+--- a/megatron/core/energy_monitor.py
++++ b/megatron/core/energy_monitor.py
+@@ -2,21 +2,27 @@
+ 
+ """Megatron Energy Monitoring (NVML)"""
+ 
++import platform
+ import torch
+ import torch.distributed as dist
+ 
+-try:
+-    from pynvml import (
+-        NVMLError,
+-        nvmlDeviceGetHandleByIndex,
+-        nvmlDeviceGetTotalEnergyConsumption,
+-        nvmlInit,
+-        nvmlShutdown,
+-    )
+-
+-    has_nvml = True
+-except ImportError:
++# nvmlDeviceGetTotalEnergyConsumption segfaults on GH200/ARM64 (aarch64).
++# Disable NVML entirely on that platform to avoid SIGSEGV during checkpointing.
++if platform.machine() == "aarch64":
+     has_nvml = False
++else:
++    try:
++        from pynvml import (
++            NVMLError,
++            nvmlDeviceGetHandleByIndex,
++            nvmlDeviceGetTotalEnergyConsumption,
++            nvmlInit,
++            nvmlShutdown,
++        )
++
++        has_nvml = True
++    except ImportError:
++        has_nvml = False
+ 
+ 
+ class EnergyMonitor:
