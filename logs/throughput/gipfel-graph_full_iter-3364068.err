@@ -1,0 +1,1114 @@
+0: [default0]:/usr/local/lib/python3.12/dist-packages/modelopt/torch/__init__.py:36: UserWarning: transformers version 5.7.0 is not tested with nvidia-modelopt and may cause issues. Please install recommended version with `pip install nvidia-modelopt[hf]` if working with HF models.
+0: [default0]:  _warnings.warn(
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: Overriding default arguments for tokenizer_type:GPT2BPETokenizer with tokenizer_type:GPT2BPETokenizer
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-use-fast argument is deprecated and will be removed soon. `use_fast` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-use-fast if you want to disable `use_fast`.
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-include-special-tokens argument is deprecated and will be removed soon. `include_special_tokens` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-include-special-tokens if you want to disable `include_special_tokens`.
+0: [default0]:  warnings.warn(message)
+1: [default0]:[rank4]:[W506 20:35:13.149461253 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+3: [default0]:[rank12]:[W506 20:35:13.196193471 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+2: [default0]:[rank8]:[W506 20:35:13.671111904 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:[rank0]:[W506 20:35:13.126874829 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py:211: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+0: [default0]:
+0:   Variable._execution_engine.run_backward(
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default2]:[rank2]: Traceback (most recent call last):
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+0: [default2]:[rank2]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+0: [default2]:[rank2]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]: Traceback (most recent call last):
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default2]:[rank2]:     output_tensor, num_tokens = forward_step(
+0: [default0]:[rank0]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+0: [default3]:[rank3]: Traceback (most recent call last):
+0: [default2]:[rank2]:                                 ^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+0: [default0]:[rank0]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default3]:[rank3]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default2]:[rank2]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default2]:[rank2]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     output_tensor, num_tokens = forward_step(
+0: [default0]:[rank0]:                                 ^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default3]:[rank3]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default0]:[rank0]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+0: [default0]:[rank0]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+0: [default0]:[rank0]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+0: [default2]:[rank2]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+0: [default2]:[rank2]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+0: [default2]:[rank2]:     batch = get_batch_on_this_tp_rank(
+0: [default2]:[rank2]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     batch = get_batch_on_this_tp_rank(
+0: [default3]:[rank3]:     output_tensor, num_tokens = forward_step(
+0: [default3]:[rank3]:                                 ^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default3]:[rank3]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default3]:[rank3]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+0: [default0]:[rank0]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+0: [default2]:[rank2]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+0: [default3]:[rank3]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+0: [default0]:[rank0]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+0: [default2]:[rank2]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+0: [default3]:[rank3]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+0: [default2]:[rank2]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+0: [default3]:[rank3]:     batch = get_batch_on_this_tp_rank(
+0: [default0]:[rank0]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+0: [default2]:[rank2]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default3]:[rank3]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+0: [default0]:[rank0]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+0: [default2]:[rank2]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default3]:[rank3]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+0: [default0]:[rank0]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default2]:[rank2]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+0: [default2]:
+0: [default0]:[rank0]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default3]:[rank3]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+0: [default2]:
+0: [default0]:[rank0]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default0]:[rank0]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default2]:[rank2]: During handling of the above exception, another exception occurred:
+0: [default3]:[rank3]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:
+0: [default2]:
+0: [default3]:[rank3]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+0: [default0]:
+0: [default2]:[rank2]: Traceback (most recent call last):
+0: [default0]:[rank0]: During handling of the above exception, another exception occurred:
+0: [default3]:[rank3]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default0]:
+0: [default3]:[rank3]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default0]:[rank0]: Traceback (most recent call last):
+0: [default2]:[rank2]:     pretrain(
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default3]:[rank3]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default3]:[rank3]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default2]:[rank2]:     iteration, num_floating_point_operations_so_far = train(
+0: [default3]:
+0: [default0]:[rank0]:     pretrain(
+0: [default2]:[rank2]:                                                       ^^^^^^
+0: [default3]:
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default3]:[rank3]: During handling of the above exception, another exception occurred:
+0: [default3]:
+0: [default0]:[rank0]:     iteration, num_floating_point_operations_so_far = train(
+0: [default0]:[rank0]:                                                       ^^^^^^
+0: [default2]:[rank2]:     ) = train_step(
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default3]:[rank3]: Traceback (most recent call last):
+0: [default2]:[rank2]:         ^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default0]:[rank0]:     ) = train_step(
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default0]:[rank0]:         ^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default2]:[rank2]:     losses_reduced = forward_backward_func(
+0: [default3]:[rank3]:     pretrain(
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default2]:[rank2]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     losses_reduced = forward_backward_func(
+0: [default3]:[rank3]:     iteration, num_floating_point_operations_so_far = train(
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+0: [default3]:[rank3]:                                                       ^^^^^^
+0: [default2]:[rank2]:     with torch.cuda.graph(
+0: [default0]:[rank0]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+0: [default2]:[rank2]:     self.cuda_graph.capture_end()
+0: [default0]:[rank0]:     with torch.cuda.graph(
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+0: [default3]:[rank3]:     ) = train_step(
+0: [default2]:[rank2]:     super().capture_end()
+0: [default0]:[rank0]:     self.cuda_graph.capture_end()
+0: [default3]:[rank3]:         ^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default2]:[rank2]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+0: [default3]:[rank3]:     losses_reduced = forward_backward_func(
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+0: [default2]:[rank2]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default3]:[rank3]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     super().capture_end()
+0: [default2]:[rank2]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default0]:[rank0]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+0: [default3]:[rank3]:     with torch.cuda.graph(
+0: [default0]:[rank0]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default2]:[rank2]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+0: [default2]:[rank2]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default3]:[rank3]:     self.cuda_graph.capture_end()
+0: [default0]:[rank0]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default0]:[rank0]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default2]:
+0: [default0]:[rank0]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+0: [default0]:
+0: [default3]:[rank3]:     super().capture_end()
+0: [default3]:[rank3]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+0: [default3]:[rank3]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default3]:[rank3]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default3]:[rank3]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default3]:[rank3]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default3]:
+0: [default1]:[rank1]: Traceback (most recent call last):
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+0: [default1]:[rank1]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+0: [default1]:[rank1]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default1]:[rank1]:     output_tensor, num_tokens = forward_step(
+0: [default1]:[rank1]:                                 ^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default1]:[rank1]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default1]:[rank1]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+0: [default1]:[rank1]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+0: [default1]:[rank1]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+0: [default1]:[rank1]:     batch = get_batch_on_this_tp_rank(
+0: [default1]:[rank1]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+0: [default1]:[rank1]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+0: [default1]:[rank1]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=d
+0: ev)
+0: [default1]:[rank1]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+0: [default1]:[rank1]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default1]:[rank1]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default1]:[rank1]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default1]:[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default1]:
+0: [default1]:
+0: [default1]:[rank1]: During handling of the above exception, another exception occurred:
+0: [default1]:
+0: [default1]:[rank1]: Traceback (most recent call last):
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default1]:[rank1]:     pretrain(
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default1]:[rank1]:     iteration, num_floating_point_operations_so_far = train(
+0: [default1]:[rank1]:                                                       ^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default1]:[rank1]:     ) = train_step(
+0: [default1]:[rank1]:         ^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default1]:[rank1]:     losses_reduced = forward_backward_func(
+0: [default1]:[rank1]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+0: [default1]:[rank1]:     with torch.cuda.graph(
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+0: [default1]:[rank1]:     self.cuda_graph.capture_end()
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+0: [default1]:[rank1]:     super().capture_end()
+0: [default1]:[rank1]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+0: [default1]:[rank1]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+0: [default1]:[rank1]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+0: [default1]:[rank1]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+0: [default1]:[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+0: [default1]:
+2: [default3]:[rank11]: Traceback (most recent call last):
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+2: [default3]:[rank11]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+2: [default3]:[rank11]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default3]:[rank11]:     output_tensor, num_tokens = forward_step(
+2: [default3]:[rank11]:                                 ^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default3]:[rank11]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default3]:[rank11]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+2: [default3]:[rank11]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+2: [default3]:[rank11]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+2: [default3]:[rank11]:     batch = get_batch_on_this_tp_rank(
+2: [default3]:[rank11]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+2: [default3]:[rank11]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+2: [default3]:[rank11]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+2: [default3]:[rank11]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+2: [default3]:[rank11]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default3]:[rank11]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default3]:[rank11]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default3]:[rank11]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default3]:
+2: [default3]:
+2: [default3]:[rank11]: During handling of the above exception, another exception occurred:
+2: [default3]:
+2: [default3]:[rank11]: Traceback (most recent call last):
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default3]:[rank11]:     pretrain(
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default3]:[rank11]:     iteration, num_floating_point_operations_so_far = train(
+2: [default3]:[rank11]:                                                       ^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default3]:[rank11]:     ) = train_step(
+2: [default3]:[rank11]:         ^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default3]:[rank11]:     losses_reduced = forward_backward_func(
+2: [default3]:[rank11]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+2: [default3]:[rank11]:     with torch.cuda.graph(
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+2: [default3]:[rank11]:     self.cuda_graph.capture_end()
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+2: [default3]:[rank11]:     super().capture_end()
+2: [default3]:[rank11]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+2: [default3]:[rank11]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default3]:[rank11]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default3]:[rank11]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default3]:[rank11]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default3]:
+2: [default0]:[rank8]: Traceback (most recent call last):
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+2: [default0]:[rank8]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+2: [default0]:[rank8]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default0]:[rank8]:     output_tensor, num_tokens = forward_step(
+2: [default0]:[rank8]:                                 ^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default0]:[rank8]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default0]:[rank8]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+2: [default0]:[rank8]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+2: [default0]:[rank8]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+2: [default0]:[rank8]:     batch = get_batch_on_this_tp_rank(
+2: [default0]:[rank8]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+2: [default0]:[rank8]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+2: [default0]:[rank8]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+2: [default0]:[rank8]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+2: [default0]:[rank8]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default0]:[rank8]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default0]:[rank8]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default0]:[rank8]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default0]:
+2: [default0]:
+2: [default0]:[rank8]: During handling of the above exception, another exception occurred:
+2: [default0]:
+2: [default0]:[rank8]: Traceback (most recent call last):
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default0]:[rank8]:     pretrain(
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default0]:[rank8]:     iteration, num_floating_point_operations_so_far = train(
+2: [default0]:[rank8]:                                                       ^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default0]:[rank8]:     ) = train_step(
+2: [default0]:[rank8]:         ^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default0]:[rank8]:     losses_reduced = forward_backward_func(
+2: [default0]:[rank8]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+2: [default0]:[rank8]:     with torch.cuda.graph(
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+2: [default0]:[rank8]:     self.cuda_graph.capture_end()
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+2: [default0]:[rank8]:     super().capture_end()
+2: [default0]:[rank8]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+2: [default0]:[rank8]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default0]:[rank8]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below
+2:  might be incorrect.
+2: [default0]:[rank8]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default0]:[rank8]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default0]:
+2: [default2]:[rank10]: Traceback (most recent call last):
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+2: [default2]:[rank10]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+2: [default2]:[rank10]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]: Traceback (most recent call last):
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+2: [default1]:[rank9]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+2: [default1]:[rank9]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default2]:[rank10]:     output_tensor, num_tokens = forward_step(
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default1]:[rank9]:     output_tensor, num_tokens = forward_step(
+2: [default2]:[rank10]:                                 ^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default1]:[rank9]:                                 ^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default1]:[rank9]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default1]:[rank9]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default2]:[rank10]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+2: [default1]:[rank9]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+2: [default1]:[rank9]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+2: [default1]:[rank9]:     batch = get_batch_on_this_tp_rank(
+2: [default1]:[rank9]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+2: [default2]:[rank10]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+2: [default2]:[rank10]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+2: [default2]:[rank10]:     batch = get_batch_on_this_tp_rank(
+2: [default2]:[rank10]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+2: [default2]:[rank10]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+2: [default1]:[rank9]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+2: [default2]:[rank10]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+2: [default1]:[rank9]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+2: [default1]:[rank9]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+2: [default2]:[rank10]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default2]:[rank10]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default2]:[rank10]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default2]:[rank10]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default1]:[rank9]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+2: [default1]:[rank9]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default1]:[rank9]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default1]:[rank9]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default1]:[rank9]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default1]:
+2: [default1]:
+2: [default1]:[rank9]: During handling of the above exception, another exception occurred:
+2: [default1]:
+2: [default2]:
+2: [default2]:
+2: [default2]:[rank10]: During handling of the above exception, another exception occurred:
+2: [default2]:
+2: [default1]:[rank9]: Traceback (most recent call last):
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default2]:[rank10]: Traceback (most recent call last):
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default2]:[rank10]:     pretrain(
+2: [default1]:[rank9]:     pretrain(
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default1]:[rank9]:     iteration, num_floating_point_operations_so_far = train(
+2: [default1]:[rank9]:                                                       ^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default2]:[rank10]:     iteration, num_floating_point_operations_so_far = train(
+2: [default2]:[rank10]:                                                       ^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default2]:[rank10]:     ) = train_step(
+2: [default2]:[rank10]:         ^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default1]:[rank9]:     ) = train_step(
+2: [default1]:[rank9]:         ^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default1]:[rank9]:     losses_reduced = forward_backward_func(
+2: [default1]:[rank9]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+2: [default1]:[rank9]:     with torch.cuda.graph(
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+2: [default1]:[rank9]:     self.cuda_graph.capture_end()
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+2: [default1]:[rank9]:     super().capture_end()
+2: [default1]:[rank9]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default2]:[rank10]:     losses_reduced = forward_backward_func(
+2: [default2]:[rank10]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default1]:[rank9]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default1]:[rank9]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default1]:[rank9]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+2: [default2]:[rank10]:     with torch.cuda.graph(
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+2: [default2]:[rank10]:     self.cuda_graph.capture_end()
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+2: [default2]:[rank10]:     super().capture_end()
+2: [default2]:[rank10]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+2: [default2]:[rank10]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+2: [default2]:[rank10]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+2: [default2]:[rank10]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+2: [default2]:[rank10]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+2: [default2]:
+2: [default1]:
+1: [default3]:[rank7]: Traceback (most recent call last):
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+1: [default3]:[rank7]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+1: [default3]:[rank7]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default3]:[rank7]:     output_tensor, num_tokens = forward_step(
+1: [default3]:[rank7]:                                 ^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default3]:[rank7]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default3]:[rank7]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+1: [default3]:[rank7]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+1: [default3]:[rank7]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+1: [default3]:[rank7]:     batch = get_batch_on_this_tp_rank(
+1: [default3]:[rank7]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+1: [default3]:[rank7]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+1: [default3]:[rank7]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+1: [default3]:[rank7]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+1: [default3]:[rank7]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default3]:[rank7]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default3]:[rank7]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default3]:[rank7]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default3]:
+1: [default3]:
+1: [default3]:[rank7]: During handling of the above exception, another exception occurred:
+1: [default3]:
+1: [default3]:[rank7]: Traceback (most recent call last):
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default3]:[rank7]:     pretrain(
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default3]:[rank7]:     iteration, num_floating_point_operations_so_far = train(
+1: [default3]:[rank7]:                                                       ^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default3]:[rank7]:     ) = train_step(
+1: [default3]:[rank7]:         ^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default3]:[rank7]:     losses_reduced = forward_backward_func(
+1: [default3]:[rank7]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+1: [default3]:[rank7]:     with torch.cuda.graph(
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+1: [default3]:[rank7]:     self.cuda_graph.capture_end()
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+1: [default3]:[rank7]:     super().capture_end()
+1: [default3]:[rank7]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+1: [default3]:[rank7]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default3]:[rank7]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default3]:[rank7]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default3]:[rank7]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default3]:
+1: [default1]:[rank5]: Traceback (most recent call last):
+1: [default0]:[rank4]: Traceback (most recent call last):
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+1: [default0]:[rank4]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+1: [default1]:[rank5]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+1: [default1]:[rank5]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]: Traceback (most recent call last):
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default1]:[rank5]:     output_tensor, num_tokens = forward_step(
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default1]:[rank5]:                                 ^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default0]:[rank4]:     output_tensor, num_tokens = forward_step(
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+1: [default0]:[rank4]:                                 ^^^^^^^^^^^^^
+1: [default1]:[rank5]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default1]:[rank5]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default2]:[rank6]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default0]:[rank4]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+1: [default1]:[rank5]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+1: [default1]:[rank5]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+1: [default0]:[rank4]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     output_tensor, num_tokens = forward_step(
+1: [default2]:[rank6]:                                 ^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+1: [default1]:[rank5]:     batch = get_batch_on_this_tp_rank(
+1: [default1]:[rank5]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default2]:[rank6]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default0]:[rank4]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+1: [default2]:[rank6]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+1: [default2]:[rank6]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+1: [default0]:[rank4]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+1: [default1]:[rank5]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+1: [default2]:[rank6]:     batch = get_batch_on_this_tp_rank(
+1: [default2]:[rank6]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+1: [default2]:[rank6]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+1: [default1]:[rank5]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+1: [default1]:[rank5]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:     batch = get_batch_on_this_tp_rank(
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+1: [default2]:[rank6]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+1: [default0]:[rank4]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+1: [default0]:[rank4]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+1: [default1]:[rank5]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+1: [default1]:[rank5]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+1: [default0]:[rank4]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+1: [default1]:[rank5]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default1]:[rank5]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default1]:[rank5]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default0]:[rank4]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+1: [default2]:[rank6]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+1: [default0]:[rank4]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default0]:[rank4]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default1]:
+1: [default1]:
+1: [default1]:[rank5]: During handling of the above exception, another exception occurred:
+1: [default2]:[rank6]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default2]:[rank6]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default0]:[rank4]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default0]:[rank4]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default1]:
+1: [default1]:[rank5]: Traceback (most recent call last):
+1: [default0]:
+1: [default0]:
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default2]:[rank6]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default0]:[rank4]: During handling of the above exception, another exception occurred:
+1: [default0]:
+1: [default0]:[rank4]: Traceback (most recent call last):
+1: [default2]:[rank6]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default2]:
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default0]:[rank4]:     pretrain(
+1: [default2]:
+1: [default2]:[rank6]: During handling of the above exception, another exception occurred:
+1: [default1]:[rank5]:     pretrain(
+1: [default2]:
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default2]:[rank6]: Traceback (most recent call last):
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default1]:[rank5]:     iteration, num_floating_point_operations_so_far = train(
+1: [default0]:[rank4]:     iteration, num_floating_point_operations_so_far = train(
+1: [default0]:[rank4]:                                                       ^^^^^^
+1: [default1]:[rank5]:                                                       ^^^^^^
+1: [default2]:[rank6]:     pretrain(
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default0]:[rank4]:     ) = train_step(
+1: [default1]:[rank5]:     ) = train_step(
+1: [default0]:[rank4]:         ^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default0]:[rank4]:     losses_reduced = forward_backward_func(
+1: [default0]:[rank4]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+1: [default2]:[rank6]:     iteration, num_floating_point_operations_so_far = train(
+1: [default2]:[rank6]:                                                       ^^^^^^
+1: [default0]:[rank4]:     with torch.cuda.graph(
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default2]:[rank6]:     ) = train_step(
+1: [default1]:[rank5]:         ^^^^^^^^^^^
+1: [default2]:[rank6]:         ^^^^^^^^^^^
+1: [default0]:[rank4]:     self.cuda_graph.capture_end()
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default2]:[rank6]:     losses_reduced = forward_backward_func(
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default0]:[rank4]:     super().capture_end()
+1: [default2]:[rank6]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+1: [default2]:[rank6]:     with torch.cuda.graph(
+1: [default1]:[rank5]:     losses_reduced = forward_backward_func(
+1: [default0]:[rank4]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+1: [default0]:[rank4]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default0]:[rank4]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default0]:[rank4]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default0]:[rank4]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+1: [default2]:[rank6]:     self.cuda_graph.capture_end()
+1: [default1]:[rank5]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+1: [default2]:[rank6]:     super().capture_end()
+1: [default2]:[rank6]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+1: [default2]:[rank6]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default2]:[rank6]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default2]:[rank6]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default2]:[rank6]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default2]:
+1: [default1]:[rank5]:     with torch.cuda.graph(
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+1: [default1]:[rank5]:     self.cuda_graph.capture_end()
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+1: [default1]:[rank5]:     super().capture_end()
+1: [default1]:[rank5]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+1: [default1]:[rank5]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+1: [default1]:[rank5]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+1: [default1]:[rank5]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+1: [default1]:[rank5]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+1: [default1]:
+3: [default3]:[rank15]: Traceback (most recent call last):
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+3: [default1]:[rank13]: Traceback (most recent call last):
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+3: [default1]:[rank13]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+3: [default3]:[rank15]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+3: [default3]:[rank15]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]: Traceback (most recent call last):
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default3]:[rank15]:     output_tensor, num_tokens = forward_step(
+3: [default1]:[rank13]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+3: [default3]:[rank15]:                                 ^^^^^^^^^^^^^
+3: [default2]:[rank14]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default2]:[rank14]:     output_tensor, num_tokens = forward_step(
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default1]:[rank13]:     output_tensor, num_tokens = forward_step(
+3: [default1]:[rank13]:                                 ^^^^^^^^^^^^^
+3: [default3]:[rank15]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default1]:[rank13]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default1]:[rank13]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:                                 ^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+3: [default1]:[rank13]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+3: [default2]:[rank14]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default2]:[rank14]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+3: [default2]:[rank14]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+3: [default1]:[rank13]:     batch = get_batch_on_this_tp_rank(
+3: [default3]:[rank15]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+3: [default1]:[rank13]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+3: [default2]:[rank14]:     batch = get_batch_on_this_tp_rank(
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+3: [default1]:[rank13]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+3: [default2]:[rank14]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+3: [default3]:[rank15]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+3: [default2]:[rank14]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+3: [default2]:[rank14]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+3: [default2]:[rank14]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+3: [default3]:[rank15]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+3: [default0]:[rank12]: Traceback (most recent call last):
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 179, in __call__
+3: [default2]:[rank14]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+3: [default1]:[rank13]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default0]:[rank12]:     FullCudaGraphWrapper.result[training_str] = self.forward_backward_func(
+3: [default1]:[rank13]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+3: [default2]:[rank14]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default0]:[rank12]:                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     batch = get_batch_on_this_tp_rank(
+3: [default2]:[rank14]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default1]:[rank13]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default2]:
+3: [default3]:[rank15]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+3: [default3]:[rank15]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+3: [default1]:[rank13]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default0]:[rank12]:     output_tensor, num_tokens = forward_step(
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+3: [default1]:[rank13]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default0]:[rank12]:                                 ^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default1]:[rank13]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default1]:
+3: [default3]:[rank15]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+3: [default3]:[rank15]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:
+3: [default0]:[rank12]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default3]:[rank15]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+3: [default1]:[rank13]: During handling of the above exception, another exception occurred:
+3: [default0]:[rank12]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:
+3: [default2]:[rank14]: During handling of the above exception, another exception occurred:
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 248, in forward_step
+3: [default0]:[rank12]:     tokens, labels, loss_mask, attention_mask, position_ids, packed_seq_params = get_batch(data_iterator, vp_stage)
+3: [default3]:[rank15]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default3]:[rank15]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default2]:
+3: [default1]:
+3: [default0]:[rank12]:                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]: Traceback (most recent call last):
+3: [default1]:[rank13]: Traceback (most recent call last):
+3: [default3]:[rank15]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 124, in get_batch
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default3]:[rank15]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default0]:[rank12]:     batch = get_batch_on_this_tp_rank(
+3: [default3]:
+3: [default3]:
+3: [default2]:[rank14]:     pretrain(
+3: [default0]:[rank12]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     pretrain(
+3: [default3]:[rank15]: During handling of the above exception, another exception occurred:
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 591, in get_batch_on_this_tp_rank
+3: [default0]:[rank12]:     _broadcast_cu_seqlens(batch['cu_seqlens'])
+3: [default3]:
+3: [default3]:[rank15]: Traceback (most recent call last):
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py", line 569, in _broadcast_cu_seqlens
+3: [default0]:[rank12]:     n_tensor = torch.tensor(n, dtype=torch.int64, device=dev)
+3: [default1]:[rank13]:     iteration, num_floating_point_operations_so_far = train(
+3: [default3]:[rank15]:     pretrain(
+3: [default2]:[rank14]:     iteration, num_floating_point_operations_so_far = train(
+3: [default1]:[rank13]:                                                       ^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default0]:[rank12]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:                                                       ^^^^^^
+3: [default1]:[rank13]:     ) = train_step(
+3: [default1]:[rank13]:         ^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default0]:[rank12]: torch.AcceleratorError: CUDA error: operation not permitted when stream is capturing
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default1]:[rank13]:     losses_reduced = forward_backward_func(
+3: [default3]:[rank15]:     iteration, num_floating_point_operations_so_far = train(
+3: [default0]:[rank12]: Search for `cudaErrorStreamCaptureUnsupported' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default2]:[rank14]:     ) = train_step(
+3: [default1]:[rank13]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+3: [default0]:[rank12]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default2]:[rank14]:         ^^^^^^^^^^^
+3: [default1]:[rank13]:     with torch.cuda.graph(
+3: [default0]:[rank12]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+3: [default3]:[rank15]:                                                       ^^^^^^
+3: [default2]:[rank14]:     losses_reduced = forward_backward_func(
+3: [default1]:[rank13]:     self.cuda_graph.capture_end()
+3: [default0]:[rank12]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default2]:[rank14]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+3: [default3]:[rank15]:     ) = train_step(
+3: [default0]:
+3: [default2]:[rank14]:     with torch.cuda.graph(
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+3: [default1]:[rank13]:     super().capture_end()
+3: [default3]:[rank15]:         ^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default2]:[rank14]:     self.cuda_graph.capture_end()
+3: [default0]:
+3: [default1]:[rank13]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+3: [default3]:[rank15]:     losses_reduced = forward_backward_func(
+3: [default3]:[rank15]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+3: [default1]:[rank13]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default1]:[rank13]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default0]:[rank12]: During handling of the above exception, another exception occurred:
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+3: [default3]:[rank15]:     with torch.cuda.graph(
+3: [default2]:[rank14]:     super().capture_end()
+3: [default1]:[rank13]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+3: [default2]:[rank14]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+3: [default0]:
+3: [default1]:[rank13]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default3]:[rank15]:     self.cuda_graph.capture_end()
+3: [default2]:[rank14]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default2]:[rank14]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default0]:[rank12]: Traceback (most recent call last):
+3: [default1]:
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+3: [default2]:[rank14]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default3]:[rank15]:     super().capture_end()
+3: [default0]:[rank12]:     pretrain(
+3: [default2]:[rank14]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default2]:
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default3]:[rank15]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+3: [default3]:[rank15]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default3]:[rank15]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default3]:[rank15]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default3]:[rank15]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default3]:
+3: [default0]:[rank12]:     iteration, num_floating_point_operations_so_far = train(
+3: [default0]:[rank12]:                                                       ^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default0]:[rank12]:     ) = train_step(
+3: [default0]:[rank12]:         ^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default0]:[rank12]:     losses_reduced = forward_backward_func(
+3: [default0]:[rank12]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/full_cuda_graph.py", line 174, in __call__
+3: [default0]:[rank12]:     with torch.cuda.graph(
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 264, in __exit__
+3: [default0]:[rank12]:     self.cuda_graph.capture_end()
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/cuda/graphs.py", line 126, in capture_end
+3: [default0]:[rank12]:     super().capture_end()
+3: [default0]:[rank12]: torch.AcceleratorError: CUDA error: operation failed due to a previous error during capture
+3: [default0]:[rank12]: Search for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+3: [default0]:[rank12]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+3: [default0]:[rank12]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+3: [default0]:[rank12]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+3: [default0]:
+2: [default0]:[rank8]:[W506 20:37:18.181791807 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: W0506 20:37:21.611000 279034 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 280492 closing signal SIGTERM
+2: W0506 20:37:21.614000 279034 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 280495 closing signal SIGTERM
+2: E0506 20:37:21.893000 279034 torch/distributed/elastic/multiprocessing/api.py:984] failed (exitcode: 1) local_rank: 1 (pid: 280493) of binary: /iopsstor/scratch/cscs/jmaillef/.venv-gipfelturm/bin/python
+2: Traceback (most recent call last):
+2:   File "<frozen runpy>", line 198, in _run_module_as_main
+2:   File "<frozen runpy>", line 88, in _run_code
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+2:     main()
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+2:     return f(*args, **kwargs)
+2:            ^^^^^^^^^^^^^^^^^^
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+2:     run(args)
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+2:     elastic_launch(
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+2:     return launch_agent(self._config, self._entrypoint, list(args))
+2:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+2:     raise ChildFailedError(
+2: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+2: ============================================================
+2: /users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py FAILED
+2: ------------------------------------------------------------
+2: Failures:
+2: [1]:
+2:   time      : 2026-05-06_20:37:21
+2:   host      : nid005567
+2:   rank      : 10 (local_rank: 2)
+2:   exitcode  : 1 (pid: 280494)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: [2]:
+2:   time      : 2026-05-06_20:37:21
+2:   host      : nid005567
+2:   rank      : 8 (local_rank: 0)
+2:   exitcode  : 1 (pid: 280492)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: [3]:
+2:   time      : 2026-05-06_20:37:21
+2:   host      : nid005567
+2:   rank      : 11 (local_rank: 3)
+2:   exitcode  : 1 (pid: 280495)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: ---------------------------------------------------
+2: ---------
+2: Root Cause (first observed failure):
+2: [0]:
+2:   time      : 2026-05-06_20:37:21
+2:   host      : nid005567
+2:   rank      : 9 (local_rank: 1)
+2:   exitcode  : 1 (pid: 280493)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: ============================================================
+2: 
+srun: error: nid005567: task 2: Exited with exit code 1
+srun: Terminating StepId=3364068.0
+0: [2026-05-06T20:37:23.507] error: *** STEP 3364068.0 ON nid005562 CANCELLED AT 2026-05-06T20:37:23 DUE TO TASK FAILURE ***
+1: W0506 20:37:23.512000 178523 torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+1: W0506 20:37:23.601000 178523 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 179974 closing signal SIGTERM
+1: W0506 20:37:23.605000 178523 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 179975 closing signal SIGTERM
+1: W0506 20:37:23.605000 178523 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 179976 closing signal SIGTERM
+1: W0506 20:37:23.605000 178523 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 179977 closing signal SIGTERM
+3: W0506 20:37:23.512000 81813 torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+1: [default2]:Stack (most recent call first):
+1: [default2]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+1: [default2]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+1: [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+1: [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+1: [default0]:Stack (most recent call first):
+1: [default0]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+1: [default0]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+1: [default0]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+1: [default0]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+1: [default1]:Stack (most recent call first):
+1: [default1]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+1: [default1]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+1: [default1]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+1: [default1]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+1: [default3]:Stack (most recent call first):
+1: [default3]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+1: [default3]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+1: [default3]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+1: [default3]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+3: W0506 20:37:23.607000 81813 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 83241 closing signal SIGTERM
+3: W0506 20:37:23.663000 81813 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 83242 closing signal SIGTERM
+3: W0506 20:37:23.663000 81813 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 83243 closing signal SIGTERM
+3: W0506 20:37:23.663000 81813 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 83244 closing signal SIGTERM
+3: [default0]:Stack (most recent call first):
+3: [default0]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+3: [default0]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+3: [default0]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+3: [default0]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+3: [default1]:Stack (most recent call first):
+3: [default1]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+3: [default1]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+3: [default2]:Stack (most recent call first):
+3: [default2]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+3: [default1]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+3: [default3]:Stack (most recent call first):
+3: [default3]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+3: [default2]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+3: [default1]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+3: [default3]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+3: [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+3: [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+3: [default3]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+3: [default3]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+0: W0506 20:37:23.511000 181701 torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+0: W0506 20:37:23.757000 181701 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 183133 closing signal SIGTERM
+0: W0506 20:37:23.782000 181701 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 183134 closing signal SIGTERM
+0: W0506 20:37:23.782000 181701 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 183135 closing signal SIGTERM
+0: W0506 20:37:23.782000 181701 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 183136 closing signal SIGTERM
+0: [default2]:Stack (most recent call first):
+0: [default2]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+0: [default2]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+0: [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+0: [default2]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+0: [default0]:Stack (most recent call first):
+0: [default0]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+0: [default0]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+0: [default0]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+0: [default0]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+0: [default3]:Stack (most recent call first):
+0: [default3]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+0: [default3]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+0: [default3]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+0: [default3]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+0: [default1]:Stack (most recent call first):
+0: [default1]:  File "/usr/lib/python3.12/subprocess.py", line 2047 in _wait
+0: [default1]:  File "/usr/lib/python3.12/subprocess.py", line 1264 in wait
+0: [default1]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/compile_worker/subproc_pool.py", line 342 in shutdown
+0: [default1]:  File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/async_compile.py", line 151 in shutdown_compile_workers
+3: Traceback (most recent call last):
+3:   File "<frozen runpy>", line 198, in _run_module_as_main
+3:   File "<frozen runpy>", line 88, in _run_code
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+3:     main()
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+3:     return f(*args, **kwargs)
+3:            ^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+3:     run(args)
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+3:     elastic_launch(
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+3:     return launch_agent(self._config, self._entrypoint, list(args))
+3:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+3:     result = agent.run()
+3:              ^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+3:     result = f(*args, **kwargs)
+3:              ^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+3:     result = self._invoke_run(role)
+3:              ^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+3:     time.sleep(monitor_interval)
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+3:     raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+3: torch.distributed.elastic.multiprocessing.api.SignalException: Process 81813 got signal: 15
+1: Traceback (most recent call last):
+1:   File "<frozen runpy>", line 198, in _run_module_as_main
+1:   File "<frozen runpy>", line 88, in _run_code
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+1:     main()
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+1:     return f(*args, **kwargs)
+1:            ^^^^^^^^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+1:     run(args)
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+1:     elastic_launch(
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+1:     return launch_agent(self._config, self._entrypoint, list(args))
+1:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+1:     result = agent.run()
+1:              ^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+1:     result = f(*args, **kwargs)
+1:              ^^^^^^^^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+1:     result = self._invoke_run(role)
+1:              ^^^^^^^^^^^^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+1:     time.sleep(monitor_interval)
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+1:     raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+1: torch.distributed.elastic.multiprocessing.api.SignalException: Process 178523 got signal: 15
+0: Traceback (most recent call last):
+0:   File "<frozen runpy>", line 198, in _run_module_as_main
+0:   File "<frozen runpy>", line 88, in _run_code
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+0:     main()
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+0:     return f(*args, **kwargs)
+0:            ^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+0:     run(args)
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+0:     elastic_launch(
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+0:     return launch_agent(self._config, self._entrypoint, list(args))
+0:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+0:     result = agent.run()
+0:              ^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+0:     result = f(*args, **kwargs)
+0:              ^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+0:     result = self._invoke_run(role)
+0:              ^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+0:     time.sleep(monitor_interval)
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+0:     raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+0: torch.distributed.elastic.multiprocessing.api.SignalException: Process 181701 got signal: 15
+srun: error: nid005562: task 0: Exited with exit code 1
+srun: error: nid005566: task 1: Exited with exit code 1
+srun: error: nid005570: task 3: Exited with exit code 1

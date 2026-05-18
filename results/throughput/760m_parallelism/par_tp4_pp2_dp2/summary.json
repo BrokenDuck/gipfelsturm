@@ -1,0 +1,13 @@
+{
+  "run_name": "par_tp4_pp2_dp2",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 23212.957894736843,
+  "median_tokens_per_sec_gpu": 23507,
+  "p95_tokens_per_sec_gpu": 24187,
+  "mean_tflops_per_gpu": 114.6778947368421,
+  "median_elapsed_ms": 2788.0,
+  "final_lm_loss": 5.215697,
+  "min_lm_loss": 5.124947,
+  "mean_lm_loss_last_10pct": 5.2008424444444445
+}

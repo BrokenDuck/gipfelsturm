@@ -1,0 +1,13 @@
+{
+  "run_name": "bs_mbs12_gbs384",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 71887.62105263158,
+  "median_tokens_per_sec_gpu": 71854,
+  "p95_tokens_per_sec_gpu": 72334,
+  "mean_tflops_per_gpu": 354.8957894736842,
+  "median_elapsed_ms": 1368.1,
+  "final_lm_loss": 5.125504,
+  "min_lm_loss": 5.039823,
+  "mean_lm_loss_last_10pct": 5.079957888888889
+}

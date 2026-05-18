@@ -1,0 +1,13 @@
+{
+  "run_name": "no_rope_fusion",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 63041.28421052632,
+  "median_tokens_per_sec_gpu": 63520,
+  "p95_tokens_per_sec_gpu": 63896,
+  "mean_tflops_per_gpu": 311.22,
+  "median_elapsed_ms": 1031.7,
+  "final_lm_loss": 5.121944,
+  "min_lm_loss": 5.034155,
+  "mean_lm_loss_last_10pct": 5.1110285555555555
+}

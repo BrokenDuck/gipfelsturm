@@ -1,0 +1,84 @@
+0: [default0]:/usr/local/lib/python3.12/dist-packages/modelopt/torch/__init__.py:36: UserWarning: transformers version 5.7.0 is not tested with nvidia-modelopt and may cause issues. Please install recommended version with `pip install nvidia-modelopt[hf]` if working with HF models.
+0: [default0]:  _warnings.warn(
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: Overriding default arguments for tokenizer_type:GPT2BPETokenizer with tokenizer_type:GPT2BPETokenizer
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-use-fast argument is deprecated and will be removed soon. `use_fast` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-use-fast if you want to disable `use_fast`.
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-include-special-tokens argument is deprecated and will be removed soon. `include_special_tokens` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-include-special-tokens if you want to disable `include_special_tokens`.
+0: [default0]:  warnings.warn(message)
+3: [default0]:[rank12]:[W506 20:35:14.547430188 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+1: [default0]:[rank4]:[W506 20:35:14.408533606 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:[rank0]:[W506 20:35:14.822707828 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+2: [default0]:[rank8]:[W506 20:35:14.995447237 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py:211: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+0: [default0]:
+0:   Variable._execution_engine.run_backward(
+0: [default0]:
+0: [default0]:create cuda graphs:   0%|          | 0/48 [00:00<?, ?it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 4.7 gb, res 7.7 gb:   0%|          | 0/48 [00:01<?, ?it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 4.7 gb, res 7.7 gb:   2%|▏         | 1/48 [00:01<00:53,  1.13s/it]
+0: [default0]:create cuda graphs | mem: alloc 5.4 gb, res 8.4 gb:   2%|▏         | 1/48 [00:01<00:53,  1.13s/it]
+0: [default0]:create cuda graphs | mem: alloc 6.1 gb, res 9.1 gb:   2%|▏         | 1/48 [00:01<00:53,  1.13s/it]
+0: [default0]:create cuda graphs | mem: alloc 6.8 gb, res 9.8 gb:   2%|▏         | 1/48 [00:01<00:53,  1.13s/it][default0]:
+0: [default0]:create cuda graphs | mem: alloc 7.5 gb, res 10.5 gb:   2%|▏         | 1/48 [00:01<00:53,  1.13s/it]
+0: [default0]:create cuda graphs | mem: alloc 7.5 gb, res 10.5 gb:  10%|█         | 5/48 [00:01<00:08,  5.18it/s]
+0: [default0]:create cuda graphs | mem: alloc 8.2 gb, res 11.2 gb:  10%|█         | 5/48 [00:01<00:08,  5.18it/s]
+0: [default0]:create cuda graphs | mem: alloc 8.8 gb, res 11.8 gb:  10%|█         | 5/48 [00:01<00:08,  5.18it/s]
+0: [default0]:create cuda graphs | mem: alloc 9.5 gb, res 12.5 gb:  10%|█         | 5/48 [00:01<00:08,  5.18it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 10.2 gb, res 13.2 gb:  10%|█         | 5/48 [00:01<00:08,  5.18it/s]
+0: [default0]:create cuda graphs | mem: alloc 10.2 gb, res 13.2 gb:  19%|█▉        | 9/48 [00:01<00:04,  9.74it/s]
+0: [default0]:create cuda graphs | mem: alloc 10.9 gb, res 13.9 gb:  19%|█▉        | 9/48 [00:01<00:04,  9.74it/s]
+0: [default0]:create cuda graphs | mem: alloc 11.6 gb, res 14.6 gb:  19%|█▉        | 9/48 [00:01<00:04,  9.74it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 12.3 gb, res 15.3 gb:  19%|█▉        | 9/48 [00:01<00:04,  9.74it/s]
+0: [default0]:create cuda graphs | mem: alloc 12.9 gb, res 15.9 gb:  19%|█▉        | 9/48 [00:01<00:04,  9.74it/s]
+0: [default0]:create cuda graphs | mem: alloc 12.9 gb, res 15.9 gb:  27%|██▋       | 13/48 [00:01<00:02, 14.28it/s]
+0: [default0]:create cuda graphs | mem: alloc 13.6 gb, res 16.6 gb:  27%|██▋       | 13/48 [00:01<00:02, 14.28it/s]
+0: [default0]:create cuda graphs | mem: alloc 14.3 gb, res 17.3 gb:  27%|██▋       | 13/48 [00:01<00:02, 14.28it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 15.0 gb, res 18.0 gb:  27%|██▋       | 13/48 [00:01<00:02, 14.28it/s]
+0: [default0]:create cuda graphs | mem: alloc 15.7 gb, res 18.7 gb:  27%|██▋       | 13/48 [00:01<00:02, 14.28it/s]
+0: [default0]:create cuda graphs | mem: alloc 15.7 gb, res 18.7 gb:  35%|███▌      | 17/48 [00:01<00:01, 18.52it/s]
+0: [default0]:create cuda graphs | mem: alloc 16.3 gb, res 19.3 gb:  35%|███▌      | 17/48 [00:01<00:01, 18.52it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 17.0 gb, res 20.0 gb:  35%|███▌      | 17/48 [00:01<00:01, 18.52it/s]
+0: [default0]:create cuda graphs | mem: alloc 17.7 gb, res 20.7 gb:  35%|███▌      | 17/48 [00:01<00:01, 18.52it/s]
+0: [default0]:create cuda graphs | mem: alloc 18.4 gb, res 21.4 gb:  35%|███▌      | 17/48 [00:01<00:01, 18.52it/s]
+0: [default0]:create cuda graphs | mem: alloc 18.4 gb, res 21.4 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 19.1 gb, res 22.1 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 19.7 gb, res 22.7 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 20.4 gb, res 23.4 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 21.1 gb, res 24.1 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 20.5 gb, res 24.6 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 19.9 gb, res 24.6 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 19.2 gb, res 24.6 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 18.6 gb, res 24.6 gb:  44%|████▍     | 21/48 [00:01<00:01, 22.14it/s]
+0: [default0]:create cuda graphs | mem: alloc 18.6 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 18.0 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s][default0]:
+0: [default0]:create cuda graphs | mem: alloc 17.3 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 16.7 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 16.1 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 15.4 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 14.8 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 14.2 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 13.5 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 12.9 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 12.3 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 11.6 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 11.0 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 10.4 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 9.7 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s] 
+0: [default0]:create cuda graphs | mem: alloc 9.1 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 8.5 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 7.8 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 7.2 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 6.6 gb, res 24.6 gb:  60%|██████    | 29/48 [00:01<00:00, 34.83it/s]
+0: [default0]:create cuda graphs | mem: alloc 6.6 gb, res 24.6 gb: 100%|██████████| 48/48 [00:01<00:00, 25.71it/s]
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+3: [default0]:[rank12]:[W506 20:37:23.912576697 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [default0]:[rank8]:[W506 20:37:23.448765690 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: [default0]:[rank0]:[W506 20:37:27.131250072 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+1: [default0]:[rank4]:[W506 20:37:28.519319623 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+3: W0506 20:37:37.760000 264791 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1341] The node 'nid005577_264791_0' has failed to send a keep-alive heartbeat to the rendezvous 'none' due to an error of type RendezvousTimeoutError.

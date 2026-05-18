@@ -1,0 +1,13 @@
+{
+  "run_name": "opt_fp16",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 68268.94736842105,
+  "median_tokens_per_sec_gpu": 68328,
+  "p95_tokens_per_sec_gpu": 68863,
+  "mean_tflops_per_gpu": 337.03263157894736,
+  "median_elapsed_ms": 959.1,
+  "final_lm_loss": 5.247345,
+  "min_lm_loss": 5.155518,
+  "mean_lm_loss_last_10pct": 5.2345543333333335
+}

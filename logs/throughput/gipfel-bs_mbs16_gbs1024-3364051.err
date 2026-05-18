@@ -1,0 +1,1871 @@
+0: [default0]:/usr/local/lib/python3.12/dist-packages/modelopt/torch/__init__.py:36: UserWarning: transformers version 5.7.0 is not tested with nvidia-modelopt and may cause issues. Please install recommended version with `pip install nvidia-modelopt[hf]` if working with HF models.
+0: [default0]:  _warnings.warn(
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: Overriding default arguments for tokenizer_type:GPT2BPETokenizer with tokenizer_type:GPT2BPETokenizer
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-use-fast argument is deprecated and will be removed soon. `use_fast` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-use-fast if you want to disable `use_fast`.
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-include-special-tokens argument is deprecated and will be removed soon. `include_special_tokens` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-include-special-tokens if you want to disable `include_special_tokens`.
+0: [default0]:  warnings.warn(message)
+1: [default0]:[rank4]:[W506 20:17:03.069078548 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+3: [default0]:[rank12]:[W506 20:17:03.388172663 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:[rank0]:[W506 20:17:03.994304293 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+2: [default0]:[rank8]:[W506 20:17:03.490877132 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+1: [default0]:[rank4]: Traceback (most recent call last):
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default0]:[rank4]:     pretrain(
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default0]:[rank4]:     iteration, num_floating_point_operations_so_far = train(
+1: [default0]:[rank4]:                                                       ^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default0]:[rank4]:     ) = train_step(
+1: [default0]:[rank4]:         ^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default0]:[rank4]:     losses_reduced = forward_backward_func(
+1: [default0]:[rank4]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipelin
+1: e_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default0]:[rank4]:     output_tensor, num_tokens = forward_step(
+1: [default0]:[rank4]:                                 ^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default0]:[rank4]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default0]:[rank4]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+1: [default0]:[rank4]:     output_tensor = model(
+1: [default0]:[rank4]:                     ^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default0]:[rank4]:     return self._call_impl(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default0]:[rank4]:     return forward_call(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+1: [default0]:[rank4]:     return self.module(*inputs, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default0]:[rank4]:     return self.
+1: _call_impl(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default0]:[rank4]:     return forward_call(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+1: [default0]:[rank4]:     outputs = self.module(*inputs, **kwargs)
+1: [default0]:[rank4]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default0]:[rank4]:     return self._call_impl(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default0]:[rank4]:     return forward_call(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+1: [default0]:[rank4]:     return self._postprocess(
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+1: [default0]:[rank4]:     loss = self.compute_language_model_loss(labels, logits)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: 
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+1: [default0]:[rank4]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+1: [default0]:[rank4]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+1: [default0]:[rank4]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [def
+1: ault0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+1: [default0]:[rank4]:     calculate_predicted_logits(
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+1: [default0]:[rank4]:     return fn(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+1: [default0]:[rank4]:     @jit_fuser
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+1: [default0]:[rank4]:     return fn(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+1: [default0]:[rank4]:     return compiled_fn(full_args)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+1: [default0]:[rank4]:     all_outs = call_func_at_runtime_with_args(
+1: [default0]:[rank4]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+1: [default0]:[rank4]:     out = normalize_as_list(f(args))
+1: [default0]:[rank4]:                             ^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+1: [default0]:[rank4]:     return self.compiled_fn(*args, **kwargs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+1: [default0]:[rank4]:     return compiled_fn(runtime_args)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+1: [default0]:[rank4]:     outs = compiled_fn(args)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+1: [default0]:[rank4]:     return self.current_callable(inputs)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+1: [default0]:[rank4]:     out = model(new
+1: _inputs)
+1: [default0]:[rank4]:           ^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]:   File "/tmp/gipfel-3364051-1/inductor/py/cpy4enzi5xygtordbwdjuzru6oqleziqpuhhaehftsn6yw3yh67h.py", line 286, in call
+1: [default0]:[rank4]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+1: [default0]:[rank4]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default0]:[rank4]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 0 has a total capacity of 95.00 GiB of which 4.27 GiB is free. Including non-PyTorch memory, this process has 90.73 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+1: [default1]:[rank5]: Traceback (most recent call last):
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default1]:[rank5]:     pretrain(
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default2]:[rank6]: Traceback (most recent call last):
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default1]:[rank5]:     iteration, num_floating_point_operations_so_far = train(
+1: [default1]:[rank5]:                                                       ^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default3]:[rank7]: Traceback (most recent call last):
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+1: [default2]:[rank6]:     pretrain(
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default3]:[rank7]:     pretrain(
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+1: [default2]:[rank6]:     iteration, num_floating_point_operations_so_far = train(
+1: [default1]:[rank5]:     ) = train_step(
+1: [default1]:[rank5]:         ^^^^^^^^^^^
+1: [default2]:[rank6]:                                                       ^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default3]:[rank7]:     iteration, num_floating_point_operations_so_far = train(
+1: [default3]:[rank7]:                                                       ^^^^^^
+1: [default2]:[rank6]:     ) = train_step(
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+1: [default3]:[rank7]:     ) = train_step(
+1: [default2]:[rank6]:         ^^^^^^^^^^^
+1: [default3]:[rank7]:         ^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default1]:[rank5]:     losses_reduced = forward_backward_func(
+1: [default1]:[rank5]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+1: [default2]:[rank6]:     losses_reduced = forward_backward_func(
+1: [default2]:[rank6]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default2]:[rank6]:     output_tensor, num_tokens = forward_step(
+1: [default3]:[rank7]:     losses_reduced = forward_backward_func(
+1: [default1]:[rank5]:     output_tensor, num_tokens = forward_step(
+1: [default1]:[rank5]:                                 ^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default1]:[rank5]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default2]:[rank6]:                                 ^^^^^^^^^^^^^
+1: [default1]:[rank5]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:                      ^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default2]:[rank6]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default3]:[rank7]:     output_tensor, num_tokens = forward_step(
+1: [default2]:[rank6]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+1: [default3]:[rank7]:                                 ^^^^^^^^^^^^^
+1: [default1]:[rank5]:     output_tensor = model(
+1: [default1]:[rank5]:                     ^^^^^^
+1: [default2]:[rank6]:     output_tensor = model(
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+1: [default3]:[rank7]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default1]:[rank5]:     return self._call_impl(*args, **kwargs)
+1: [default3]:[rank7]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:                     ^^^^^^
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+1: [default3]:[rank7]:     output_tensor = model(
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default2]:[rank6]:     return self._call_impl(*args, **kwargs)
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default1]:[rank5]:     return forward_call(*args, **kwargs)
+1: [default3]:[rank7]:                     ^^^^^^
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default3]:[rank7]:     return self._call_impl(*args, **kwargs)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     return forward_call(*args, **kwargs)
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+1: [default1]:[rank5]:     return self.module(*inputs, **kwargs)
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default3]:[rank7]:     return forward_call(*args, **kwargs)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+1: [default3]:[rank7]:     return self.module(*inputs, **kwargs)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     return self.module(*inputs, **kwargs)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default3]:[rank7]:     return self._call_impl(*args, **kwargs)
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default2]:[rank6]:     return self._call_impl(*args, **kwargs)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:     return self._call_impl(*args, **kwargs)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default2]:[rank6]:     return forward_call(*args, **kwargs)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default3]:[rank7]:     return forward_call(*args, **kwargs)
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     outputs = self.module(*inputs, **kwargs)
+1: [default2]:[rank6]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+1: [default3]:[rank7]:     outputs = self.module(*inputs, **kwargs)
+1: [default1]:[rank5]:     return forward_call(*args, **kwargs)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default3]:[rank7]:     return self._call_impl(*args, **kwargs)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default2]:[rank6]:     return self._call_impl(*args, **kwargs)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:     return forward_call(*args, **kwargs)
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default1]:[rank5]:     outputs = self.module(*inputs, **kwargs)
+1: [default1]:[rank5]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     return forward_call(*args, **kwargs)
+1: [default3]:[rank7]:     return self._postprocess(
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+1: [default1]:[rank5]:     return self._call_impl(*args, **kwargs)
+1: [default2]:[rank6]:     return self._postprocess(
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+1: [default3]:[rank7]:     loss = self.compute_language_model_loss(labels, logits)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     loss = self.compute_language_model_loss(labels, logits)
+1: [default1]:[rank5]:     return forward_call(*args, **kwargs)
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+1: [default3]:[rank7]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+1: [default1]:[rank5]:     return self._postprocess(
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+1: [default3]:[rank7]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+1: [default3]:[rank7]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+1: [default1]:[rank5]:     loss = self.compute_language_model_loss(labels, logits)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+1: [default3]:[rank7]:     calculate_predicted_logits(
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+1: [default1]:[rank5]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:     return fn(*args, **kwargs)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+1: [default2]:[rank6]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+1: [default1]:[rank5]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+1: [default2]:[rank6]:     calculate_predicted_logits(
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+1: [default3]:[rank7]:     @jit_fuser
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+1: [default2]:[rank6]:     return fn(*args, **kwargs)
+1: [default3]:[rank7]:     return fn(*args, **kwargs)
+1: [default1]:[rank5]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+1: [default2]:[rank6]:     @jit_fuser
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+1: [default3]:[rank7]:     return compiled_fn(full_args)
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+1: [default1]:[rank5]:     calculate_predicted_logits(
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+1: [default2]:[rank6]:     return fn(*args, **kwargs)
+1: [default1]:[rank5]:     return fn(*args, **kwargs)
+1: [default3]:[rank7]:     all_outs = call_func_at_runtime_with_args(
+1: [default3]:[rank7]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+1: [default2]:[rank6]:     return compiled_fn(full_args)
+1: [default3]:[rank7]:     out = normalize_as_list(f(args))
+1: [default3]:[rank7]:                             ^^^^^^^
+1: [default1]:[rank5]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+1: [default1]:[rank5]:     @jit_fuser
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+1: [default3]:[rank7]:     return self.compiled_fn(*args, **kwargs)
+1: [default2]:[rank6]:     all_outs = call_func_at_runtime_with_args(
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+1: [default1]:[rank5]:     return fn(*args, **kwargs)
+1: [default3]:[rank7]:     return compiled_fn(runtime_args)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+1: [default3]:[rank7]:     outs = compiled_fn(args)
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:     out = normalize_as_list(f(args))
+1: [default2]:[rank6]:                             ^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+1: [default3]:[rank7]:     return self.current_callable(inputs)
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+1: [default1]:[rank5]:     return compiled_fn(full_args)
+1: [default2]:[rank6]:     return self.compiled_fn(*args, **kwargs)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:     out = model(new_inputs)
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+1: [default3]:[rank7]:           ^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]:   File "/tmp/gipfel-3364051-1/inductor/an/can7ackjy7ithtpuomdoaejvws3zu7tqsaek3ydxqrt7vxqsdbe2.py", line 286, in call
+1: [default2]:[rank6]:     return compiled_fn(runtime_args)
+1: [default1]:[rank5]:     all_outs = call_func_at_runtime_with_args(
+1: [default3]:[rank7]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+1: [default3]:[rank7]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default3]:[rank7]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 3 has a total capacity of 95.00 GiB of which 4.33 GiB is free. Including non-PyTorch memory, this process has 90.67 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+1: [default1]:[rank5]:     out = normalize_as_list(f(args))
+1: [default1]:[rank5]:                             ^^^^^^^
+1: [default2]:[rank6]:     outs = compiled_fn(args)
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+1: [default1]:[rank5]:     return self.compiled_fn(*args, **kwargs)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+1: [default1]:[rank5]:     return compiled_fn(runtime_args)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+1: [default2]:[rank6]:     return self.current_callable(inputs)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+1: [default2]:[rank6]:     out = model(new_inputs)
+1: [default2]:[rank6]:           ^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:     outs = compiled_fn(args)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+1: [default1]:[rank5]:     return self.current_callable(inputs)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default2]:[rank6]:   File "/tmp/gipfel-3364051-1/inductor/pf/cpfwf2a2xkiwq5n3viqaxyo74hxe7liebtscphglocfhyf24vxlt.py", line 286, in call
+1: [default2]:[rank6]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+1: [default2]:[rank6]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+1: [default1]:[rank5]:     out = model(new_inputs)
+1: [default1]:[rank5]:           ^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]:   File "/tmp/gipfel-3364051-1/inductor/fc/cfczm6n7fjizrilv6lzuwtlfxvbuqfw3kyyx35bcg6ovyckgh6cm.py", line 286, in call
+1: [default2]:[rank6]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 2 has a total capacity of 95.00 GiB of which 4.26 GiB is free. Including non-PyTorch memory, this process has 90.73 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+1: [default1]:[rank5]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+1: [default1]:[rank5]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1: [default1]:[rank5]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 1 has a total capacity of 95.00 GiB of which 4.27 GiB is free. Including non-PyTorch memory, this process has 90.73 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+0: [default2]:[rank2]: Traceback (most recent call last):
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default2]:[rank2]:     pretrain(
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default2]:[rank2]:     iteration, num_floating_point_operations_so_far = train(
+0: [default2]:[rank2]:                                                       ^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default2]:[rank2]:     ) = train_step(
+0: [default2]:[rank2]:         ^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default1]:[rank1]: Traceback (most recent call last):
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default1]:[rank1]:     pretrain(
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default1]:[rank1]:     iteration, num_floating_point_operations_so_far = train(
+0: [default1]:[rank1]:                                                       ^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default1]:[rank1]:     ) = train_step(
+0: [default1]:[rank1]:         ^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default1]:[rank1]:     losses_reduced = forward_backward_func(
+0: [default1]:[rank1]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default1]:[rank1]:     output_tensor, num_tokens = forward_step(
+0: [default1]:[rank1]:                                 ^^^^^^^^^^^^^
+0: [default2]:[rank2]:     losses_reduced = forward_backward_func(
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default1]:[rank1]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default1]:[rank1]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default2]:[rank2]:     output_tensor, num_tokens = forward_step(
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+0: [default1]:[rank1]:     output_tensor = model(
+0: [default1]:[rank1]:                     ^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default1]:[rank1]:     return self._call_impl(*args, **kwargs)
+0: [default2]:[rank2]:                                 ^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default2]:[rank2]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default2]:[rank2]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+0: [default2]:[rank2]:     output_tensor = model(
+0: [default2]:[rank2]:                     ^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default1]:[rank1]:     return forward_call(*args, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:     return self._call_impl(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default2]:[rank2]:     return forward_call(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+0: [default2]:[rank2]:     return self.module(*inputs, **kwargs)
+0: [default1]:[rank1]:     return self.module(*inputs, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default2]:[rank2]:     return self._call_impl(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default1]:[rank1]:     return self._call_impl(*args, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default1]:[rank1]:     return forward_call(*args, **kwargs)
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default2]:[rank2]:     return forward_call(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:     outputs = self.module(*inputs, **kwargs)
+0: [default2]:[rank2]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default2]:[rank2]:     return self._call_impl(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+0: [default1]:[rank1]:     outputs = self.module(*inputs, **kwargs)
+0: [default1]:[rank1]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default2]:[rank2]:     return forward_call(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+0: [default2]:[rank2]:     return self._postprocess(
+0: [default1]:[rank1]:     return self._call_impl(*args, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default1]:[rank1]:     return forward_call(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+0: [default2]:[rank2]:     loss = self.compute_language_model_loss(labels, logits)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+0: [default2]:[rank2]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+0: [default1]:[rank1]:     return self._postprocess(
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+0: [default2]:[rank2]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+0: [default2]:[rank2]:     calculate_predicted_logits(
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+0: [default1]:[rank1]:     loss = self.compute_language_model_loss(labels, logits)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:     return fn(*args, **kwargs)
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+0: [default1]:[rank1]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+0: [default1]:[rank1]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+0: [default2]:[rank2]:     @jit_fuser
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+0: [default1]:[rank1]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+0: [default1]:[rank1]:     calculate_predicted_logits(
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+0: [default1]:[rank1]:     return fn(*args, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+0: [default1]:[rank1]:     @jit_fuser
+0: [default2]:[rank2]:     return fn(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+0: [default2]:[rank2]:     return compiled_fn(full_args)
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+0: [default1]:[rank1]:     return fn(*args, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+0: [default2]:[rank2]:     all_outs = call_func_at_runtime_with_args(
+0: [default2]:[rank2]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+0: [default2]:[rank2]:     out = normalize_as_list(f(args))
+0: [default2]:[rank2]:                             ^^^^^^^
+0: [default1]:[rank1]:     return compiled_fn(full_args)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+0: [default1]:[rank1]:     all_outs = call_func_at_runtime_with_args(
+0: [default1]:[rank1]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+0: [default2]:[rank2]:     return self.compiled_fn(*args, **kwargs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+0: [default2]:[rank2]:     return compiled_fn(runtime_args)
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+0: [default1]:[rank1]:     out = normalize_as_list(f(args))
+0: [default1]:[rank1]:                             ^^^^^^^
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+0: [default2]:[rank2]:     outs = compiled_fn(args)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+0: [default1]:[rank1]:     return self.compiled_fn(*args, **kwargs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+0: [default1]:[rank1]:     return compiled_fn(runtime_args)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+0: [default2]:[rank2]:     return self.current_callable(inputs)
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+0: [default1]:[rank1]:     outs = compiled_fn(args)
+0: [default2]:[rank2]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+0: [default1]:[rank1]:     return self.current_callable(inputs)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:     out = model(new_inputs)
+0: [default1]:[rank1]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+0: [default1]:[rank1]:     out = model(new_inputs)
+0: [default1]:[rank1]:           ^^^^^^^^^^^^^^^^^
+0: [default1]:[rank1]:   File "/tmp/gipfel-3364051-0/inductor/gu/cguu6ndrgx744uxi4wpcox3toquxt5ql7mv4a7wipcfmo3v35iv5.py", line 286, in call
+0: [default1]:[rank1]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+0: [default1]:[rank1]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:           ^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]:   File "/tmp/gipfel-3364051-0/inductor/gj/cgjhcpg2i2ja7af4u3cbslqzp6ybhxnd2btpji2sitjvxixr4rmq.py", line 286, in call
+0: [default2]:[rank2]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+0: [default1]:[rank1]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 1 has a total capacity of 95.00 GiB of which 4.29 GiB is free. Including non-PyTorch memory, this process has 90.71 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 90.95 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+0: [default0]:[rank0]: Traceback (most recent call last):
+0: [default3]:[rank3]: Traceback (most recent call last):
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default2]:[rank2]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default2]:[rank2]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 2 has a total capacity of 95.00 GiB of which 4.28 GiB is free. Including non-PyTorch memory, this process has 90.71 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 90.45 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+0: [default0]:[rank0]:     pretrain(
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+0: [default3]:[rank3]:     pretrain(
+0: [default0]:[rank0]:     iteration, num_floating_point_operations_so_far = train(
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+0: [default3]:[rank3]:     iteration, num_floating_point_operations_so_far = train(
+0: [default0]:[rank0]:                                                       ^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default3]:[rank3]:                                                       ^^^^^^
+0: [default0]:[rank0]:     ) = train_step(
+0: [default0]:[rank0]:         ^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default0]:[rank0]:     losses_reduced = forward_backward_func(
+0: [default0]:[rank0]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+0: [default3]:[rank3]:     ) = train_step(
+0: [default3]:[rank3]:         ^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default0]:[rank0]:     output_tensor, num_tokens = forward_step(
+0: [default3]:[rank3]:     losses_reduced = forward_backward_func(
+0: [default3]:[rank3]:                      ^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+0: [default3]:[rank3]:     output_tensor, num_tokens = forward_step(
+0: [default3]:[rank3]:                                 ^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default3]:[rank3]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default0]:[rank0]:                                 ^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+0: [default0]:[rank0]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+0: [default0]:[rank0]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+0: [default0]:[rank0]:     output_tensor = model(
+0: [default0]:[rank0]:                     ^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default3]:[rank3]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+0: [default3]:[rank3]:     output_tensor = model(
+0: [default3]:[rank3]:                     ^^^^^^
+0: [default0]:[rank0]:     return self._call_impl(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default3]:[rank3]:     return self._call_impl(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     return forward_call(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+0: [default0]:[rank0]:     return self.module(*inputs, **kwargs)
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default3]:[rank3]:     return forward_call(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+0: [default3]:[rank3]:     return self.module(*inputs, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     return self._call_impl(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default0]:[rank0]:     return forward_call(*args, **kwargs)
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default3]:[rank3]:     return self._call_impl(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+0: [default3]:[rank3]:     return forward_call(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+0: [default3]:[rank3]:     outputs = self.module(*inputs, **kwargs)
+0: [default3]:[rank3]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:     outputs = self.module(*inputs, **kwargs)
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default3]:[rank3]:     return self._call_impl(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default3]:[rank3]:     return forward_call(*args, **kwargs)
+0: [default0]:[rank0]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+0: [default0]:[rank0]:     return self._call_impl(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+0: [default0]:[rank0]:     return forward_call(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+0: [default3]:[rank3]:     return self._postprocess(
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+0: [default3]:[rank3]:     loss = self.compute_language_model_loss(labels, logits)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+0: [default0]:[rank0]:     return self._postprocess(
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+0: [default0]:[rank0]:     loss = self.compute_language_model_loss(labels, logits)
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+0: [default3]:[rank3]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+0: [default3]:[rank3]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+0: [default0]:[rank0]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+0: [default0]:[rank0]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+0: [default3]:[rank3]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+0: [default3]:[rank3]:     calculate_predicted_logits(
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+0: [default3]:[rank3]:     return fn(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+0: [default0]:[rank0]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+0: [default3]:[rank3]:     @jit_fuser
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+0: [default0]:[rank0]:     calculate_predicted_logits(
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+0: [default0]:[rank0]:     return fn(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+0: [default0]:[rank0]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+0: [default0]:[rank0]:     @jit_fuser
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+0: [default0]:[rank0]:     return fn(*args, **kwargs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:     return fn(*args, **kwargs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+0: [default3]:[rank3]:     return compiled_fn(full_args)
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+0: [default0]:[rank0]:     return compiled_fn(full_args)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+0: [default0]:[rank0]:     all_outs = call_func_at_runtime_with_args(
+0: [default0]:[rank0]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+0: [default0]:[rank0]:     out = normalize_as_list(f(args))
+0: [default0]:[rank0]:                             ^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+0: [default0]:[rank0]:     return self.compiled_fn(*args, **kwargs)
+0: [default3]:[rank3]:     all_outs = call_func_at_runtime_with_args(
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+0: [default0]:[rank0]:     return compiled_fn(runtime_args)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+0: [default0]:[rank0]:     outs = compiled_fn(args)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+0: [default3]:[rank3]:     out = normalize_as_list(f(args))
+0: [default3]:[rank3]:                             ^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+0: [default3]:[rank3]:     return self.compiled_fn(*args, **kwargs)
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+0: [default0]:[rank0]:     return self.current_callable(inputs)
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+0: [default0]:[rank0]:     out = model(new_inputs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+0: [default3]:[rank3]:     return compiled_fn(runtime_args)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+0: [default3]:[rank3]:     outs = compiled_fn(args)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:           ^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:   File "/tmp/gipfel-3364051-0/inductor/i6/ci6xrvh4konu6scvej44rr2t35nzt36eomeczuvadqxf45bj6hrj.py", line 286, in call
+0: [default0]:[rank0]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+0: [default3]:[rank3]:     return self.current_callable(inputs)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+0: [default3]:[rank3]:     out = model(new_inputs)
+0: [default3]:[rank3]:           ^^^^^^^^^^^^^^^^^
+0: [default0]:[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 0 has a total capacity of 95.00 GiB of which 4.29 GiB is free. Including non-PyTorch memory, this process has 90.71 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 91.46 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+0: [default3]:[rank3]:   File "/tmp/gipfel-3364051-0/inductor/ne/cneasbl4giz3bb4jlbavnyumgke77lehax4ltpcza43lsjjsdkza.py", line 286, in call
+0: [default3]:[rank3]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+0: [default3]:[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0: [default3]:[rank3]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 3 has a total capacity of 95.00 GiB of which 4.36 GiB is free. Including non-PyTorch memory, this process has 90.64 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.01 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2: [default2]:[rank10]: Traceback (most recent call last):
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default2]:[rank10]:     pretrain(
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default2]:[rank10]:     iteration, num_floating_point_operations_so_far = train(
+2: [default2]:[rank10]:                                                       ^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default2]:[rank10]:     ) = train_step(
+2: [default2]:[rank10]:         ^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default2]:[rank10]:     losses_reduced = forward_backward_func(
+2: [default2]:[rank10]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron
+2: /core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default2]:[rank10]:     output_tensor, num_tokens = forward_step(
+2: [default2]:[rank10]:                                 ^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default2]:[rank10]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default2]:[rank10]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+2: [default2]:[rank10]:     output_tensor = model(
+2: [default2]:[rank10]:                     ^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default2]:[rank10]:     return self._call_impl(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default2]:[rank10]:     return forward_call(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+2: [default2]:[rank10]:     return self.module(*inputs, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default2]:[rank10]:    
+2:  return self._call_impl(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default2]:[rank10]:     return forward_call(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+2: [default2]:[rank10]:     outputs = self.module(*inputs, **kwargs)
+2: [default2]:[rank10]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default2]:[rank10]:     return self._call_impl(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default2]:[rank10]:     return forward_call(*args, **kwargs)
+2: [defau
+2: lt2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+2: [default2]:[rank10]:     return self._postprocess(
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+2: [default2]:[rank10]:     loss = self.compute_language_model_loss(labels, logits)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+2: [default2]:[rank10]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfels
+2: turm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+2: [default2]:[rank10]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+2: [default2]:[rank10]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+2: [default2]:[rank10]:     calculate_predicted_logits(
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+2: [default2]:[rank10]:     return fn(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+2: [default2]:[rank10]:     @jit_fuser
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+2: [default2]:[rank10]:     return fn(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+2: [default2]:[rank10]:     return compiled_fn(full_args)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+2: [default2]:[rank10]:     all_outs = call_func_at_runtime_with_args(
+2: [default2]:[rank10]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+2: [default2]:[rank10]:     out = normalize_as_list(f(args))
+2: [default2]:[rank10]:           
+2:                   ^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+2: [default2]:[rank10]:     return self.compiled_fn(*args, **kwargs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+2: [default2]:[rank10]:     return compiled_fn(runtime_args)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+2: [default2]:[rank10]:     outs = compiled_fn(args)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+2: [default2]:[rank10]:     return self.current_callable(inputs)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+2: [default2]:[rank10]:     out = model(new_inputs)
+2: [default2]:[rank10]:           ^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]:   File "/tmp/gipfel-3364051-2/inductor/mb/cmbpo3zy3tdywpzogfavj6wwmum2vuasr66p7uaefrol3rjjdlba.py", line 286, in call
+2: [default2]:[rank10]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+2: [default2]:[rank10]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default2]:[rank10]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 2 has a total capacity of 95.00 GiB of which 4.26 GiB is free. Incl
+2: uding non-PyTorch memory, this process has 90.73 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2: [default0]:[rank8]: Traceback (most recent call last):
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default0]:[rank8]:     pretrain(
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default0]:[rank8]:     iteration, num_floating_point_operations_so_far = train(
+2: [default0]:[rank8]:                                                       ^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default0]:[rank8]:     ) = train_step(
+2: [default0]:[rank8]:         ^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default0]:[rank8]:     losses_reduced = forward_backward_func(
+2: [default1]:[rank9]: Traceback (most recent call last):
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default1]:[rank9]:     pretrain(
+2: [default0]:[rank8]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default0]:[rank8]:     output_tensor, num_tokens = forward_step(
+2: [default0]:[rank8]:                                 ^^^^^^^^^^^^^
+2: [default3]:[rank11]: Traceback (most recent call last):
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default0]:[rank8]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default0]:[rank8]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+2: [default3]:[rank11]:     pretrain(
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default3]:[rank11]:     iteration, num_floating_point_operations_so_far = train(
+2: [default0]:[rank8]:     output_tensor = model(
+2: [default0]:[rank8]:                     ^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+2: [default0]:[rank8]:     return self._call_impl(*args, **kwargs)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:     iteration, num_floating_point_operations_so_far = train(
+2: [default1]:[rank9]:                                                       ^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default0]:[rank8]:     return forward_call(*args, **kwargs)
+2: [default3]:[rank11]:                                                       ^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+2: [default1]:[rank9]:     ) = train_step(
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+2: [default0]:[rank8]:     return self.module(*inputs, **kwargs)
+2: [default3]:[rank11]:     ) = train_step(
+2: [default3]:[rank11]:         ^^^^^^^^^^^
+2: [default1]:[rank9]:         ^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default3]:[rank11]:     losses_reduced = forward_backward_func(
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default0]:[rank8]:     return self._call_impl(*args, **kwargs)
+2: [default3]:[rank11]:     output_tensor, num_tokens = forward_step(
+2: [default3]:[rank11]:                                 ^^^^^^^^^^^^^
+2: [default1]:[rank9]:     losses_reduced = forward_backward_func(
+2: [default1]:[rank9]:                      ^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default3]:[rank11]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+2: [default0]:[rank8]:     return forward_call(*args, **kwargs)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+2: [default1]:[rank9]:     output_tensor, num_tokens = forward_step(
+2: [default1]:[rank9]:                                 ^^^^^^^^^^^^^
+2: [default0]:[rank8]:     outputs = self.module(*inputs, **kwargs)
+2: [default0]:[rank8]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:     output_tensor = model(
+2: [default3]:[rank11]:                     ^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default3]:[rank11]:     return self._call_impl(*args, **kwargs)
+2: [default0]:[rank8]:     return self._call_impl(*args, **kwargs)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+2: [default1]:[rank9]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+2: [default0]:[rank8]:     return forward_call(*args, **kwargs)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default1]:[rank9]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:     return forward_call(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+2: [default0]:[rank8]:     return self._postprocess(
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+2: [default3]:[rank11]:     return self.module(*inputs, **kwargs)
+2: [default0]:[rank8]:     loss = self.compute_language_model_loss(labels, logits)
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default1]:[rank9]:     output_tensor = model(
+2: [default3]:[rank11]:     return self._call_impl(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+2: [default0]:[rank8]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default1]:[rank9]:                     ^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+2: [default0]:[rank8]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default3]:[rank11]:     return forward_call(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+2: [default3]:[rank11]:     outputs = self.module(*inputs, **kwargs)
+2: [default1]:[rank9]:     return self._call_impl(*args, **kwargs)
+2: [default0]:[rank8]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:     return forward_call(*args, **kwargs)
+2: [default3]:[rank11]:     return self._call_impl(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+2: [default0]:[rank8]:     calculate_predicted_logits(
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+2: [default3]:[rank11]:     return forward_call(*args, **kwargs)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:     return fn(*args, **kwargs)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+2: [default1]:[rank9]:     return self.module(*inputs, **kwargs)
+2: [default0]:[rank8]:     @jit_fuser
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+2: [default0]:[rank8]:     return fn(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+2: [default0]:[rank8]:     return compiled_fn(full_args)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:     return self._postprocess(
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default1]:[rank9]:     return self._call_impl(*args, **kwargs)
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:     all_outs = call_func_at_runtime_with_args(
+2: [default0]:[rank8]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:     loss = self.compute_language_model_loss(labels, logits)
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+2: [default0]:[rank8]:     out = normalize_as_list(f(args))
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default1]:[rank9]:     return forward_call(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:                             ^^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+2: [default0]:[rank8]:     return self.compiled_fn(*args, **kwargs)
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+2: [default3]:[rank11]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+2: [default3]:[rank11]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+2: [default0]:[rank8]:     return compiled_fn(runtime_args)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:     outputs = self.module(*inputs, **kwargs)
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+2: [default0]:[rank8]:     outs = compiled_fn(args)
+2: [default1]:[rank9]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+2: [default1]:[rank9]:     return self._call_impl(*args, **kwargs)
+2: [default0]:[rank8]:     return self.current_callable(inputs)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+2: [default3]:[rank11]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+2: [default0]:[rank8]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+2: [default0]:[rank8]:     out = model(new_inputs)
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+2: [default0]:[rank8]:           ^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:   File "/tmp/gipfel-3364051-2/inductor/74/c74tsl7knne7phiknrirabifrnz7u2vfur42wmfuoa7vkrxrfdbk.py", line 286, in call
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default0]:[rank8]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+2: [default0]:[rank8]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+2: [default3]:[rank11]:     calculate_predicted_logits(
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+2: [default1]:[rank9]:     return forward_call(*args, **kwargs)
+2: [default0]:[rank8]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 0 has a total capacity of 95.00 GiB of which 4.25 GiB is free. Including non-PyTorch memory, this process has 90.75 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 91.10 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+2: [default1]:[rank9]:     return self._postprocess(
+2: [default3]:[rank11]:     return fn(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+2: [default1]:[rank9]:     loss = self.compute_language_model_loss(labels, logits)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:     @jit_fuser
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+2: [default3]:[rank11]:     return fn(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+2: [default3]:[rank11]:     return compiled_fn(full_args)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+2: [default3]:[rank11]:     all_outs = call_func_at_runtime_with_args(
+2: [default1]:[rank9]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+2: [default1]:[rank9]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+2: [default3]:[rank11]:     out = normalize_as_list(f(args))
+2: [default3]:[rank11]:                             ^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+2: [default1]:[rank9]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+2: [default1]:[rank9]:     calculate_predicted_logits(
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+2: [default1]:[rank9]:     return fn(*args, **kwargs)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+2: [default3]:[rank11]:     return self.compiled_fn(*args, **kwargs)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:     @jit_fuser
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+2: [default3]:[rank11]:     return compiled_fn(runtime_args)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+2: [default3]:[rank11]:     outs = compiled_fn(args)
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:     return fn(*args, **kwargs)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+2: [default1]:[rank9]:     return compiled_fn(full_args)
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+2: [default3]:[rank11]:     return self.current_callable(inputs)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+2: [default1]:[rank9]:     all_outs = call_func_at_runtime_with_args(
+2: [default1]:[rank9]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+2: [default3]:[rank11]:     out = model(new_inputs)
+2: [default3]:[rank11]:           ^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]:   File "/tmp/gipfel-3364051-2/inductor/jn/cjnvwu6gluqgkujrgidsgbdksh65amyxp623obncbzb67qfkhpnn.py", line 286, in call
+2: [default3]:[rank11]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+2: [default1]:[rank9]:     out = normalize_as_list(f(args))
+2: [default3]:[rank11]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default3]:[rank11]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 3 has a total capacity of 95.00 GiB of which 4.30 GiB is free. Including non-PyTorch memory, this process has 90.70 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 91.01 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2: [default1]:[rank9]:                             ^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+2: [default1]:[rank9]:     return self.compiled_fn(*args, **kwargs)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+2: [default1]:[rank9]:     return compiled_fn(runtime_args)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+2: [default1]:[rank9]:     outs = compiled_fn(args)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+2: [default1]:[rank9]:     return self.current_callable(inputs)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+2: [default1]:[rank9]:     out = model(new_inputs)
+2: [default1]:[rank9]:           ^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]:   File "/tmp/gipfel-3364051-2/inductor/tg/ctgxa6dilnuf7qgbbu6w5itfl4xesnevdhwygmqw3vjc4vmoqanq.py", line 286, in call
+2: [default1]:[rank9]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+2: [default1]:[rank9]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2: [default1]:[rank9]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 1 has a total capacity of 95.00 GiB of which 4.27 GiB is free. Including non-PyTorch memory, this process has 90.73 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 70.12 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+3: [default0]:[rank12]: Traceback (most recent call last):
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default0]:[rank12]:     pretrain(
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default0]:[rank12]:     iteration, num_floating_point_operations_so_far = train(
+3: [default0]:[rank12]:                                                       ^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default0]:[rank12]:     ) = train_step(
+3: [default0]:[rank12]:         ^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default0]:[rank12]:     losses_reduced = forward_backward_func(
+3: [default0]:[rank12]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default0]:[rank12]:     output_tensor, num_tokens = forward_step(
+3: [default0]:[rank12]:                                 ^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default0]:[rank12]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default0]:[rank12]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+3: [default3]:[rank15]: Traceback (most recent call last):
+3: [default0]:[rank12]:     output_tensor = model(
+3: [default0]:[rank12]:                     ^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default1]:[rank13]: Traceback (most recent call last):
+3: [default0]:[rank12]:     return self._call_impl(*args, **kwargs)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default2]:[rank14]: Traceback (most recent call last):
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default1]:[rank13]:     pretrain(
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 412, in <module>
+3: [default3]:[rank15]:     pretrain(
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default0]:[rank12]:     return forward_call(*args, **kwargs)
+3: [default2]:[rank14]:     pretrain(
+3: [default3]:[rank15]:     iteration, num_floating_point_operations_so_far = train(
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default2]:[rank14]:     iteration, num_floating_point_operations_so_far = train(
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:                                                       ^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+3: [default0]:[rank12]:     return self.module(*inputs, **kwargs)
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default2]:[rank14]:                                                       ^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1180, in pretrain
+3: [default1]:[rank13]:     iteration, num_floating_point_operations_so_far = train(
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default2]:[rank14]:     ) = train_step(
+3: [default3]:[rank15]:     ) = train_step(
+3: [default3]:[rank15]:         ^^^^^^^^^^^
+3: [default0]:[rank12]:     return self._call_impl(*args, **kwargs)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:                                                       ^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default0]:[rank12]:     return forward_call(*args, **kwargs)
+3: [default2]:[rank14]:         ^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 3029, in train
+3: [default1]:[rank13]:     ) = train_step(
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default3]:[rank15]:     losses_reduced = forward_backward_func(
+3: [default3]:[rank15]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:         ^^^^^^^^^^^
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     losses_reduced = forward_backward_func(
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default3]:[rank15]:     output_tensor, num_tokens = forward_step(
+3: [default0]:[rank12]:     outputs = self.module(*inputs, **kwargs)
+3: [default0]:[rank12]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/training.py", line 1832, in train_step
+3: [default3]:[rank15]:                                 ^^^^^^^^^^^^^
+3: [default2]:[rank14]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default1]:[rank13]:     losses_reduced = forward_backward_func(
+3: [default2]:[rank14]:     output_tensor, num_tokens = forward_step(
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default3]:[rank15]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default1]:[rank13]:                      ^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 686, in forward_backward_no_pipelining
+3: [default1]:[rank13]:     output_tensor, num_tokens = forward_step(
+3: [default2]:[rank14]:                                 ^^^^^^^^^^^^^
+3: [default3]:[rank15]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:     return self._call_impl(*args, **kwargs)
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default1]:[rank13]:                                 ^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py", line 428, in forward_step
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default3]:[rank15]:     output_tensor = model(
+3: [default3]:[rank15]:                     ^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default0]:[rank12]:     return forward_call(*args, **kwargs)
+3: [default1]:[rank13]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     output_tensor, loss_func = forward_step_func(data_iterator, model)
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     return self._call_impl(*args, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     output_tensor = model(
+3: [default1]:[rank13]:                     ^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py", line 263, in forward_step
+3: [default2]:[rank14]:     output_tensor = model(
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default3]:[rank15]:     return forward_call(*args, **kwargs)
+3: [default2]:[rank14]:                     ^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default0]:[rank12]:     return self._postprocess(
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     return self._call_impl(*args, **kwargs)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+3: [default1]:[rank13]:     return self._call_impl(*args, **kwargs)
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default3]:[rank15]:     return self.module(*inputs, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     return forward_call(*args, **kwargs)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:     loss = self.compute_language_model_loss(labels, logits)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+3: [default3]:[rank15]:     return self._call_impl(*args, **kwargs)
+3: [default2]:[rank14]:     return self.module(*inputs, **kwargs)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default1]:[rank13]:     return forward_call(*args, **kwargs)
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default2]:[rank14]:     return self._call_impl(*args, **kwargs)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/distributed/data_parallel_base.py", line 22, in forward
+3: [default1]:[rank13]:     return self.module(*inputs, **kwargs)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default0]:[rank12]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+3: [default2]:[rank14]:     return forward_call(*args, **kwargs)
+3: [default3]:[rank15]:     return forward_call(*args, **kwargs)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+3: [default3]:[rank15]:     outputs = self.module(*inputs, **kwargs)
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default1]:[rank13]:     return self._call_impl(*args, **kwargs)
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+3: [default3]:[rank15]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+3: [default0]:[rank12]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+3: [default3]:[rank15]:     return self._call_impl(*args, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     outputs = self.module(*inputs, **kwargs)
+3: [default1]:[rank13]:     return forward_call(*args, **kwargs)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/transformer/module.py", line 493, in forward
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     return self._call_impl(*args, **kwargs)
+3: [default1]:[rank13]:     outputs = self.module(*inputs, **kwargs)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default2]:[rank14]:     return forward_call(*args, **kwargs)
+3: [default3]:[rank15]:     return forward_call(*args, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     return self._call_impl(*args, **kwargs)
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+3: [default3]:[rank15]:     return self._postprocess(
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+3: [default1]:[rank13]:     return forward_call(*args, **kwargs)
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+3: [default0]:[rank12]:     calculate_predicted_logits(
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 550, in forward
+3: [default1]:[rank13]:     return self._postprocess(
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     loss = self.compute_language_model_loss(labels, logits)
+3: [default2]:[rank14]:     return self._postprocess(
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:     return fn(*args, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/gpt/gpt_model.py", line 709, in _postprocess
+3: [default1]:[rank13]:     loss = self.compute_language_model_loss(labels, logits)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+3: [default2]:[rank14]:     loss = self.compute_language_model_loss(labels, logits)
+3: [default0]:[rank12]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+3: [default3]:[rank15]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+3: [default0]:[rank12]:     @jit_fuser
+3: [default3]:[rank15]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/models/common/language_module/language_module.py", line 166, in compute_language_model_loss
+3: [default2]:[rank14]:     loss = fused_vocab_parallel_cross_entropy(logits, labels, self.pg_collection.tp)
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+3: [default2]:[rank14]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+3: [default0]:[rank12]:     return fn(*args, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 148, in fused_vocab_parallel_cross_entropy
+3: [default1]:[rank13]:     return _VocabParallelCrossEntropy.apply(vocab_parallel_logits, target, tp_group)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+3: [default2]:[rank14]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 583, in apply
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+3: [default1]:[rank13]:     return super().apply(*args, **kwargs)  # type: ignore[misc]
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 104, in forward
+3: [default1]:[rank13]:     calculate_predicted_logits(
+3: [default3]:[rank15]:     calculate_predicted_logits(
+3: [default0]:[rank12]:     return compiled_fn(full_args)
+3: [default2]:[rank14]:     calculate_predicted_logits(
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     return fn(*args, **kwargs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 985, in compile_wrapper
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+3: [default2]:[rank14]:     return fn(*args, **kwargs)
+3: [default0]:[rank12]:     all_outs = call_func_at_runtime_with_args(
+3: [default3]:[rank15]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+3: [default0]:[rank12]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     @jit_fuser
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+3: [default1]:[rank13]:     return fn(*args, **kwargs)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+3: [default3]:[rank15]:     return fn(*args, **kwargs)
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+3: [default1]:[rank13]:   File "/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/fusions/fused_cross_entropy.py", line 25, in calculate_predicted_logits
+3: [default1]:[rank13]:     @jit_fuser
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     @jit_fuser
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+3: [default0]:[rank12]:     out = normalize_as_list(f(args))
+3: [default2]:[rank14]:     return fn(*args, **kwargs)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:                             ^^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 1220, in _fn
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+3: [default1]:[rank13]:     return fn(*args, **kwargs)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:     return self.compiled_fn(*args, **kwargs)
+3: [default3]:[rank15]:     return compiled_fn(full_args)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+3: [default2]:[rank14]:     return compiled_fn(full_args)
+3: [default0]:[rank12]:     return compiled_fn(runtime_args)
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/aot_autograd.py", line 1151, in forward
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     return compiled_fn(full_args)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+3: [default3]:[rank15]:     all_outs = call_func_at_runtime_with_args(
+3: [default3]:[rank15]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+3: [default1]:[rank13]:     all_outs = call_func_at_runtime_with_args(
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 536, in runtime_wrapper
+3: [default3]:[rank15]:     out = normalize_as_list(f(args))
+3: [default3]:[rank15]:                             ^^^^^^^
+3: [default2]:[rank14]:     all_outs = call_func_at_runtime_with_args(
+3: [default2]:[rank14]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+3: [default3]:[rank15]:     return self.compiled_fn(*args, **kwargs)
+3: [default0]:[rank12]:     outs = compiled_fn(args)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     out = normalize_as_list(f(args))
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/utils.py", line 134, in call_func_at_runtime_with_args
+3: [default1]:[rank13]:     out = normalize_as_list(f(args))
+3: [default1]:[rank13]:                             ^^^^^^^
+3: [default2]:[rank14]:                             ^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 2163, in __call__
+3: [default3]:[rank15]:     return compiled_fn(runtime_args)
+3: [default1]:[rank13]:     return self.compiled_fn(*args, **kwargs)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:     return self.current_callable(inputs)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+3: [default1]:[rank13]:     return compiled_fn(runtime_args)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+3: [default2]:[rank14]:     return self.compiled_fn(*args, **kwargs)
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+3: [default3]:[rank15]:     outs = compiled_fn(args)
+3: [default0]:[rank12]:     out = model(new_inputs)
+3: [default1]:[rank13]:     outs = compiled_fn(args)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 710, in wrapper
+3: [default0]:[rank12]:           ^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^
+3: [default0]:[rank12]:   File "/tmp/gipfel-3364051-3/inductor/mm/cmm77xbulx4u2pvxru37hx37gqbo3ggnhawy4udivm64ftvgbthk.py", line 286, in call
+3: [default0]:[rank12]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+3: [default3]:[rank15]:     return self.current_callable(inputs)
+3: [default0]:[rank12]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:     return compiled_fn(runtime_args)
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+3: [default3]:[rank15]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_functorch/_aot_autograd/runtime_wrappers.py", line 930, in inner_fn
+3: [default3]:[rank15]:     out = model(new_inputs)
+3: [default0]:[rank12]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 0 has a total capacity of 95.00 GiB of which 4.31 GiB is free. Including non-PyTorch memory, this process has 90.69 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+3: [default3]:[rank15]:           ^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:     return self.current_callable(inputs)
+3: [default2]:[rank14]:     outs = compiled_fn(args)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/output_code.py", line 638, in __call__
+3: [default2]:[rank14]:     return self.current_callable(inputs)
+3: [default3]:[rank15]:   File "/tmp/gipfel-3364051-3/inductor/t5/ct5hipofeijuj7ezpjwqstdkwqqa7tkz3txduetihkuthqv4qxah.py", line 286, in call
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default3]:[rank15]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+3: [default3]:[rank15]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 3 has a total capacity of 95.00 GiB of which 4.36 GiB is free. Including non-PyTorch memory, this process has 90.63 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+3: [default2]:[rank14]:   File "/usr/local/lib/python3.12/dist-packages/torch/_inductor/utils.py", line 3331, in run
+3: [default2]:[rank14]:     out = model(new_inputs)
+3: [default1]:[rank13]:     out = model(new_inputs)
+3: [default1]:[rank13]:           ^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:           ^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]:   File "/tmp/gipfel-3364051-3/inductor/k5/ck535hmplpxcv77gszrfiohss7g4ycwxirjbdh7eegw3rhnudhpq.py", line 286, in call
+3: [default2]:[rank14]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+3: [default2]:[rank14]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default1]:[rank13]:   File "/tmp/gipfel-3364051-3/inductor/35/c35lkq4v5xa26mu3b35pkm6m27kh5yrn4zlqcjd7owjqzorw6r7v.py", line 286, in call
+3: [default1]:[rank13]:     buf9 = empty_strided_cuda((4096, 16, 50304), (804864, 50304, 1), torch.float32)
+3: [default1]:[rank13]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: [default2]:[rank14]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 2 has a total capacity of 95.00 GiB of which 4.30 GiB is free. Including non-PyTorch memory, this process has 90.69 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+3: [default1]:[rank13]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 12.28 GiB. GPU 1 has a total capacity of 95.00 GiB of which 4.31 GiB is free. Including non-PyTorch memory, this process has 90.69 GiB memory in use. Of the allocated memory 88.84 GiB is allocated by PyTorch, and 71.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+1: [default0]:[rank4]:[W506 20:18:56.292776318 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [default0]:[rank8]:[W506 20:18:56.671884466 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: [default0]:[rank0]:[W506 20:18:56.323680439 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+3: [default0]:[rank12]:[W506 20:18:57.037636719 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: W0506 20:19:01.859000 273548 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 274938 closing signal SIGTERM
+0: W0506 20:19:01.861000 273548 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 274939 closing signal SIGTERM
+0: W0506 20:19:01.861000 273548 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 274940 closing signal SIGTERM
+2: W0506 20:19:01.954000 157069 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 158434 closing signal SIGTERM
+2: W0506 20:19:01.956000 157069 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 158435 closing signal SIGTERM
+2: W0506 20:19:01.956000 157069 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 158437 closing signal SIGTERM
+1: W0506 20:19:01.991000 280120 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 281513 closing signal SIGTERM
+1: W0506 20:19:01.992000 280120 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 281515 closing signal SIGTERM
+1: W0506 20:19:01.992000 280120 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 281516 closing signal SIGTERM
+1: E0506 20:19:02.326000 280120 torch/distributed/elastic/multiprocessing/api.py:984] failed (exitcode: 1) local_rank: 1 (pid: 281514) of binary: /iopsstor/scratch/cscs/jmaillef/.venv-gipfelturm/bin/python
+0: E0506 20:19:02.327000 273548 torch/distributed/elastic/multiprocessing/api.py:984] failed (exitcode: 1) local_rank: 0 (pid: 274937) of binary: /iopsstor/scratch/cscs/jmaillef/.venv-gipfelturm/bin/python
+2: E0506 20:19:02.340000 157069 torch/distributed/elastic/multiprocessing/api.py:984] failed (exitcode: 1) local_rank: 2 (pid: 158436) of binary: /iopsstor/scratch/cscs/jmaillef/.venv-gipfelturm/bin/python
+1: Traceback (most recent call last):
+1:   File "<frozen runpy>", line 198, in _run_module_as_main
+1:   File "<frozen runpy>", line 88, in _run_code
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+1:     main()
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+1:     return f(*args, **kwargs)
+1:            ^^^^^^^^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+1:     run(args)
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+1:     elastic_launch(
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+1:     return launch_agent(self._config, self._entrypoint, list(args))
+1:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+1:     raise ChildFailedError(
+1: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+1: ============================================================
+1: /users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py FAILED
+1: ------------------------------------------------------------
+1: Failures:
+1: [1]:
+1:   time      : 2026-05-06_20:19:02
+1:   host      : nid005818
+1:   rank      : 4 (local_rank: 0)
+1:   exitcode  : 1 (pid: 281513)
+1:   error_file: <N/A>
+1:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+1: [2]:
+1:   time      : 2026-05-06_20:19:02
+1:   host      : nid005818
+1:   rank      : 6 (local_rank: 2)
+1:   exitcode  : 1 (pid: 281515)
+1:   error_file: <N/A>
+1:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+1: [3]:
+1:   time      : 2026-05-06_20:19:02
+1:   host      : nid005818
+1:   rank      : 7 (local_rank: 3)
+1:   exitcode  : 1 (pid: 281516)
+1:   error_file: <N/A>
+1:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+1: -------------------------
+1: -----------------------------------
+1: Root Cause (first observed failure):
+1: [0]:
+1:   time      : 2026-05-06_20:19:01
+1:   host      : nid005818
+1:   rank      : 5 (local_rank: 1)
+1:   exitcode  : 1 (pid: 281514)
+1:   error_file: <N/A>
+1:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+1: ============================================================
+1: 
+0: Traceback (most recent call last):
+0:   File "<frozen runpy>", line 198, in _run_module_as_main
+0:   File "<frozen runpy>", line 88, in _run_code
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+0:     main()
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+0:     return f(*args, **kwargs)
+0:            ^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+0:     run(args)
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+0:     elastic_launch(
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+0:     return launch_agent(self._config, self._entrypoint, list(args))
+0:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+0:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+0:     raise ChildFailedError(
+0: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+0: ============================================================
+0: /users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py FAILED
+0: ------------------------------------------------------------
+0: Failures:
+0: [1]:
+0:   time      : 2026-05-06_20:19:02
+0:   host      : nid005817
+0:   rank      : 1 (local_rank: 1)
+0:   exitcode  : 1 (pid: 274938)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: [2]:
+0:   time      : 2026-05-06_20:19:02
+0:   host      : nid005817
+0:   rank      : 2 (local_rank: 2)
+0:   exitcode  : 1 (pid: 274939)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: [3]:
+0:   time      : 2026-05-06_20:19:02
+0:   host      : nid005817
+0:   rank      : 3 (local_rank: 3)
+0:   exitcode  : 1 (pid: 274940)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: -----------------------------------------------------
+0: -------
+0: Root Cause (first observed failure):
+0: [0]:
+0:   time      : 2026-05-06_20:19:01
+0:   host      : nid005817
+0:   rank      : 0 (local_rank: 0)
+0:   exitcode  : 1 (pid: 274937)
+0:   error_file: <N/A>
+0:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+0: ============================================================
+2: Traceback (most recent call last):
+2:   File "<frozen runpy>", line 198, in _run_module_as_main
+2:   File "<frozen runpy>", line 88, in _run_code
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+2:     main()
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+2:     return f(*args, **kwargs)
+2:            ^^^^^^^^^^^^^^^^^^
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+2:     run(args)
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+2:     elastic_launch(
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+2:     return launch_agent(self._config, self._entrypoint, list(args))
+2:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+2:     raise ChildFailedError(
+2: torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+2: ============================================================
+2: /users/jmaillef/gipfelsturm/Megatron-LM/pretrain_gpt.py FAILED
+2: ------------------------------------------------------------
+2: Failures:
+2: [1]:
+2:   time      : 2026-05-06_20:19:02
+2:   host      : nid005839
+2:   rank      : 8 (local_rank: 0)
+2:   exitcode  : 1 (pid: 158434)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: [2]:
+2:   time      : 2026-05-06_20:19:02
+2:   host      : nid005839
+2:   rank      : 9 (local_rank: 1)
+2:   exitcode  : 1 (pid: 158435)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: [3]:
+2:   time      : 2026-05-06_20:19:02
+2:   host      : nid005839
+2:   rank      : 11 (local_rank: 3)
+2:   exitcode  : 1 (pid: 158437)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: ----------------------------------------------------
+2: --------
+2: Root Cause (first observed failure):
+2: [0]:
+2:   time      : 2026-05-06_20:19:01
+2:   host      : nid005839
+2:   rank      : 10 (local_rank: 2)
+2:   exitcode  : 1 (pid: 158436)
+2:   error_file: <N/A>
+2:   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+2: ============================================================
+3: [W506 20:19:02.844891086 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=45, addr=[nid005852-hsn3]:33614, remote=[nid005817]:24051): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+3: Exception raised from recvBytes at /opt/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+3: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xd4 (0x4000ff4039f4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+3: frame #1: <unknown function> + 0x655f564 (0x40010a15f564 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x240 (0x40010a164bc0 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #3: c10d::TCPStore
+3: ::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x28 (0x40010a1654a8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x88 (0x40010a166e98 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #5: <unknown function> + 0x124a7f0 (0x4000fecaa7f0 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+3: frame #6: <unknown function> + 0x5ccbf8 (0x4000fe02cbf8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+3: frame #7: python() [0x504a34]
+3: <omitting python frames>
+3: frame #9: python() [0x4c812c]
+3: frame #12: python() [0x52a070]
+3: frame #16: python() [0x560198]
+3: frame #17: python() [0x50482c]
+3: frame #20: python() [0x68bad8]
+3: frame #23: <unknown function> + 0x284c4 (0x4000fadb84c4 in /usr/lib/aarch64-linux-gnu/libc.so.6)
+3: frame #24: __libc_start_main + 0x98 (0x4000fadb8598 in /usr
+3: /lib/aarch64-linux-gnu/libc.so.6)
+3: 
+3: W0506 20:19:02.913000 271946 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 273419 closing signal SIGTERM
+3: W0506 20:19:02.914000 271946 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 273420 closing signal SIGTERM
+3: W0506 20:19:02.914000 271946 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 273421 closing signal SIGTERM
+3: W0506 20:19:02.914000 271946 torch/distributed/elastic/multiprocessing/api.py:1010] Sending process 273422 closing signal SIGTERM
+srun: error: nid005817: task 0: Exited with exit code 1
+srun: Terminating StepId=3364051.0
+3: [W506 20:19:03.806651956 TCPStore.cpp:106] [c10d] sendBytes failed on SocketImpl(fd=45, addr=[nid005852-hsn3]:33614, remote=[nid005817]:24051): Broken pipe
+3: Exception raised from sendBytes at /opt/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:653 (most recent call first):
+3: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xd4 (0x4000ff4039f4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+3: frame #1: <unknown function> + 0x655df84 (0x40010a15df84 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0xc4 (0x40010a164a44 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #3: c10d::TCPStore::doGet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x
+3: 28 (0x40010a1654a8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x88 (0x40010a166e98 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+3: frame #5: <unknown function> + 0x124a7f0 (0x4000fecaa7f0 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+3: frame #6: <unknown function> + 0x5ccbf8 (0x4000fe02cbf8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+3: frame #7: python() [0x504a34]
+3: <omitting python frames>
+3: frame #9: python() [0x4c812c]
+3: frame #12: python() [0x52a070]
+3: frame #16: python() [0x560198]
+3: frame #17: python() [0x50482c]
+3: frame #20: python() [0x68bad8]
+3: frame #23: <unknown function> + 0x284c4 (0x4000fadb84c4 in /usr/lib/aarch64-linux-gnu/libc.so.6)
+3: frame #24: __libc_start_main + 0x98 (0x4000fadb8598 in /usr/lib/aarch64-linux-gnu/libc.so.6)
+3: 
+3: W0506 20:19:03.874000 271946 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1293] The node 'nid005852_271946_0' has failed to shutdown the rendezvous 'none' due to an error of type RendezvousConnectionError.
+3: Traceback (most recent call last):
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 114, in _call_store
+3:     return getattr(self._store, store_op)(*args, **kwargs)
+3:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3: torch.distributed.DistNetworkError: Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+3: 
+3: The above exception was the direct cause of the following exception:
+3: 
+3: Traceback (most recent call last):
+3:   File "<frozen runpy>", line 198, in _run_module_as_main
+3:   File "<frozen runpy>", line 88, in _run_code
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 994, in <module>
+3:     main()
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+3:     return f(*args, **kwargs)
+3:            ^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 990, in main
+3:     run(args)
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 981, in run
+3:     elastic_launch(
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 170, in __call__
+3:     return launch_agent(self._config, self._entrypoint, list(args))
+3:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+3:     result = agent.run()
+3:              ^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+3:     result = f(*args, **kwargs)
+3:              ^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+3:     result = self._invoke_run(role)
+3:              ^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/agent/server/api.py", line 944, in _invoke_run
+3:     num_nodes_waiting = rdzv_handler.num_nodes_waiting()
+3:                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 1264, in num_nodes_waiting
+3:     self._state_holder.sync()
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/rendezvous/dynamic_rendezvous.py", line 438, in sync
+3:     get_response = self._backend.get_state()
+3:                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 75, in get_state
+3:     base64_state: bytes = self._call_store("get", self._key)
+3:                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3:   File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/rendezvous/c10d_rendezvous_backend.py", line 116, in _call_store
+3:     raise RendezvousConnectionError(
+3: torch.distributed.elastic.rendezvous.api.RendezvousConnectionError: The connection to the C10d store has failed. See inner exception for details.
+srun: error: nid005839: task 2: Exited with exit code 1
+srun: error: nid005818: task 1: Exited with exit code 1
+srun: error: nid005852: task 3: Exited with exit code 1

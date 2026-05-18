@@ -1,0 +1,13 @@
+{
+  "run_name": "model_3b",
+  "total_iterations": 500,
+  "steady_state_iterations": 495,
+  "mean_tokens_per_sec_gpu": 18889.864646464648,
+  "median_tokens_per_sec_gpu": 18878,
+  "p95_tokens_per_sec_gpu": 18992,
+  "mean_tflops_per_gpu": 428.2422222222222,
+  "median_elapsed_ms": 3471.5,
+  "final_lm_loss": 2.971532,
+  "min_lm_loss": 2.921888,
+  "mean_lm_loss_last_10pct": 3.0121955918367345
+}

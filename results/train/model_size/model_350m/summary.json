@@ -1,0 +1,13 @@
+{
+  "run_name": "model_350m",
+  "total_iterations": 500,
+  "steady_state_iterations": 495,
+  "mean_tokens_per_sec_gpu": 103664.24242424243,
+  "median_tokens_per_sec_gpu": 103939,
+  "p95_tokens_per_sec_gpu": 105284,
+  "mean_tflops_per_gpu": 262.9171717171717,
+  "median_elapsed_ms": 630.5,
+  "final_lm_loss": 3.168964,
+  "min_lm_loss": 3.093325,
+  "mean_lm_loss_last_10pct": 3.195185102040816
+}

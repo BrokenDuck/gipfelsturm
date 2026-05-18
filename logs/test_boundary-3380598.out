@@ -1,0 +1,19 @@
+START TIME: Fri May  8 13:38:35 CEST 2026
+TRAINING_CMD: python -m torch.distributed.run     --nproc-per-node 4     --nnodes 4     --rdzv_endpoint nid005462:40598     --rdzv_backend c10d     --max_restarts 0     --tee 3     --node-rank $SLURM_NODEID     /users/jmaillef/gipfelsturm/check_parallel_mapping.py
+1: [default2]:[rank-map] global_rank=06/16 host=nid005611 SLURM_NODEID=1 LOCAL_RANK=2 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=2 tp_world=4 pp_rank=0 pp_world=1 dp_rank=1 dp_world=4
+1: [default0]:[rank-map] global_rank=04/16 host=nid005611 SLURM_NODEID=1 LOCAL_RANK=0 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=0 tp_world=4 pp_rank=0 pp_world=1 dp_rank=1 dp_world=4
+1: [default3]:[rank-map] global_rank=07/16 host=nid005611 SLURM_NODEID=1 LOCAL_RANK=3 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=3 tp_world=4 pp_rank=0 pp_world=1 dp_rank=1 dp_world=4
+1: [default1]:[rank-map] global_rank=05/16 host=nid005611 SLURM_NODEID=1 LOCAL_RANK=1 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=1 tp_world=4 pp_rank=0 pp_world=1 dp_rank=1 dp_world=4
+2: [default2]:[rank-map] global_rank=10/16 host=nid005673 SLURM_NODEID=2 LOCAL_RANK=2 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=2 tp_world=4 pp_rank=0 pp_world=1 dp_rank=2 dp_world=4
+2: [default1]:[rank-map] global_rank=09/16 host=nid005673 SLURM_NODEID=2 LOCAL_RANK=1 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=1 tp_world=4 pp_rank=0 pp_world=1 dp_rank=2 dp_world=4
+2: [default3]:[rank-map] global_rank=11/16 host=nid005673 SLURM_NODEID=2 LOCAL_RANK=3 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=3 tp_world=4 pp_rank=0 pp_world=1 dp_rank=2 dp_world=4
+2: [default0]:[rank-map] global_rank=08/16 host=nid005673 SLURM_NODEID=2 LOCAL_RANK=0 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=0 tp_world=4 pp_rank=0 pp_world=1 dp_rank=2 dp_world=4
+3: [default1]:[rank-map] global_rank=13/16 host=nid006516 SLURM_NODEID=3 LOCAL_RANK=1 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=1 tp_world=4 pp_rank=0 pp_world=1 dp_rank=3 dp_world=4
+3: [default2]:[rank-map] global_rank=14/16 host=nid006516 SLURM_NODEID=3 LOCAL_RANK=2 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=2 tp_world=4 pp_rank=0 pp_world=1 dp_rank=3 dp_world=4
+3: [default0]:[rank-map] global_rank=12/16 host=nid006516 SLURM_NODEID=3 LOCAL_RANK=0 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=0 tp_world=4 pp_rank=0 pp_world=1 dp_rank=3 dp_world=4
+3: [default3]:[rank-map] global_rank=15/16 host=nid006516 SLURM_NODEID=3 LOCAL_RANK=3 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=3 tp_world=4 pp_rank=0 pp_world=1 dp_rank=3 dp_world=4
+0: [default2]:[rank-map] global_rank=02/16 host=nid005462 SLURM_NODEID=0 LOCAL_RANK=2 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=2 tp_world=4 pp_rank=0 pp_world=1 dp_rank=0 dp_world=4
+0: [default0]:[rank-map] global_rank=00/16 host=nid005462 SLURM_NODEID=0 LOCAL_RANK=0 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=0 tp_world=4 pp_rank=0 pp_world=1 dp_rank=0 dp_world=4
+0: [default1]:[rank-map] global_rank=01/16 host=nid005462 SLURM_NODEID=0 LOCAL_RANK=1 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=1 tp_world=4 pp_rank=0 pp_world=1 dp_rank=0 dp_world=4
+0: [default3]:[rank-map] global_rank=03/16 host=nid005462 SLURM_NODEID=0 LOCAL_RANK=3 CUDA_VISIBLE_DEVICES=0,1,2,3 tp_rank=3 tp_world=4 pp_rank=0 pp_world=1 dp_rank=0 dp_world=4
+END TIME: Fri May  8 13:39:31 CEST 2026

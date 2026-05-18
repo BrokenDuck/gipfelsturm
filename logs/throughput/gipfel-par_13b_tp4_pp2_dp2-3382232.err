@@ -1,0 +1,59 @@
+0: [default0]:/usr/local/lib/python3.12/dist-packages/modelopt/torch/__init__.py:36: UserWarning: transformers version 5.7.0 is not tested with nvidia-modelopt and may cause issues. Please install recommended version with `pip install nvidia-modelopt[hf]` if working with HF models.
+0: [default0]:  _warnings.warn(
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: Overriding default arguments for tokenizer_type:GPT2BPETokenizer with tokenizer_type:GPT2BPETokenizer
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-use-fast argument is deprecated and will be removed soon. `use_fast` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-use-fast if you want to disable `use_fast`.
+0: [default0]:  warnings.warn(message)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/training/utils.py:412: UserWarning: --tokenizer-hf-include-special-tokens argument is deprecated and will be removed soon. `include_special_tokens` is set to True by default for HF tokenizers.Use --tokenizer-hf-no-include-special-tokens if you want to disable `include_special_tokens`.
+0: [default0]:  warnings.warn(message)
+3: [default0]:[rank12]:[W508 20:12:18.943502772 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+1: [default0]:[rank4]:[W508 20:12:18.025135820 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+2: [default0]:[rank8]:[W508 20:12:18.284963711 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:[rank0]:[W508 20:12:18.930107867 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:/users/jmaillef/gipfelsturm/Megatron-LM/megatron/core/pipeline_parallel/schedules.py:211: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+0: [default0]:
+0:   Variable._execution_engine.run_backward(
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:[rank0]:[W508 20:33:55.924363963 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [default0]:[rank8]:[W508 20:33:55.727541770 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [default2]:[rank10]:[W508 20:33:55.877561082 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [default1]:[rank9]:[W508 20:33:55.938962810 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [default3]:[rank11]:[W508 20:33:55.952433831 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: [default3]:[rank3]:[W508 20:33:56.606783654 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: [default2]:[rank2]:[W508 20:33:56.627585739 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+0: [default1]:[rank1]:[W508 20:33:56.729876059 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+1: [default0]:[rank4]:[W508 20:33:56.427173006 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+1: [default1]:[rank5]:[W508 20:33:56.425209827 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+1: [default2]:[rank6]:[W508 20:33:56.442455473 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+1: [default3]:[rank7]:[W508 20:33:56.446277354 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+3: [default0]:[rank12]:[W508 20:33:57.802959753 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+3: [default3]:[rank15]:[W508 20:33:57.879672081 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+3: [default1]:[rank13]:[W508 20:33:57.868619077 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+3: [default2]:[rank14]:[W508 20:33:57.327879599 ProcessGroupNCCL.cpp:1569] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+2: [W508 20:34:00.673441022 TCPStore.cpp:138] [c10d] recvValueWithTimeout failed on SocketImpl(fd=45, addr=[nid005471]:60040, remote=[nid005314]:42232): Failed to recv, got 0 bytes. Connection was likely closed. Did the remote server shutdown or crash?
+2: Exception raised from recvBytes at /opt/pytorch/pytorch/torch/csrc/distributed/c10d/Utils.hpp:682 (most recent call first):
+2: frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0xd4 (0x40001aed39f4 in /usr/local/lib/python3.12/dist-packages/torch/lib/libc10.so)
+2: frame #1: <unknown function> + 0x655f564 (0x40002755f564 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+2: frame #2: c10d::TCPStore::doWait(c10::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::chrono::duration<long, std::ratio<1l, 1000l> >) + 0x240 (0x400027564bc0 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+2: frame #3: c10d::TCPStore::doG
+2: et(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x28 (0x4000275654a8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+2: frame #4: c10d::TCPStore::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) + 0x88 (0x400027566e98 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_cpu.so)
+2: frame #5: <unknown function> + 0x124a7f0 (0x400020e4a7f0 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+2: frame #6: <unknown function> + 0x5ccbf8 (0x4000201ccbf8 in /usr/local/lib/python3.12/dist-packages/torch/lib/libtorch_python.so)
+2: frame #7: python() [0x504a34]
+2: <omitting python frames>
+2: frame #9: python() [0x4c812c]
+2: frame #12: python() [0x52a070]
+2: frame #16: python() [0x560198]
+2: frame #17: python() [0x50482c]
+2: frame #20: python() [0x68bad8]
+2: frame #23: <unknown function> + 0x284c4 (0x400017c884c4 in /usr/lib/aarch64-linux-gnu/libc.so.6)
+2: frame #24: __libc_start_main + 0x98 (0x400017c88598 in /usr/lib/
+2: aarch64-linux-gnu/libc.so.6)
+2: 
+2: W0508 20:34:00.660000 241941 torch/distributed/elastic/rendezvous/dynamic_rendezvous.py:1293] The node 'nid005471_241941_0' has failed to shutdown the rendezvous 'none' due to an error of type RendezvousConnectionError.

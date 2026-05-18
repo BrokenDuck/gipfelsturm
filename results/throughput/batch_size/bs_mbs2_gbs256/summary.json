@@ -1,0 +1,13 @@
+{
+  "run_name": "bs_mbs2_gbs256",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 56364.336842105266,
+  "median_tokens_per_sec_gpu": 56862,
+  "p95_tokens_per_sec_gpu": 58016,
+  "mean_tflops_per_gpu": 278.26,
+  "median_elapsed_ms": 1152.5,
+  "final_lm_loss": 5.24134,
+  "min_lm_loss": 5.151128,
+  "mean_lm_loss_last_10pct": 5.229181888888889
+}

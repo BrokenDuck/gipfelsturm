@@ -1,0 +1,13 @@
+{
+  "run_name": "prec_fp32",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 11474.484210526316,
+  "median_tokens_per_sec_gpu": 11467,
+  "p95_tokens_per_sec_gpu": 11517,
+  "mean_tflops_per_gpu": 56.65684210526316,
+  "median_elapsed_ms": 5715.3,
+  "final_lm_loss": 5.183466,
+  "min_lm_loss": 5.093142,
+  "mean_lm_loss_last_10pct": 5.171328222222222
+}

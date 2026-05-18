@@ -1,0 +1,5 @@
+run,tp,pp,dp,tok_per_sec_gpu,tflops_per_gpu,median_iter_ms,final_loss,relative_speedup
+par_8b_tp1_pp4_dp4,1,4,4,9004,417.2,7268.7,7.0867,1.000
+par_8b_tp2_pp4_dp2,2,4,2,7163,331.9,9164.0,7.3771,0.796
+par_8b_tp4_pp1_dp4,4,1,4,4902,227.2,13473.6,7.1508,0.544
+par_8b_tp4_pp4_dp1,4,4,1,4352,201.7,15029.9,7.1335,0.483

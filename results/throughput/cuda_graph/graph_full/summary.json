@@ -1,0 +1,13 @@
+{
+  "run_name": "graph_full",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 68338.8947368421,
+  "median_tokens_per_sec_gpu": 68977,
+  "p95_tokens_per_sec_gpu": 69331,
+  "mean_tflops_per_gpu": 337.37368421052633,
+  "median_elapsed_ms": 950.1,
+  "final_lm_loss": 5.203313,
+  "min_lm_loss": 5.114568,
+  "mean_lm_loss_last_10pct": 5.191171222222222
+}

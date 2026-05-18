@@ -1,0 +1,13 @@
+{
+  "run_name": "attn_unfused",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 37743.18947368421,
+  "median_tokens_per_sec_gpu": 37719,
+  "p95_tokens_per_sec_gpu": 38035,
+  "mean_tflops_per_gpu": 186.33263157894737,
+  "median_elapsed_ms": 1737.5,
+  "final_lm_loss": 5.198367,
+  "min_lm_loss": 5.110109,
+  "mean_lm_loss_last_10pct": 5.186505111111111
+}

@@ -1,0 +1,13 @@
+{
+  "run_name": "prec_fp8_delayed",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 76719.28421052631,
+  "median_tokens_per_sec_gpu": 76854,
+  "p95_tokens_per_sec_gpu": 77640,
+  "mean_tflops_per_gpu": 378.75052631578944,
+  "median_elapsed_ms": 852.7,
+  "final_lm_loss": 5.195859,
+  "min_lm_loss": 5.107389,
+  "mean_lm_loss_last_10pct": 5.184506888888889
+}

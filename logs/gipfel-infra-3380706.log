@@ -1,0 +1,67 @@
+1: W0508 13:46:38.065000 133132 torch/distributed/run.py:851] 
+1: W0508 13:46:38.065000 133132 torch/distributed/run.py:851] *****************************************
+1: W0508 13:46:38.065000 133132 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+1: W0508 13:46:38.065000 133132 torch/distributed/run.py:851] *****************************************
+2: W0508 13:46:38.066000 107911 torch/distributed/run.py:851] 
+2: W0508 13:46:38.066000 107911 torch/distributed/run.py:851] *****************************************
+2: W0508 13:46:38.066000 107911 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+2: W0508 13:46:38.066000 107911 torch/distributed/run.py:851] *****************************************
+3: W0508 13:46:38.074000 167228 torch/distributed/run.py:851] 
+3: W0508 13:46:38.074000 167228 torch/distributed/run.py:851] *****************************************
+3: W0508 13:46:38.074000 167228 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+3: W0508 13:46:38.074000 167228 torch/distributed/run.py:851] *****************************************
+0: W0508 13:46:38.095000 148596 torch/distributed/run.py:851] 
+0: W0508 13:46:38.095000 148596 torch/distributed/run.py:851] *****************************************
+0: W0508 13:46:38.095000 148596 torch/distributed/run.py:851] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+0: W0508 13:46:38.095000 148596 torch/distributed/run.py:851] *****************************************
+2: [default0]:[W508 13:46:45.603511092 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+1: [default0]:[W508 13:46:45.023007822 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+2: [default1]:[W508 13:46:45.630173686 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+2: [default2]:[W508 13:46:45.593340536 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+3: [default0]:[W508 13:46:45.919081132 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+3: [default1]:[W508 13:46:45.909262605 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+3: [default3]:[W508 13:46:45.913730569 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+0: [default2]:[W508 13:46:45.634273102 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+0: [default3]:[W508 13:46:45.633321419 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+1: [default2]:[W508 13:46:45.220636574 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+1: [default1]:[W508 13:46:45.395496281 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+1: [default3]:[W508 13:46:45.395567575 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+3: [default2]:[W508 13:46:45.264672993 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+0: [default0]:[W508 13:46:45.951892736 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+0: [default1]:[W508 13:46:45.947406408 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+2: [default3]:[W508 13:46:45.074160321 ProcessGroupNCCL.cpp:930] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+1: [default0]:[rank4]:[W508 13:46:46.826551611 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+3: [default0]:[rank12]:[W508 13:46:46.736492536 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+2: [default0]:[rank8]:[W508 13:46:46.466220319 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:Nodes: 4
+0: [default0]:GPUs: 16
+0: [default0]:Device: NVIDIA GH200 120GB
+0: [default0]:PyTorch: 2.11.0a0+eb65b36914.nv26.02
+0: [default0]:NCCL: (2, 29, 2)
+0: [default0]:/usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+0: [default0]:  return func(*args, **kwargs)
+0: [default0]:[rank0]:[W508 13:46:46.545036034 ProcessGroupNCCL.cpp:5178] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0: [default0]:
+0: [default0]:--- Intra-node (4 GPUs) ---
+0: [default0]:        Size   Latency (ms)    Bus BW (GB/s)
+0: [default0]:      128 MB            0.6            311.4
+0: [default0]:      256 MB            1.2            325.6
+0: [default0]:      512 MB            2.8            289.8
+0: [default0]:        1 GB            4.8            337.6
+0: [default0]:        2 GB            9.5            340.4
+0: [default0]:        4 GB           18.9            341.0
+0: [default0]:        8 GB           37.8            340.8
+0: [default0]:       16 GB           75.7            340.2
+0: [default0]:
+0: [default0]:--- Inter-node (16 GPUs, 4 nodes) ---
+0: [default0]:        Size   Latency (ms)    Bus BW (GB/s)
+0: [default0]:      128 MB            3.4             73.8
+0: [default0]:      256 MB            7.8             64.6
+0: [default0]:      512 MB           13.9             72.5
+0: [default0]:        1 GB           28.0             71.8
+0: [default0]:        2 GB           56.1             71.8
+0: [default0]:        4 GB          112.2             71.8
+0: [default0]:        8 GB          224.4             71.8
+0: [default0]:       16 GB          449.6             71.6
+0: [default0]:
+0: [default0]:Infra test passed.

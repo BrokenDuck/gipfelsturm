@@ -1,0 +1,13 @@
+{
+  "run_name": "attn_cudnn",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 68099.88421052632,
+  "median_tokens_per_sec_gpu": 68358,
+  "p95_tokens_per_sec_gpu": 68752,
+  "mean_tflops_per_gpu": 336.1978947368421,
+  "median_elapsed_ms": 958.7,
+  "final_lm_loss": 5.099434,
+  "min_lm_loss": 5.010549,
+  "mean_lm_loss_last_10pct": 5.086460444444445
+}

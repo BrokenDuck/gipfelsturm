@@ -1,0 +1,13 @@
+{
+  "run_name": "fsdp_torch_z1",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 18245.084210526315,
+  "median_tokens_per_sec_gpu": 18239,
+  "p95_tokens_per_sec_gpu": 18317,
+  "mean_tflops_per_gpu": 413.6273684210526,
+  "median_elapsed_ms": 3593.3,
+  "final_lm_loss": 5.791096,
+  "min_lm_loss": 5.708547,
+  "mean_lm_loss_last_10pct": 5.786939777777778
+}

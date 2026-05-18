@@ -1,0 +1,13 @@
+{
+  "run_name": "model_125m",
+  "total_iterations": 500,
+  "steady_state_iterations": 495,
+  "mean_tokens_per_sec_gpu": 182868.36767676767,
+  "median_tokens_per_sec_gpu": 183477,
+  "p95_tokens_per_sec_gpu": 186915,
+  "mean_tflops_per_gpu": 166.6448484848485,
+  "median_elapsed_ms": 357.2,
+  "final_lm_loss": 3.585383,
+  "min_lm_loss": 3.483566,
+  "mean_lm_loss_last_10pct": 3.5992273469387754
+}

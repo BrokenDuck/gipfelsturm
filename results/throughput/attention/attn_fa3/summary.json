@@ -1,0 +1,13 @@
+{
+  "run_name": "attn_fa3",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 69969.77894736842,
+  "median_tokens_per_sec_gpu": 70087,
+  "p95_tokens_per_sec_gpu": 70576,
+  "mean_tflops_per_gpu": 345.43052631578945,
+  "median_elapsed_ms": 935.1,
+  "final_lm_loss": 5.203979,
+  "min_lm_loss": 5.114674,
+  "mean_lm_loss_last_10pct": 5.192346555555556
+}

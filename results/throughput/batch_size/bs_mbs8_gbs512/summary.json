@@ -1,0 +1,13 @@
+{
+  "run_name": "bs_mbs8_gbs512",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 70269.92631578947,
+  "median_tokens_per_sec_gpu": 70370,
+  "p95_tokens_per_sec_gpu": 70592,
+  "mean_tflops_per_gpu": 346.9136842105263,
+  "median_elapsed_ms": 1862.6,
+  "final_lm_loss": 5.074133,
+  "min_lm_loss": 4.942438,
+  "mean_lm_loss_last_10pct": 5.046014888888889
+}

@@ -1,0 +1,13 @@
+{
+  "run_name": "no_swiglu_fusion",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 63111,
+  "median_tokens_per_sec_gpu": 63200,
+  "p95_tokens_per_sec_gpu": 63815,
+  "mean_tflops_per_gpu": 311.5684210526316,
+  "median_elapsed_ms": 1037.0,
+  "final_lm_loss": 5.187134,
+  "min_lm_loss": 5.09825,
+  "mean_lm_loss_last_10pct": 5.175344666666667
+}

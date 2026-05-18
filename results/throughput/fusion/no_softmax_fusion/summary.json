@@ -1,0 +1,13 @@
+{
+  "run_name": "no_softmax_fusion",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 68115.64210526316,
+  "median_tokens_per_sec_gpu": 68119,
+  "p95_tokens_per_sec_gpu": 68530,
+  "mean_tflops_per_gpu": 336.27263157894737,
+  "median_elapsed_ms": 962.1,
+  "final_lm_loss": 5.102033,
+  "min_lm_loss": 5.012288,
+  "mean_lm_loss_last_10pct": 5.089692
+}

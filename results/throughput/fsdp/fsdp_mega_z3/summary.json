@@ -1,0 +1,13 @@
+{
+  "run_name": "fsdp_mega_z3",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 17816.147368421054,
+  "median_tokens_per_sec_gpu": 17801,
+  "p95_tokens_per_sec_gpu": 17955,
+  "mean_tflops_per_gpu": 403.90526315789475,
+  "median_elapsed_ms": 3681.6,
+  "final_lm_loss": 5.79462,
+  "min_lm_loss": 5.713569,
+  "mean_lm_loss_last_10pct": 5.792762333333333
+}

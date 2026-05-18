@@ -1,0 +1,13 @@
+{
+  "run_name": "prec_fp8_current",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 74096.4947368421,
+  "median_tokens_per_sec_gpu": 74092,
+  "p95_tokens_per_sec_gpu": 74855,
+  "mean_tflops_per_gpu": 365.80526315789473,
+  "median_elapsed_ms": 884.5,
+  "final_lm_loss": 5.129973,
+  "min_lm_loss": 5.037961,
+  "mean_lm_loss_last_10pct": 5.115305888888889
+}

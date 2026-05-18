@@ -1,0 +1,13 @@
+{
+  "run_name": "no_cross_entropy_fusion",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 67354.8,
+  "median_tokens_per_sec_gpu": 67332,
+  "p95_tokens_per_sec_gpu": 67854,
+  "mean_tflops_per_gpu": 332.5242105263158,
+  "median_elapsed_ms": 973.3,
+  "final_lm_loss": 5.153544,
+  "min_lm_loss": 5.064678,
+  "mean_lm_loss_last_10pct": 5.142057222222222
+}

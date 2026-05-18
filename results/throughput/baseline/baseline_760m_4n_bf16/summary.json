@@ -1,0 +1,13 @@
+{
+  "run_name": "baseline_760m_4n_bf16",
+  "total_iterations": 100,
+  "steady_state_iterations": 95,
+  "mean_tokens_per_sec_gpu": 67443.57894736843,
+  "median_tokens_per_sec_gpu": 67518,
+  "p95_tokens_per_sec_gpu": 67901,
+  "mean_tflops_per_gpu": 332.9610526315789,
+  "median_elapsed_ms": 970.6,
+  "final_lm_loss": 5.209574,
+  "min_lm_loss": 5.117174,
+  "mean_lm_loss_last_10pct": 5.195277555555555
+}
